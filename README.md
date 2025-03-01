@@ -22,7 +22,16 @@ VyaktigatavRtta/
 │   │   │   │   ├── footer/        # Footer
 │   │   │   ├── layout.module.ts   # Declares & exports layout components
 │   │   │   ├── layout.component.ts # Wraps content inside layout
-│   │   ├── features/              
+│   │   ├──  features/              
+│   │   │   ├── welcome/            # Welcome module
+│   │   │   │   ├── components/
+│   │   │   │   │   ├── topbar/     # Dark mode toggle & login button
+│   │   │   │   │   ├── hero/       # Main CTA & tagline
+│   │   │   │   │   ├── footer/     # Minimal footer
+│   │   │   │   ├── welcome.module.ts # Welcome module setup
+│   │   │   │   ├── welcome.component.ts # Logic for Welcome
+│   │   │   │   ├── welcome.component.html # UI layout
+│   │   │   │   ├── welcome.component.scss # Styling
 │   │   │   ├── resume-editor/      # Resume editing module
 │   │   │   ├── resume-preview/     # Resume preview module
 │   │   │   ├── resume-theme/       # Theme selection module
@@ -61,7 +70,7 @@ VyaktigatavRtta is a modern resume builder application built using Angular (late
 ## Setup & Installation
 1. Clone the repository:
    ```sh
-   git clone https://github.com/your-repo/vyaktigatavrtta.git
+   git clone https://github.com/nilabhsubramaniam/ida.git
    ```
 2. Navigate to the project directory:
    ```sh
