@@ -1,59 +1,90 @@
 # VyaktigatavRtta
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.0.
+## Project Structure
 
-## Development server
-
-To start a local development server, run:
-
-```bash
-ng serve
+```
+VyaktigatavRtta/
+│── src/
+│   ├── app/
+│   │   ├── core/                  # Core services & utilities
+│   │   │   ├── services/          # API, state management
+│   │   │   ├── guards/            # Route guards
+│   │   │   ├── interceptors/      # HTTP interceptors
+│   │   ├── shared/                # Reusable UI components
+│   │   │   ├── components/        # Buttons, modals, etc.
+│   │   │   ├── directives/        # Custom directives
+│   │   │   ├── pipes/             # Custom pipes
+│   │   ├── layout/                # Layout module
+│   │   │   ├── components/
+│   │   │   │   ├── topbar/        # Header/Topbar
+│   │   │   │   ├── navbar/        # Navigation bar
+│   │   │   │   ├── sidebar/       # Sidebar
+│   │   │   │   ├── footer/        # Footer
+│   │   │   ├── layout.module.ts   # Declares & exports layout components
+│   │   │   ├── layout.component.ts # Wraps content inside layout
+│   │   ├── features/              
+│   │   │   ├── resume-editor/      # Resume editing module
+│   │   │   ├── resume-preview/     # Resume preview module
+│   │   │   ├── resume-theme/       # Theme selection module
+│   │   │   ├── export-resume/      # Export module
+│   │   ├── app-routing.module.ts   # Routes configuration
+│   │   ├── app.module.ts           # Root module
+│   ├── assets/                     # Static files
+│   ├── environments/                # Environment config
+│   ├── styles/                     
+│   │   ├── base/                   # Global styles
+│   │   ├── themes/                 # Theme-based SCSS
+│   ├── index.html                   # Main HTML
+│   ├── main.ts                      # Angular bootstrap
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Description
+VyaktigatavRtta is a modern resume builder application built using Angular (latest version), SCSS, and TypeScript for the frontend, Golang for the backend, and PostgreSQL as the database.
 
-## Code scaffolding
+## Modules Overview
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+### **1. Core Module**
+- Manages essential services such as API calls, authentication, and route guards.
 
-```bash
-ng generate component component-name
-```
+### **2. Shared Module**
+- Contains reusable components, directives, and pipes.
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+### **3. Layout Module**
+- Provides a structured UI with a topbar, navbar, sidebar, and footer.
 
-```bash
-ng generate --help
-```
+### **4. Features Module**
+- **Resume Editor**: Allows users to create and edit resumes.
+- **Resume Preview**: Provides a preview before finalizing.
+- **Resume Theme**: Enables theme selection.
+- **Export Resume**: Facilitates resume download/export options.
 
-## Building
+## Setup & Installation
+1. Clone the repository:
+   ```sh
+   git clone https://github.com/your-repo/vyaktigatavrtta.git
+   ```
+2. Navigate to the project directory:
+   ```sh
+   cd vyaktigatavrtta
+   ```
+3. Install dependencies:
+   ```sh
+   npm install
+   ```
+4. Run the development server:
+   ```sh
+   ng serve
+   ```
+5. Open your browser and go to:
+   ```sh
+   http://localhost:4200
+   ```
 
-To build the project run:
+## Contribution
+- Follow best practices for Angular development.
+- Use TypeScript class-based structure.
+- Maintain clean and modular SCSS.
 
-```bash
-ng build
-```
+## License
+VyaktigatavRtta is licensed under the MIT License.
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
