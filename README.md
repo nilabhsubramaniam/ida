@@ -1,77 +1,187 @@
 # VyaktigatavRtta
+VyaktigatavRtta is a modern and modular resume builder application. It uses **Angular (latest)** for the frontend, **Golang** for the backend, and **PostgreSQL** as the database.
 
-## Project Structure
+The UI is built using reusable, standalone components, smart services, and a scalable layout system. It features a drag-and-drop resume editor, theme selector, preview engine, and export functionality.
+
+## 📁 Project Structure
 
 ```
-VyaktigatavRtta/
-│── src/
-│   ├── app/
-│   │   ├── core/                  # Core services & utilities
-│   │   │   ├── services/          # API, state management
-│   │   │   ├── guards/            # Route guards
-│   │   │   ├── interceptors/      # HTTP interceptors
-│   │   ├── shared/                # Reusable UI components
-│   │   │   ├── components/        # Buttons, modals, etc.
-│   │   │   ├── directives/        # Custom directives
-│   │   │   ├── pipes/             # Custom pipes
-│   │   ├── layout/                # Layout module
-│   │   │   ├── components/
-│   │   │   │   ├── topbar/        # Header/Topbar
-│   │   │   │   ├── navbar/        # Navigation bar
-│   │   │   │   ├── sidebar/       # Sidebar
-│   │   │   │   ├── footer/        # Footer
-│   │   │   ├── layout.module.ts   # Declares & exports layout components
-│   │   │   ├── layout.component.ts # Wraps content inside layout
-│   │   ├──  features/              
-│   │   │   ├── welcome/            # Welcome module
-│   │   │   │   ├── components/
-│   │   │   │   │   ├── topbar/     # Dark mode toggle & login button
-│   │   │   │   │   ├── hero/       # Main CTA & tagline
-│   │   │   │   │   ├── footer/     # Minimal footer
-│   │   │   │   ├── welcome.module.ts # Welcome module setup
-│   │   │   │   ├── welcome.component.ts # Logic for Welcome
-│   │   │   │   ├── welcome.component.html # UI layout
-│   │   │   │   ├── welcome.component.scss # Styling
-│   │   │   ├── resume-editor/      # Resume editing module
-│   │   │   ├── resume-preview/     # Resume preview module
-│   │   │   ├── resume-theme/       # Theme selection module
-│   │   │   ├── export-resume/      # Export module
-│   │   ├── app-routing.module.ts   # Routes configuration
-│   │   ├── app.module.ts           # Root module
-│   ├── assets/                     # Static files
-│   ├── environments/                # Environment config
-│   ├── styles/                     
-│   │   ├── base/                   # Global styles
-│   │   ├── themes/                 # Theme-based SCSS
-│   ├── index.html                   # Main HTML
-│   ├── main.ts                      # Angular bootstrap
+src/
+└── app/
+    ├── core/                        # App-wide services & guards
+    │   ├── services/
+    │   │   ├── auth.service.ts
+    │   │   ├── resume-builder.service.ts
+    │   │   ├── export.service.ts
+    │   │   ├── theme.service.ts
+    │   │   ├── toast.service.ts
+    │   │   └── template-render.service.ts
+    │   ├── guards/
+    │   │   ├── auth.guard.ts
+    │   │   └── guest.guard.ts
+    │   ├── interceptors/
+    │   │   ├── auth.interceptor.ts
+    │   │   └── error.interceptor.ts
+
+    ├── shared/                      # Reusable components, directives, pipes
+    │   ├── components/
+    │   │   ├── auth-ui/
+    │   │   │   ├── login-form.component.ts
+    │   │   │   ├── register-form.component.ts
+    │   │   │   ├── social-login.component.ts
+    │   │   │   └── auth-card.component.ts
+    │   │   ├── resume-fields/
+    │   │   │   ├── text-input-field.component.ts
+    │   │   │   ├── textarea-field.component.ts
+    │   │   │   ├── date-range-field.component.ts
+    │   │   │   ├── tag-input-field.component.ts
+    │   │   │   ├── markdown-editor.component.ts
+    │   │   │   ├── rating-field.component.ts
+    │   │   │   └── list-field.component.ts
+    │   │   ├── shared-ui/
+    │   │   │   ├── button.component.ts
+    │   │   │   ├── modal.component.ts
+    │   │   │   ├── icon.component.ts
+    │   │   │   ├── toggle-switch.component.ts
+    │   │   │   ├── confirmation-dialog.component.ts
+    │   │   │   └── empty-state.component.ts
+    │   │   ├── template-preview/
+    │   │   │   ├── template-card.component.ts
+    │   │   │   ├── theme-picker.component.ts
+    │   │   │   ├── live-preview.component.ts
+    │   │   │   ├── font-selector.component.ts
+    │   │   │   └── color-palette.component.ts
+    │   │   ├── export/
+    │   │   │   ├── resume-preview.component.ts
+    │   │   │   ├── export-toolbar.component.ts
+
+    │   ├── templates/
+    │   │   ├── modern/
+    │   │   │   ├── modern-template.component.ts
+    │   │   │   └── modern-template.scss
+    │   │   ├── creative/
+    │   │   │   ├── creative-template.component.ts
+    │   │   │   └── creative-template.scss
+    │   │   ├── academic/
+    │   │   │   ├── academic-template.component.ts
+    │   │   │   └── academic-template.scss
+
+    │   ├── directives/
+    │   │   ├── drag-handle.directive.ts
+    │   │   ├── auto-resize-textarea.directive.ts
+    │   │   └── click-outside.directive.ts
+
+    │   ├── pipes/
+    │   │   ├── truncate-text.pipe.ts
+    │   │   ├── format-date.pipe.ts
+    │   │   └── highlight-search.pipe.ts
+
+    ├── layout/
+    │   ├── components/
+    │   │   ├── topbar/
+    │   │   ├── navbar/
+    │   │   ├── sidebar/
+    │   │   └── footer/
+    │   ├── layout.module.ts
+    │   ├── layout.component.ts
+    │   └── layout.component.html
+
+    ├── features/
+    │   ├── welcome/
+    │   │   ├── components/
+    │   │   │   ├── hero/
+    │   │   │   ├── footer/
+    │   │   ├── welcome.component.ts
+    │   │   ├── welcome.component.html
+    │   │   └── welcome.module.ts
+    │
+    │   ├── dashboard/
+    │   │   └── dashboard.component.ts
+    │
+    │   ├── resume-editor/
+    │   │   ├── editor.component.ts
+    │   │   └── resume-section.component.ts
+    │
+    │   ├── resume-preview/
+    │   │   └── preview.component.ts
+    │
+    │   ├── resume-theme/
+    │   │   └── theme.component.ts
+    │
+    │   ├── export-resume/
+    │   │   └── export.component.ts
+    │
+    │   ├── profile-settings/
+    │   │   └── settings.component.ts
+
+    ├── app-routing.module.ts
+    ├── app.module.ts
+
 ```
 
 ## Description
 VyaktigatavRtta is a modern resume builder application built using Angular (latest version), SCSS, and TypeScript for the frontend, Golang for the backend, and PostgreSQL as the database.
 
-## Modules Overview
 
-### **1. Core Module**
-- Manages essential services such as API calls, authentication, and route guards.
+---
 
-### **2. Shared Module**
-- Contains reusable components, directives, and pipes.
+## 🔍 Modules Overview
 
-### **3. Layout Module**
-- Provides a structured UI with a topbar, navbar, sidebar, and footer.
+### 🧠 1. Core Module
+Manages all essential services, state management, route security, and global interceptors.
 
-### **4. Features Module**
-- **Resume Editor**: Allows users to create and edit resumes.
-- **Resume Preview**: Provides a preview before finalizing.
-- **Resume Theme**: Enables theme selection.
-- **Export Resume**: Facilitates resume download/export options.
+| Folder        | Purpose                                      |
+|---------------|----------------------------------------------|
+| `services/`   | Auth, API, Resume Builder, Theme, Export     |
+| `guards/`     | Route protection                            |
+| `interceptors/` | HTTP request interception & error handling |
 
-## Setup & Installation
-1. Clone the repository:
+---
+
+### 📦 2. Shared Module (Reusable Library)
+Contains all reusable building blocks of the UI.
+
+- `auth-ui/`: Login, Register, Social Auth
+- `resume-fields/`: Text, Tags, Markdown, Dates
+- `shared-ui/`: Buttons, Modals, Toggles, Icons
+- `template-preview/`: Templates, Theme pickers
+- `export/`: Resume preview, export toolbar
+- `directives/`: Drag, resize, outside-click
+- `pipes/`: Date formatting, truncation, highlighting
+
+✅ *This folder acts as a self-maintained UI library.*
+
+---
+
+### 🧱 3. Layout Module
+Provides the app shell and layout components.
+
+- `topbar/`
+- `navbar/`
+- `sidebar/`
+- `footer/`
+
+---
+
+### 🚀 4. Features Module
+All route-level features:
+
+- **Welcome**: Landing page
+- **Dashboard**: Resume list
+- **Resume Editor**: Section builder
+- **Resume Preview**: Read-only view
+- **Resume Theme**: Pick and apply themes
+- **Export Resume**: Export as PDF/shareable link
+- **Profile Settings**: User settings, preferences
+
+---
+
+## ⚙️ Setup & Installation
+
+1. **Clone the repository:**
    ```sh
    git clone https://github.com/nilabhsubramaniam/ida.git
-   ```
+
 2. Navigate to the project directory:
    ```sh
    cd vyaktigatavrtta
@@ -89,10 +199,14 @@ VyaktigatavRtta is a modern resume builder application built using Angular (late
    http://localhost:4200
    ```
 
-## Contribution
-- Follow best practices for Angular development.
-- Use TypeScript class-based structure.
-- Maintain clean and modular SCSS.
+🧑‍💻 Contribution Guidelines
+
+-   Use Angular best practices (standalone components, modules).
+-   Follow feature-based folder structure.
+-   Use SCSS with consistent naming (kebab-case).
+-   Write clean, type-safe TypeScript with interfaces.
+-   Prefer reactive forms over template-driven forms.
+-   Reuse from shared/ — keep DRY.
 
 ## License
 VyaktigatavRtta is licensed under the MIT License.
