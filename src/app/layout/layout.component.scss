@@ -10,10 +10,10 @@
 }
 
 .layout__topbar {
-  background-color: var(--primary-light);
+  background-color: transparent;
   color: white;
-  padding: var(--space-sm) var(--space-md);
-  @include flex-between;
+  padding: 0;
+
 
   &.dark-mode {
     background-color: var(--primary-dark);
