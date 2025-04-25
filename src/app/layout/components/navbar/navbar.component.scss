@@ -1,0 +1,23 @@
+:host {
+  display: contents; // let it behave as if it’s part of the parent layout
+}
+
+.navbar {
+  display: flex;
+  gap: var(--space-lg);
+  background-color: transparent; // or remove this line entirely
+
+  a {
+    text-decoration: none;
+    font-weight: 500;
+    color: var(--text-light);
+
+    &.active {
+      border-bottom: 2px solid var(--primary-light);
+    }
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

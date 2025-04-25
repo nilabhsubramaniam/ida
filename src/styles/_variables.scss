@@ -1,0 +1,24 @@
+:root {
+    // Light Theme
+    --bg-light: #f9f9f9;
+    --text-light: #1a1a1a;
+    --primary-light: #3f51b5;
+    --secondary-light: #5c6bc0;
+    --accent-light: #e91e63;
+    --border-light: #ddd;
+  
+    // Dark Theme
+    --bg-dark: #121212;
+    --text-dark: #f5f5f5;
+    --primary-dark: #7986cb;
+    --secondary-dark: #9fa8da;
+    --accent-dark: #f06292;
+    --border-dark: #333;
+  
+    // Shared Spacing
+    --space-xs: 0.25rem;
+    --space-sm: 0.5rem;
+    --space-md: 1rem;
+    --space-lg: 2rem;
+  }
+  
