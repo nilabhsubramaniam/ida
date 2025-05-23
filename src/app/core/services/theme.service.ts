@@ -4,6 +4,11 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class ThemeService {
+  enableDarkTheme(): void {
+    document.body.classList.add('dark-theme');
+  }
 
-  constructor() { }
+  disableDarkTheme(): void {
+    document.body.classList.remove('dark-theme');
+  }
 }

@@ -22,6 +22,7 @@
   gap: var(--space-lg);
   flex-wrap: nowrap;
   overflow: hidden;
+  background: linear-gradient(to bottom, #f0f4f8, #d9e2ec);
 
   &__left {
     flex-shrink: 0;

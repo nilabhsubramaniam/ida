@@ -1,22 +1,15 @@
-<div class="layout-container">
+<div class="layout-container" style="background: linear-gradient(to bottom, #f0f0f0, #d9d9d9); color: #333; position: relative; z-index: 0;">
 
-    <header >
-      <app-topbar></app-topbar>
-    </header>
-  
-    <div class="layout__body">
-      <!-- <aside class="layout__sidebar">
-        <app-sidebar></app-sidebar>
-      </aside> -->
-  
-      <main class="layout__main">
-        <router-outlet></router-outlet>
-      </main>
-    </div>
-  
-    <footer class="layout__footer">
-      <app-footer></app-footer>
-    </footer>
-  
-  </div>
-  
+  <header style="position: relative; z-index: 2;">
+    <app-topbar></app-topbar>
+  </header>
+
+  <main class="layout__main" style="position: relative; z-index: 1;">
+    <router-outlet></router-outlet>
+  </main>
+
+  <footer class="layout__footer" style="position: relative; z-index: 2;">
+    <app-footer></app-footer>
+  </footer>
+
+</div>

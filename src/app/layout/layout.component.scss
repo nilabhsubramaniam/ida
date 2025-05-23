@@ -1,10 +1,18 @@
 @import 'variables';
 @import 'layout/mixins';
 
+:host {
+  background-color: black;
+  color: white;
+  display: block; /* Ensure the styles apply to the entire layout */
+  min-height: 100vh; /* Cover the full viewport height */
+}
+
 .layout-container {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  background: linear-gradient(to bottom, #f0f4f8, #d9e2ec);
   background-color: inherit;
   color: inherit;
 }
@@ -34,6 +42,7 @@
   display: flex;
   flex: 1;
   min-height: 0;
+  /* Removed margin-top as the issue is resolved */
 }
 
 .layout__sidebar {
@@ -53,6 +62,8 @@
   flex: 1;
   padding: var(--space-lg);
   overflow-y: auto;
+  position: relative; /* Ensure stacking context */
+  z-index: 1; /* Set z-index to ensure it is above other elements */
 }
 
 .layout__footer {

@@ -2,17 +2,14 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { WelcomeRoutingModule } from './welcome-routing.module';
 import { WelcomeComponent } from './welcome/welcome.component';
-import { LayoutComponent } from '../../layout/layout.component'; 
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
-  declarations: [
-    
-  ],
   imports: [
     CommonModule,
+    MatIconModule, // Added MatIconModule to resolve 'mat-icon' error
     WelcomeRoutingModule,
-    WelcomeComponent,
-    LayoutComponent  
+    WelcomeComponent
   ]
 })
 export class WelcomeModule {}

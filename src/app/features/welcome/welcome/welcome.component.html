@@ -1,34 +1,62 @@
 <section class="welcome">
-    <!-- Hero -->
-    <div class="welcome__hero">
-      <div class="welcome__text">
-        <h1>Free Online Resume Builder</h1>
-        <p>Create beautiful resumes easily, with powerful tools and templates.</p>
-        <a routerLink="/editor" class="btn btn--primary">Build my resume</a>
-      </div>
-      <div class="welcome__image">
-        <img src="assets/resume_Sample.png" alt="Resume preview" />
-      </div>
+  <style>
+    .btn:hover {
+      background-color: #0056b3; /* A darker shade for hover effect */
+      color: #fff; /* Ensure text is readable */
+      transition: background-color 0.3s ease; /* Smooth transition */
+    }
+
+    .feature:hover {
+      background-color: #f0f8ff; /* Light blue background on hover */
+      transition: background-color 0.3s ease; /* Smooth transition */
+    }
+
+    .feature mat-icon {
+      vertical-align: middle; /* Align icon with text */
+      margin-right: 8px; /* Add spacing between icon and text */
+      font-size: 24px; /* Ensure consistent icon size */
+    }
+
+    .welcome__tips {
+      background-color: #f9f9f9; /* Light background for contrast */
+      border: 1px solid #ddd; /* Subtle border */
+      border-radius: 8px; /* Rounded corners */
+      padding: 16px; /* Add spacing */
+      margin-top: 20px; /* Add spacing from other sections */
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    }
+
+    .welcome__tips h3 {
+      color: #333; /* Darker heading color */
+      font-size: 1.5rem; /* Larger font size */
+      margin-bottom: 12px; /* Spacing below heading */
+    }
+
+    .welcome__tips ul {
+      list-style-type: disc; /* Use bullet points */
+      padding-left: 20px; /* Indent list */
+    }
+
+    .welcome__tips li {
+      margin-bottom: 8px; /* Spacing between tips */
+      line-height: 1.6; /* Improve readability */
+    }
+  </style>
+  <div class="welcome__header">
+    <h1>Welcome back, {{ userName }}!</h1>
+    <p>Your journey to building the perfect resume starts here.</p>
+  </div>
+
+  <div class="welcome__cta">
+    <button class="btn btn--primary" (click)="startResumeBuilder()">Start Building Your Resume</button>
+    <button class="btn btn--secondary" (click)="exploreTemplates()">Explore Templates</button>
+  </div>
+
+  <div class="welcome__features">
+    <div class="feature" *ngFor="let feature of features">
+      <mat-icon>{{ feature.icon }}</mat-icon>
+      <h3>{{ feature.title }}</h3>
+      <p>{{ feature.description }}</p>
     </div>
-  
-    <!-- Features -->
-    <div class="welcome__features">
-      <div class="feature">
-        <i class="icon">🧩</i>
-        <h3>Drag-and-drop editor</h3>
-      </div>
-      <div class="feature">
-        <i class="icon">🎨</i>
-        <h3>Professional templates</h3>
-      </div>
-      <div class="feature">
-        <i class="icon">⚡</i>
-        <h3>AI-Powered Suggestions</h3>
-      </div>
-      <div class="feature">
-        <i class="icon">📤</i>
-        <h3>Export or Share</h3>
-      </div>
-    </div>
-  </section>
-  
+  </div>
+</section>
