@@ -5,19 +5,24 @@
 .navbar {
   display: flex;
   gap: var(--space-lg);
-  background-color: transparent; // or remove this line entirely
+  //background: linear-gradient(to bottom, #1e1e2f, #000000); /* Dark gradient background */
+  color: #fff !important; /* Ensure text is visible */
+  padding: 1rem 2rem;
+}
 
-  a {
-    text-decoration: none;
-    font-weight: 500;
-    color: var(--text-light);
+.navbar a {
+  color: #fff !important; /* Default text color */
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.3s ease, transform 0.3s ease; /* Smooth transition */
+}
 
-    &.active {
-      border-bottom: 2px solid var(--primary-light);
-    }
+.navbar a:hover {
+  color: #7ebafa !important;  /* Highlight color on hover */
+  transform: translateY(-3px); /* Slight lift effect */
+}
 
-    &:hover {
-      text-decoration: underline;
-    }
-  }
+.navbar a.active {
+  font-weight: bold;
+  border-bottom: 2px solid #7ebafa !important; /* Underline for active link */
 }

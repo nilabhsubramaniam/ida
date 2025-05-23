@@ -1,0 +1,15 @@
+a {
+  color: #fff; /* Default text color */
+  text-decoration: none;
+  transition: color 0.3s ease, transform 0.3s ease; /* Smooth transition */
+
+  &:hover {
+    color: #7ebafa; /* Highlight color on hover */
+    transform: scale(1.05); /* Slight zoom effect */
+  }
+
+  &.active {
+    font-weight: bold;
+    border-left: 4px solid #7ebafa; /* Highlight for active link */
+  }
+}

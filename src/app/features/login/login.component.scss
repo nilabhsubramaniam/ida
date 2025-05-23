@@ -1,18 +1,92 @@
+.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: url('/assets/login_theme.jpg') no-repeat center center; /* Full-page background image */
+  background-size: cover;
+}
+
+.login-left {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  //background: inherit; /* Inherit background from parent */
+  color: #fff; /* Set text color to white */
+  text-align: center;
+}
+
+.infographics {
+  text-align: center;
+  animation: fadeInOut 10s infinite;
+}
+
+.quote {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: inherit; /* Inherit text color */
+  margin: 20px 0;
+  opacity: 0;
+  animation: fadeInOut 10s infinite;
+}
+
+@keyframes fadeInOut {
+  0%, 100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.login-right {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: url('/assets/login_theme.jpg') no-repeat center center; /* Image on the right */
+  background-size: cover;
+}
+
 .login-container {
-  max-width: 400px;
-  margin: 50px auto;
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  background-color: #fff;
-  position: relative; /* Ensure stacking context */
-  z-index: 2; /* Set higher z-index to ensure it is above layout elements */
+  max-width: 500px; /* Increased size */
+  padding: 30px; /* Adjusted padding for larger size */
+  background: rgba(255, 255, 255, 0.9); /* Semi-transparent background */
+  color: #333;
+  border-radius: 12px; /* Slightly more rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 0 15px rgba(255, 255, 255, 0.5); /* Added light feature around the border */
+  text-align: center;
+}
+
+.social-login {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+social-login.facebook {
+  background: #3b5998;
+  color: #fff;
+}
+
+.social-login.google {
+  background: #db4437;
+  color: #fff;
 }
 
 mat-form-field {
   width: 100%;
   margin-bottom: 16px;
+  color: inherit; /* Reverted to inherit color */
+}
+
+mat-label, input {
+  color: inherit !important; /* Reverted to inherit color */
 }
 
 button {
@@ -21,7 +95,7 @@ button {
   transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition for hover effects */
 
   &:hover {
-    background-color: #0056b3; /* Darker shade of blue */
+    background-color: #7ebafa; /* Darker shade of blue */
     color: #fff; /* Ensure text is readable */
     transform: translateY(-3px); /* Slight lift effect */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Add shadow for depth */

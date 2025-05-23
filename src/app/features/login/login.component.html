@@ -1,22 +1,37 @@
-<div class="login-container">
-  <h1>Login</h1>
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    <mat-form-field appearance="fill">
-      <mat-label>Email</mat-label>
-      <input matInput formControlName="email" type="email" placeholder="Enter your email">
-      <mat-error *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
-        Please enter a valid email.
-      </mat-error>
-    </mat-form-field>
+<div class="login-page">
+  <div class="login-left">
+    <div class="infographics">
+      <p class="quote">"Your resume is your first impression. Make it count!"</p>
+      <p class="quote">"Build your career with a professional resume."</p>
+      <p class="quote">"Stand out from the crowd with a stunning resume."</p>
+    </div>
+  </div>
+  <div class="login-right">
+    <div class="login-container">
+      <h2>Login</h2>
+      <button class="social-login facebook">Facebook</button>
+      <button class="social-login google">Google</button>
+      <p>OR</p>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="fill">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" type="email" placeholder="Enter your email">
+          <mat-error *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+            Please enter a valid email.
+          </mat-error>
+        </mat-form-field>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Password</mat-label>
-      <input matInput formControlName="password" type="password" placeholder="Enter your password">
-      <mat-error *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
-        Password is required.
-      </mat-error>
-    </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Password</mat-label>
+          <input matInput formControlName="password" type="password" placeholder="Enter your password">
+          <mat-error *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+            Password is required.
+          </mat-error>
+        </mat-form-field>
 
-    <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid">Login</button>
-  </form>
+        <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid">Login</button>
+      </form>
+      <p>Don't have an account? <a routerLink="/signup">Sign up</a></p>
+    </div>
+  </div>
 </div>

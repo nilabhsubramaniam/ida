@@ -3,3 +3,26 @@
 @import 'layout/mixins';
 @import 'layout/layout';
 @import 'buttons';
+
+body {
+  color: #f5f5f5; /* Set text color to off-white for visibility */
+  background-color: #000; /* Ensure background is black */
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #ffffff; /* Ensure headings are fully white for emphasis */
+}
+
+a {
+  color: #7ebafa; /* Set links to a light blue for contrast */
+  text-decoration: none;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: #ffffff; /* Highlight links on hover */
+  }
+}
+
+p, span, li {
+  color: #f5f5f5; /* Ensure general text is off-white */
+}

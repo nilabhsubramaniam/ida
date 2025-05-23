@@ -4,15 +4,15 @@
 :host {
   display: block;
   width: 100%;
-  background-color: white;
-  border-bottom: 1px solid #eee;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  background: linear-gradient(to bottom, #1e1e2f, #000000); /* Updated to match footer gradient */
+  color: #fff; /* Set text color to white */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Enhanced box shadow */
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 1000; 
+  z-index: 1000;
+  border: none; /* Removed any border properties */
 }
-
 
 .topbar {
   display: flex;
@@ -22,7 +22,8 @@
   gap: var(--space-lg);
   flex-wrap: nowrap;
   overflow: hidden;
-  background: linear-gradient(to bottom, #f0f4f8, #d9e2ec);
+  background: transparent; /* Removed inner gradient */
+  color: #fff; /* Set text color to white */
 
   &__left {
     flex-shrink: 0;
@@ -31,7 +32,7 @@
   &__logo {
     font-size: 1.5rem;
     font-weight: 700;
-    color: var(--primary-light);
+    color: var(--primary-light); /* Retain original color for logo */
   }
 
   &__center {
@@ -39,11 +40,31 @@
     display: flex;
     justify-content: center;
     overflow: hidden;
+    color: inherit; /* Inherit white color */
+    gap: var(--space-lg);
+  }
+
+  &__center a {
+    text-decoration: none;
+    font-weight: 500;
+    color: #fff !important; /* Override conflicting color */
+    transition: color 0.3s ease, transform 0.3s ease; /* Smooth transition */
+  }
+
+  &__center a:hover {
+    color: #7ebafa !important; /* Highlight color on hover */
+    transform: translateY(-3px); /* Slight lift effect */
+  }
+
+  &__center a.active {
+    font-weight: bold;
+    border-bottom: 2px solid #7ebafa; /* Underline for active link */
   }
 
   &__right {
     flex-shrink: 0;
     display: flex;
     gap: var(--space-md);
+    color: inherit; /* Inherit white color */
   }
 }
