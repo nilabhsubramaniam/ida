@@ -12,11 +12,23 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background: url('/assets/main_theme.jpg') no-repeat center center; /* Added background image */
-  background-size: cover; /* Ensure the image covers the entire area */
-  color: #333;
+  color: white;
   position: relative;
   z-index: 0;
+  
+  /* Ensure the footer stays at the bottom */
+  & > * {
+    width: 100%;
+  }
+}
+
+.layout__main {
+  margin-top: var(--topbar-height, 64px); /* Use margin instead of padding to ensure proper spacing */
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 1;
 }
 
 .layout__topbar {
@@ -66,38 +78,15 @@
   }
 }
 
-.layout__main {
-  position: relative;
-  z-index: 1;
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: url('/assets/main_theme.jpg') no-repeat center center; /* Added background image */
-  background-size: cover; /* Ensure the image covers the entire area */
-}
-
 .layout__footer {
+  width: 100%;
   text-align: center;
-  font-size: 0.85rem;
   padding: var(--space-sm);
-  border-top: 1px solid transparent; /* Removed visible border */
   position: relative;
   z-index: 2;
-  background: transparent; /* Removed white background */
-  color: #fff; /* Set text color to white */
-}
-
-.layout__footer::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: url('/assets/star-pattern.png') repeat; /* Added star pattern */
-  opacity: 0.2; /* Subtle effect */
-  z-index: -1; /* Place behind content */
+  background: rgba(18, 18, 35, 0.95);
+  border-top: 1px solid var(--border-light);
+  color: #fff;
 }
 
 .layout__header {

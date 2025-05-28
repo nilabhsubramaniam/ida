@@ -1,1 +1,292 @@
-<p>resume-section works!</p>
+<div class="section-container">
+  <!-- Personal Information Section -->
+  <div *ngIf="sectionType === 'personal'">
+    <div class="section-header">
+      <h2><fa-icon [icon]="faUser"></fa-icon> Personal Information</h2>
+      <p>Add your contact details so employers can reach you</p>
+    </div>
+
+    <div class="form-container">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="firstName">First Name</label>
+          <input type="text" id="firstName" placeholder="John" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="lastName">Last Name</label>
+          <input type="text" id="lastName" placeholder="Doe" class="form-control">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="jobTitle">Professional Title</label>
+          <input type="text" id="jobTitle" placeholder="Software Developer" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <div class="input-with-icon">
+            <fa-icon [icon]="faEnvelope"></fa-icon>
+            <input type="email" id="email" placeholder="john.doe@example.com" class="form-control">
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="phone">Phone</label>
+          <div class="input-with-icon">
+            <fa-icon [icon]="faPhone"></fa-icon>
+            <input type="tel" id="phone" placeholder="+1 (555) 123-4567" class="form-control">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="location">Location</label>
+          <div class="input-with-icon">
+            <fa-icon [icon]="faMapMarker"></fa-icon>
+            <input type="text" id="location" placeholder="New York, NY" class="form-control">
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group full-width">
+        <label for="summary">Professional Summary</label>
+        <textarea id="summary" rows="4" placeholder="Write a short summary of your professional background and skills..." class="form-control"></textarea>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="linkedin">LinkedIn</label>
+          <div class="input-with-icon">
+            <fa-icon [icon]="faLinkedin"></fa-icon>
+            <input type="url" id="linkedin" placeholder="https://linkedin.com/in/johndoe" class="form-control">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="website">Portfolio/Website</label>
+          <div class="input-with-icon">
+            <fa-icon [icon]="faGlobe"></fa-icon>
+            <input type="url" id="website" placeholder="https://johndoe.com" class="form-control">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Education Section -->
+  <div *ngIf="sectionType === 'education'">
+    <div class="section-header">
+      <h2><fa-icon [icon]="faGraduationCap"></fa-icon> Education</h2>
+      <p>Add your academic background</p>
+    </div>
+
+    <div class="list-container">
+      <div class="list-item" *ngFor="let education of educationItems; let i = index">
+        <div class="list-item-header">
+          <h3>{{ education.degree }}</h3>
+          <div class="list-item-actions">
+            <button class="btn btn--ghost btn--sm" (click)="editEducation(i)">
+              <fa-icon [icon]="faPencil"></fa-icon>
+            </button>
+            <button class="btn btn--ghost btn--sm btn--danger" (click)="removeEducation(i)">
+              <fa-icon [icon]="faTrash"></fa-icon>
+            </button>
+          </div>
+        </div>
+        <div class="list-item-details">
+          <p class="institution">{{ education.institution }}</p>
+          <p class="timeframe">{{ education.startDate }} - {{ education.endDate || 'Present' }}</p>
+        </div>
+      </div>
+
+      <button class="btn btn--add" (click)="addNewEducation()">
+        <fa-icon [icon]="faPlus"></fa-icon> Add Education
+      </button>
+    </div>
+  </div>
+
+  <!-- Experience Section -->
+  <div *ngIf="sectionType === 'experience'">
+    <div class="section-header">
+      <h2><fa-icon [icon]="faBriefcase"></fa-icon> Work Experience</h2>
+      <p>Add your work history and responsibilities</p>
+    </div>
+
+    <div class="list-container">
+      <div class="list-item" *ngFor="let job of experienceItems; let i = index">
+        <div class="list-item-header">
+          <h3>{{ job.title }}</h3>
+          <div class="list-item-actions">
+            <button class="btn btn--ghost btn--sm" (click)="editExperience(i)">
+              <fa-icon [icon]="faPencil"></fa-icon>
+            </button>
+            <button class="btn btn--ghost btn--sm btn--danger" (click)="removeExperience(i)">
+              <fa-icon [icon]="faTrash"></fa-icon>
+            </button>
+          </div>
+        </div>
+        <div class="list-item-details">
+          <p class="company">{{ job.company }}</p>
+          <p class="timeframe">{{ job.startDate }} - {{ job.endDate || 'Present' }}</p>
+        </div>
+        <div class="list-item-description">
+          <p>{{ job.description }}</p>
+        </div>
+      </div>
+
+      <button class="btn btn--add" (click)="addNewExperience()">
+        <fa-icon [icon]="faPlus"></fa-icon> Add Experience
+      </button>
+    </div>
+  </div>
+
+  <!-- Skills Section -->
+  <div *ngIf="sectionType === 'skills'">
+    <div class="section-header">
+      <h2><fa-icon [icon]="faCode"></fa-icon> Skills</h2>
+      <p>Highlight your professional and technical skills</p>
+    </div>
+
+    <div class="skills-container">
+      <div class="skill-groups">
+        <div class="skill-group" *ngFor="let group of skillGroups; let i = index">
+          <div class="skill-group-header">
+            <h3>{{ group.name }}</h3>
+            <div class="list-item-actions">
+              <button class="btn btn--ghost btn--sm" (click)="editSkillGroup(i)">
+                <fa-icon [icon]="faPencil"></fa-icon>
+              </button>
+              <button class="btn btn--ghost btn--sm btn--danger" (click)="removeSkillGroup(i)">
+                <fa-icon [icon]="faTrash"></fa-icon>
+              </button>
+            </div>
+          </div>
+          
+          <div class="skill-tags">
+            <div class="skill-tag" *ngFor="let skill of group.skills; let j = index">
+              {{ skill }}
+              <button class="skill-remove-btn" (click)="removeSkill(i, j)">
+                <fa-icon [icon]="faTimes"></fa-icon>
+              </button>
+            </div>
+            <button class="btn btn--ghost btn--sm skill-add-btn" (click)="addSkillToGroup(i)">
+              <fa-icon [icon]="faPlus"></fa-icon> Add
+            </button>
+          </div>
+        </div>
+        
+        <button class="btn btn--add" (click)="addNewSkillGroup()">
+          <fa-icon [icon]="faPlus"></fa-icon> Add Skill Category
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Projects Section -->
+  <div *ngIf="sectionType === 'projects'">
+    <div class="section-header">
+      <h2><fa-icon [icon]="faFolder"></fa-icon> Projects</h2>
+      <p>Showcase projects you've worked on</p>
+    </div>
+    
+    <div class="list-container">
+      <div class="list-item" *ngFor="let project of projectItems; let i = index">
+        <div class="list-item-header">
+          <h3>{{ project.name }}</h3>
+          <div class="list-item-actions">
+            <button class="btn btn--ghost btn--sm" (click)="editProject(i)">
+              <fa-icon [icon]="faPencil"></fa-icon>
+            </button>
+            <button class="btn btn--ghost btn--sm btn--danger" (click)="removeProject(i)">
+              <fa-icon [icon]="faTrash"></fa-icon>
+            </button>
+          </div>
+        </div>
+        <div class="list-item-details">
+          <p class="project-links" *ngIf="project.link">
+            <fa-icon [icon]="faLink"></fa-icon> 
+            <a [href]="project.link" target="_blank">{{ project.link }}</a>
+          </p>
+        </div>
+        <div class="list-item-description">
+          <p>{{ project.description }}</p>
+        </div>
+      </div>
+      
+      <button class="btn btn--add" (click)="addNewProject()">
+        <fa-icon [icon]="faPlus"></fa-icon> Add Project
+      </button>
+    </div>
+  </div>
+
+  <!-- Awards Section -->
+  <div *ngIf="sectionType === 'awards'">
+    <div class="section-header">
+      <h2><fa-icon [icon]="faTrophy"></fa-icon> Awards</h2>
+      <p>Highlight your achievements and awards</p>
+    </div>
+    
+    <div class="list-container">
+      <div class="list-item" *ngFor="let award of awardItems; let i = index">
+        <div class="list-item-header">
+          <h3>{{ award.title }}</h3>
+          <div class="list-item-actions">
+            <button class="btn btn--ghost btn--sm" (click)="editAward(i)">
+              <fa-icon [icon]="faPencil"></fa-icon>
+            </button>
+            <button class="btn btn--ghost btn--sm btn--danger" (click)="removeAward(i)">
+              <fa-icon [icon]="faTrash"></fa-icon>
+            </button>
+          </div>
+        </div>
+        <div class="list-item-details">
+          <p class="issuer">{{ award.issuer }}</p>
+          <p class="timeframe">{{ award.date }}</p>
+        </div>
+        <div class="list-item-description" *ngIf="award.description">
+          <p>{{ award.description }}</p>
+        </div>
+      </div>
+      
+      <button class="btn btn--add" (click)="addNewAward()">
+        <fa-icon [icon]="faPlus"></fa-icon> Add Award
+      </button>
+    </div>
+  </div>
+
+  <!-- Languages Section -->
+  <div *ngIf="sectionType === 'languages'">
+    <div class="section-header">
+      <h2><fa-icon [icon]="faGlobe"></fa-icon> Languages</h2>
+      <p>Add languages you speak and your proficiency level</p>
+    </div>
+    
+    <div class="list-container">
+      <div class="list-item" *ngFor="let language of languageItems; let i = index">
+        <div class="list-item-header">
+          <h3>{{ language.name }}</h3>
+          <div class="list-item-actions">
+            <button class="btn btn--ghost btn--sm" (click)="editLanguage(i)">
+              <fa-icon [icon]="faPencil"></fa-icon>
+            </button>
+            <button class="btn btn--ghost btn--sm btn--danger" (click)="removeLanguage(i)">
+              <fa-icon [icon]="faTrash"></fa-icon>
+            </button>
+          </div>
+        </div>
+        <div class="list-item-details">
+          <div class="proficiency-meter">
+            <div class="proficiency-label">{{ language.level }}</div>
+            <div class="proficiency-bar">
+              <div class="proficiency-fill" [style.width.%]="getProficiencyPercentage(language.level)"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <button class="btn btn--add" (click)="addNewLanguage()">
+        <fa-icon [icon]="faPlus"></fa-icon> Add Language
+      </button>
+    </div>
+  </div>
+</div>

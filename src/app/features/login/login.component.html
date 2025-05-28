@@ -1,37 +1,123 @@
 <div class="login-page">
   <div class="login-left">
-    <div class="infographics">
-      <p class="quote">"Your resume is your first impression. Make it count!"</p>
-      <p class="quote">"Build your career with a professional resume."</p>
-      <p class="quote">"Stand out from the crowd with a stunning resume."</p>
+    <div class="login-left__content">
+      <div class="brand">
+        <div class="brand__logo">V</div>
+        <h1 class="brand__name">VyaktigatavRtta</h1>
+      </div>
+      
+      <div class="quotes-carousel">
+        <div class="quote" *ngFor="let quote of quotes; let i = index" [class.active]="currentQuoteIndex === i">
+          <p class="quote__text">{{ quote.text }}</p>
+          <p class="quote__translation">"{{ quote.translation }}"</p>
+          <div class="quote__author">— {{ quote.author }}</div>
+        </div>
+      </div>
+      
+      <div class="quote-indicators">
+        <span 
+          *ngFor="let _ of [0,1,2]; let i = index" 
+          class="indicator" 
+          [class.active]="currentQuoteIndex === i"
+          (click)="setQuote(i)">
+        </span>
+      </div>
     </div>
   </div>
+  
   <div class="login-right">
     <div class="login-container">
-      <h2>Login</h2>
-      <button class="social-login facebook">Facebook</button>
-      <button class="social-login google">Google</button>
-      <p>OR</p>
-      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-        <mat-form-field appearance="fill">
+      <h2 class="login-title">Welcome Back</h2>
+      <p class="login-subtitle">Sign in to continue building your professional resume</p>
+      
+      <div class="social-buttons">
+        <button class="social-btn google">
+          <mat-icon class="icon">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
+              <path d="M12.545 12.151c0 1.054-.86 1.909-1.915 1.909s-1.915-.855-1.915-1.909c0-1.054.86-1.909 1.915-1.909s1.915.855 1.915 1.909z"></path>
+              <path d="M12.244 10.241h7.766v2h-1.491v7.758h-5.025v-7.758h-1.25v-2z"></path>
+              <path d="M5.85 12.001c0-3.39 2.76-6.15 6.15-6.15v-2.95c-5.022 0-9.1 4.078-9.1 9.1s4.078 9.1 9.1 9.1v-2.95c-3.39 0-6.15-2.76-6.15-6.15z"></path>
+            </svg>
+          </mat-icon>
+          <span>Continue with Google</span>
+        </button>
+        <button class="social-btn github">
+          <mat-icon class="icon">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
+              <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+            </svg>
+          </mat-icon>
+          <span>Continue with GitHub</span>
+        </button>
+        <button class="social-btn linkedin">
+          <mat-icon class="icon">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
+              <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+            </svg>
+          </mat-icon>
+          <span>Continue with LinkedIn</span>
+        </button>
+      </div>
+      
+      <div class="divider">
+        <span>OR</span>
+      </div>
+      
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+        <mat-form-field appearance="outline" color="accent">
           <mat-label>Email</mat-label>
-          <input matInput formControlName="email" type="email" placeholder="Enter your email">
+          <input 
+            matInput 
+            formControlName="email" 
+            type="email" 
+            placeholder="Enter your email">
+          <mat-icon matPrefix>email</mat-icon>
           <mat-error *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
-            Please enter a valid email.
+            Please enter a valid email address
           </mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="fill">
+        <mat-form-field appearance="outline" color="accent">
           <mat-label>Password</mat-label>
-          <input matInput formControlName="password" type="password" placeholder="Enter your password">
+          <input 
+            matInput 
+            formControlName="password" 
+            [type]="hidePassword ? 'password' : 'text'"
+            placeholder="Enter your password">
+          <mat-icon matPrefix>lock</mat-icon>
+          <button 
+            type="button"
+            mat-icon-button 
+            matSuffix 
+            (click)="hidePassword = !hidePassword"
+            [attr.aria-label]="'Hide password'" 
+            [attr.aria-pressed]="hidePassword">
+            <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
           <mat-error *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
-            Password is required.
+            Password is required
           </mat-error>
         </mat-form-field>
+        
+        <div class="form-actions">
+          <mat-checkbox color="accent" formControlName="rememberMe">Remember me</mat-checkbox>
+          <a routerLink="/reset-password" class="forgot-link">Forgot password?</a>
+        </div>
 
-        <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid">Login</button>
+        <button 
+          mat-flat-button 
+          color="accent" 
+          class="login-btn btn--glow" 
+          type="submit" 
+          [disabled]="loginForm.invalid">
+          Sign in
+        </button>
       </form>
-      <p>Don't have an account? <a routerLink="/signup">Sign up</a></p>
+      
+      <p class="signup-prompt">
+        Don't have an account? 
+        <a routerLink="/signup" class="signup-link">Create account</a>
+      </p>
     </div>
   </div>
 </div>

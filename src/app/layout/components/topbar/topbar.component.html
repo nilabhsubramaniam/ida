@@ -1,6 +1,8 @@
-<div class="topbar">
+<div class="topbar" [ngClass]="{'topbar--transparent': isAtTop}">
   <div class="topbar__left">
-    <div class="topbar__logo">VyaktigatavRtta</div>
+    <a routerLink="/" class="topbar__logo">
+      <span class="logo-text">व्यक्तिगतवृत्त - <span>Resume builder</span>  </span>
+    </a>
   </div>
 
   <div class="topbar__center">
@@ -8,7 +10,26 @@
   </div>
 
   <div class="topbar__right">
+    <button class="topbar__theme-toggle" (click)="toggleDarkMode()" title="Toggle dark mode">
+      <mat-icon>{{ isDarkMode ? 'light_mode' : 'dark_mode' }}</mat-icon>
+    </button>
     <a routerLink="/login" class="btn btn--ghost">Log in</a>
     <a routerLink="/signup" class="btn btn--primary">Sign up</a>
+    <!-- Add mobile menu toggle button -->
+    <button class="topbar__mobile-toggle" (click)="toggleMobileMenu()">
+      <mat-icon>{{ isMobileMenuOpen ? 'close' : 'menu' }}</mat-icon>
+    </button>
   </div>
+</div>
+
+<!-- Mobile menu -->
+<div class="mobile-menu" [ngClass]="{'mobile-menu--open': isMobileMenuOpen}">
+  <nav class="mobile-menu__nav">
+    <a routerLink="/editor" routerLinkActive="active">Editor</a>
+    <a routerLink="/theme" routerLinkActive="active">Templates</a>
+    <div class="mobile-menu__auth">
+      <a routerLink="/login" class="btn btn--ghost">Log in</a>
+      <a routerLink="/signup" class="btn btn--primary">Sign up</a>
+    </div>
+  </nav>
 </div>

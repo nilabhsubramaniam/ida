@@ -1,82 +1,253 @@
 @import 'variables';
 
+// Base Button Styles
 .btn {
-  display: inline-block;
-  padding: 0.6rem 1.5rem;
-  border-radius: 0.5rem;
-  font-size: 0.95rem;
-  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-sm) var(--space-lg);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
   cursor: pointer;
-  transition: all 0.3s ease-in-out;
+  transition: all var(--transition-normal);
   text-decoration: none;
   border: none;
   position: relative;
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+  user-select: none;
+  white-space: nowrap;
   overflow: hidden;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-
-  // shared hover glow effect
+  
+  // Shared hover glow effect
   &:hover::before {
     content: '';
     position: absolute;
     inset: 0;
     border-radius: inherit;
-    box-shadow: 0 0 12px rgba(63, 81, 181, 0.3),
-                0 0 20px rgba(63, 81, 181, 0.2);
+    box-shadow: 0 0 12px rgba(66, 135, 245, 0.3),
+                0 0 20px rgba(66, 135, 245, 0.2);
     animation: glowPulse 1.4s ease-out;
     z-index: 0;
   }
+  
+  // Disabled state
+  &:disabled, &[disabled] {
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
 
-  // make sure text is on top of ::before
+  // Make sure text is on top of ::before
   > * {
     position: relative;
     z-index: 1;
   }
 
+  // Button variants
   &--primary {
-    background: rgba(63, 81, 181, 0.12);
-    color: var(--primary-light);
-    border: 1px solid var(--primary-light);
+    background-color: var(--primary-light);
+    color: white;
+    box-shadow: var(--shadow-sm);
 
     &:hover {
-      background: rgba(63, 81, 181, 0.18);
+      background-color: darken(#4287f5, 5%);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+    
+    &:active {
+      transform: translateY(0);
+    }
+  }
+
+  &--secondary {
+    background-color: white;
+    color: var(--primary-light);
+    border: 1px solid var(--primary-light);
+    box-shadow: var(--shadow-sm);
+
+    &:hover {
+      background-color: rgba(66, 135, 245, 0.05);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+    
+    &:active {
+      transform: translateY(0);
     }
   }
 
   &--ghost {
-    background: rgba(63, 81, 181, 0.05);
+    background-color: transparent;
     color: var(--primary-light);
     border: 1px solid transparent;
 
     &:hover {
-      background: rgba(63, 81, 181, 0.1);
+      background-color: rgba(66, 135, 245, 0.05);
+    }
+  }
+  
+  &--danger {
+    background-color: var(--error-light);
+    color: white;
+    
+    &:hover {
+      background-color: darken(#e63946, 5%);
+      &::before {
+        box-shadow: 0 0 12px rgba(230, 57, 70, 0.3),
+                    0 0 20px rgba(230, 57, 70, 0.2);
+      }
+    }
+  }
+  
+  &--success {
+    background-color: var(--success-light);
+    color: white;
+    
+    &:hover {
+      background-color: darken(#2ec4b6, 5%);
+      &::before {
+        box-shadow: 0 0 12px rgba(46, 196, 182, 0.3),
+                    0 0 20px rgba(46, 196, 182, 0.2);
+      }
+    }
+  }
+  
+  &--text {
+    background-color: transparent;
+    color: var(--primary-light);
+    padding: var(--space-xs) var(--space-sm);
+    
+    &:hover {
+      background-color: rgba(66, 135, 245, 0.05);
+      &::before {
+        box-shadow: none;
+      }
     }
   }
 
+  // Size variants
+  &--sm {
+    padding: var(--space-2xs) var(--space-sm);
+    font-size: var(--font-size-sm);
+  }
+  
+  &--lg {
+    padding: var(--space-md) var(--space-xl);
+    font-size: var(--font-size-md);
+  }
+  
+  // Icon button
   &--icon {
-    padding: 0.25rem 0.75rem;
-    font-size: 1.2rem;
-    line-height: 1;
-    background: transparent;
-    color: var(--primary-light);
-    border: none;
-
-    &:hover {
-      background-color: rgba(63, 81, 181, 0.1);
-      border-radius: 0.5rem;
+    gap: var(--space-xs);
+    
+    mat-icon {
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+    }
+  }
+  
+  // Icon-only button (square)
+  &--icon-only {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border-radius: var(--radius-md);
+    
+    mat-icon {
+      font-size: 20px;
+      width: 20px;
+      height: 20px;
+    }
+    
+    &.btn--sm {
+      width: 32px;
+      height: 32px;
+      
+      mat-icon {
+        font-size: 16px;
+        width: 16px;
+        height: 16px;
+      }
+    }
+    
+    &.btn--lg {
+      width: 48px;
+      height: 48px;
+      
+      mat-icon {
+        font-size: 24px;
+        width: 24px;
+        height: 24px;
+      }
     }
   }
 }
 
-// Pulse glow animation
+// Button groups
+.btn-group {
+  display: inline-flex;
+  
+  .btn {
+    border-radius: 0;
+    
+    &:first-child {
+      border-top-left-radius: var(--radius-md);
+      border-bottom-left-radius: var(--radius-md);
+    }
+    
+    &:last-child {
+      border-top-right-radius: var(--radius-md);
+      border-bottom-right-radius: var(--radius-md);
+    }
+    
+    &:not(:last-child) {
+      border-right: none;
+    }
+  }
+}
+
+// Floating action button
+.btn-floating {
+  position: fixed;
+  bottom: var(--space-xl);
+  right: var(--space-xl);
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: var(--primary-light);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-lg);
+  transition: all var(--transition-normal);
+  z-index: var(--z-fixed);
+  
+  mat-icon {
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+  }
+  
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-xl);
+  }
+}
+
+// Animation for glow effect
 @keyframes glowPulse {
   0% {
-    box-shadow: 0 0 0 rgba(63, 81, 181, 0.0);
+    box-shadow: 0 0 0 0 rgba(66, 135, 245, 0.4);
   }
-  50% {
-    box-shadow: 0 0 20px rgba(63, 81, 181, 0.4);
+  70% {
+    box-shadow: 0 0 0 10px rgba(66, 135, 245, 0);
   }
   100% {
-    box-shadow: 0 0 0 rgba(63, 81, 181, 0.0);
+    box-shadow: 0 0 0 0 rgba(66, 135, 245, 0);
   }
 }

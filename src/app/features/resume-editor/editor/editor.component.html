@@ -1,1 +1,122 @@
-<p>editor works!</p>
+<div class="editor-container">
+  <div class="editor-sidebar">
+    <div class="editor-logo">
+      <span class="logo-icon">V</span>
+      <span class="logo-text">VyaktigatavRtta</span>
+    </div>
+    
+    <nav class="editor-nav">
+      <div class="section-item" [class.active]="activeSection === 'personal'" (click)="setActiveSection('personal')">
+        <fa-icon [icon]="faUser" class="section-icon"></fa-icon>
+        <span>Personal Info</span>
+        <div class="section-progress">
+          <div class="progress-bar" [style.width.%]="90"></div>
+        </div>
+      </div>
+      
+      <div class="section-item" [class.active]="activeSection === 'education'" (click)="setActiveSection('education')">
+        <fa-icon [icon]="faGraduationCap" class="section-icon"></fa-icon>
+        <span>Education</span>
+        <div class="section-progress">
+          <div class="progress-bar" [style.width.%]="75"></div>
+        </div>
+      </div>
+      
+      <div class="section-item" [class.active]="activeSection === 'experience'" (click)="setActiveSection('experience')">
+        <fa-icon [icon]="faBriefcase" class="section-icon"></fa-icon>
+        <span>Experience</span>
+        <div class="section-progress">
+          <div class="progress-bar" [style.width.%]="60"></div>
+        </div>
+      </div>
+      
+      <div class="section-item" [class.active]="activeSection === 'skills'" (click)="setActiveSection('skills')">
+        <fa-icon [icon]="faCode" class="section-icon"></fa-icon>
+        <span>Skills</span>
+        <div class="section-progress">
+          <div class="progress-bar" [style.width.%]="80"></div>
+        </div>
+      </div>
+      
+      <div class="section-item" [class.active]="activeSection === 'projects'" (click)="setActiveSection('projects')">
+        <fa-icon [icon]="faFolder" class="section-icon"></fa-icon>
+        <span>Projects</span>
+        <div class="section-progress">
+          <div class="progress-bar" [style.width.%]="50"></div>
+        </div>
+      </div>
+      
+      <div class="section-item" [class.active]="activeSection === 'awards'" (click)="setActiveSection('awards')">
+        <fa-icon [icon]="faTrophy" class="section-icon"></fa-icon>
+        <span>Awards</span>
+        <div class="section-progress">
+          <div class="progress-bar" [style.width.%]="40"></div>
+        </div>
+      </div>
+      
+      <div class="section-item" [class.active]="activeSection === 'languages'" (click)="setActiveSection('languages')">
+        <fa-icon [icon]="faGlobe" class="section-icon"></fa-icon>
+        <span>Languages</span>
+        <div class="section-progress">
+          <div class="progress-bar" [style.width.%]="100"></div>
+        </div>
+      </div>
+    </nav>
+    
+    <div class="editor-actions">
+      <div class="completion-info">
+        <div class="completion-text">
+          <span>Overall Completion</span>
+          <span class="percentage">72%</span>
+        </div>
+        <div class="completion-bar">
+          <div class="progress-bar" [style.width.%]="72"></div>
+        </div>
+      </div>
+      
+      <button class="btn btn--primary btn--block">
+        <fa-icon [icon]="faSave"></fa-icon> Save Changes
+      </button>
+      
+      <button class="btn btn--secondary btn--block">
+        <fa-icon [icon]="faEye"></fa-icon> Preview
+      </button>
+      
+      <button class="btn btn--outline btn--block">
+        <fa-icon [icon]="faDownload"></fa-icon> Export
+      </button>
+    </div>
+  </div>
+  
+  <div class="editor-content">
+    <div class="editor-header">
+      <div class="resume-title">
+        <input type="text" placeholder="Resume Title" value="Software Developer Resume">
+        <span class="last-saved">Last saved: 5 minutes ago</span>
+      </div>
+      
+      <div class="editor-header-actions">
+        <button class="btn btn--ghost btn--sm">
+          <fa-icon [icon]="faUndo"></fa-icon>
+        </button>
+        <button class="btn btn--ghost btn--sm">
+          <fa-icon [icon]="faRedo"></fa-icon>
+        </button>
+        <div class="template-selector">
+          <span>Template:</span>
+          <select class="template-dropdown">
+            <option>Modern</option>
+            <option>Professional</option>
+            <option>Creative</option>
+            <option>Minimal</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    
+    <div class="section-editor">
+      <!-- Here we insert the active section component -->
+      <app-resume-section [sectionType]="activeSection"></app-resume-section>
+    </div>
+  </div>
+</div>

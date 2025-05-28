@@ -1,0 +1,176 @@
+// Typography styles for consistent text across the application
+@import 'variables';
+
+// Heading styles
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-family);
+  margin-bottom: 0.5em;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  font-weight: var(--font-weight-bold);
+}
+
+h1 {
+  font-size: var(--font-size-4xl);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: -0.025em;
+  
+  @media (max-width: $breakpoint-md) {
+    font-size: var(--font-size-3xl);
+  }
+}
+
+h2 {
+  font-size: var(--font-size-3xl);
+  
+  @media (max-width: $breakpoint-md) {
+    font-size: var(--font-size-2xl);
+  }
+}
+
+h3 {
+  font-size: var(--font-size-xl);
+  
+  @media (max-width: $breakpoint-md) {
+    font-size: var(--font-size-lg);
+  }
+}
+
+h4 {
+  font-size: var(--font-size-lg);
+}
+
+h5 {
+  font-size: var(--font-size-md);
+}
+
+h6 {
+  font-size: var(--font-size-base);
+}
+
+// Paragraph styles
+p {
+  font-size: var(--font-size-base);
+  line-height: 1.6;
+  margin-bottom: 1em;
+}
+
+// Link styles
+a {
+  color: var(--primary-light);
+  text-decoration: none;
+  transition: color var(--transition-normal);
+  
+  &:hover {
+    color: darken(#4d9fff, 10%);
+    text-decoration: underline;
+  }
+}
+
+// Text emphasis
+.text-bold {
+  font-weight: var(--font-weight-bold);
+}
+
+.text-semibold {
+  font-weight: var(--font-weight-semibold);
+}
+
+.text-medium {
+  font-weight: var(--font-weight-medium);
+}
+
+.text-regular {
+  font-weight: var(--font-weight-regular);
+}
+
+.text-light {
+  font-weight: var(--font-weight-light);
+}
+
+// Text sizes
+.text-xs {
+  font-size: var(--font-size-xs);
+}
+
+.text-sm {
+  font-size: var(--font-size-sm);
+}
+
+.text-base {
+  font-size: var(--font-size-base);
+}
+
+.text-md {
+  font-size: var(--font-size-md);
+}
+
+.text-lg {
+  font-size: var(--font-size-lg);
+}
+
+.text-xl {
+  font-size: var(--font-size-xl);
+}
+
+// Text alignments
+.text-left {
+  text-align: left;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+// Text colors
+.text-primary {
+  color: var(--primary-light);
+}
+
+.text-secondary {
+  color: var(--secondary-light);
+}
+
+.text-accent {
+  color: var(--accent-light);
+}
+
+.text-error {
+  color: var(--error-light);
+}
+
+.text-success {
+  color: var(--success-light);
+}
+
+.text-warning {
+  color: var(--warning-light);
+}
+
+// Text effects
+.text-glow {
+  text-shadow: 0 0 10px rgba(77, 159, 255, 0.5);
+}
+
+.text-gradient {
+  background: linear-gradient(120deg, var(--primary-light), var(--accent-light));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+// Dark theme text adjustments
+.dark-theme {
+  a {
+    color: var(--primary-dark);
+    
+    &:hover {
+      color: lighten(#8aa7fc, 10%);
+    }
+  }
+}

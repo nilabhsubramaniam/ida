@@ -1,28 +1,66 @@
+@import 'variables';
+
 :host {
-  display: contents; // let it behave as if it’s part of the parent layout
+  display: contents; // let it behave as if it's part of the parent layout
 }
 
 .navbar {
   display: flex;
   gap: var(--space-lg);
-  //background: linear-gradient(to bottom, #1e1e2f, #000000); /* Dark gradient background */
-  color: #fff !important; /* Ensure text is visible */
-  padding: 1rem 2rem;
-}
-
-.navbar a {
-  color: #fff !important; /* Default text color */
-  text-decoration: none;
-  font-size: 1rem;
-  transition: color 0.3s ease, transform 0.3s ease; /* Smooth transition */
-}
-
-.navbar a:hover {
-  color: #7ebafa !important;  /* Highlight color on hover */
-  transform: translateY(-3px); /* Slight lift effect */
-}
-
-.navbar a.active {
-  font-weight: bold;
-  border-bottom: 2px solid #7ebafa !important; /* Underline for active link */
+  color: white;
+  padding: 0.5rem 1rem;
+  
+  &__link {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    color: rgba(255, 255, 255, 0.75);
+    text-decoration: none;
+    font-size: var(--font-size-base);
+    padding: 0.5rem 0.75rem;
+    border-radius: var(--radius-md);
+    transition: all var(--transition-normal);
+    position: relative;
+    overflow: hidden;
+    
+    mat-icon {
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+      opacity: 0.9;
+    }
+    
+    &:hover {
+      color: var(--primary-light);
+      background-color: rgba(255, 255, 255, 0.05);
+      transform: translateY(-2px);
+      
+      &::after {
+        transform: scaleX(1);
+      }
+    }
+    
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 2px;
+      width: 100%;
+      background: linear-gradient(to right, var(--primary-light), var(--accent-light));
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform var(--transition-normal);
+    }
+    
+    &.active {
+      color: var(--primary-light);
+      background-color: rgba(77, 159, 255, 0.1);
+      font-weight: var(--font-weight-medium);
+      
+      &::after {
+        transform: scaleX(1);
+      }
+    }
+  }
 }

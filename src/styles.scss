@@ -1,28 +1,28 @@
-// src/styles.scss
+// Main styles entry point
 @import 'variables';
 @import 'layout/mixins';
 @import 'layout/layout';
 @import 'buttons';
+@import 'typography'; // Add the new typography file
+
+html {
+  scroll-behavior: smooth;
+}
 
 body {
-  color: #f5f5f5; /* Set text color to off-white for visibility */
-  background-color: #000; /* Ensure background is black */
-}
-
-h1, h2, h3, h4, h5, h6 {
-  color: #ffffff; /* Ensure headings are fully white for emphasis */
-}
-
-a {
-  color: #7ebafa; /* Set links to a light blue for contrast */
-  text-decoration: none;
-  transition: color 0.3s ease;
-
-  &:hover {
-    color: #ffffff; /* Highlight links on hover */
-  }
-}
-
-p, span, li {
-  color: #f5f5f5; /* Ensure general text is off-white */
+  color: var(--text-dark);
+  background-color: var(--bg-dark);
+  font-family: var(--font-family);
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  
+  // Apply a subtle background texture
+  background-image: 
+    linear-gradient(to bottom, rgba(18, 18, 35, 0.8), rgba(10, 10, 20, 1)),
+    url('/assets/main_theme.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-blend-mode: luminosity;
 }

@@ -1,1 +1,276 @@
-<p>preview works!</p>
+<div class="preview-container">
+  <div class="preview-sidebar">
+    <div class="preview-actions">
+      <button class="btn btn--primary btn--block">
+        <fa-icon [icon]="faDownload"></fa-icon> Download PDF
+      </button>
+      
+      <button class="btn btn--secondary btn--block">
+        <fa-icon [icon]="faEdit"></fa-icon> Back to Editor
+      </button>
+      
+      <div class="separator"></div>
+      
+      <div class="action-group">
+        <h3>Template Settings</h3>
+        
+        <div class="form-group">
+          <label for="template">Template</label>
+          <select id="template" class="form-control">
+            <option>Modern</option>
+            <option>Professional</option>
+            <option>Creative</option>
+            <option>Minimal</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="primaryColor">Primary Color</label>
+          <div class="color-picker">
+            <input type="color" id="primaryColor" value="#4d9fff" class="form-control">
+            <span class="color-value">#4d9fff</span>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="fontSize">Font Size</label>
+          <div class="slider-control">
+            <input type="range" min="80" max="120" value="100" class="form-control">
+            <span class="slider-value">100%</span>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="fontFamily">Font Family</label>
+          <select id="fontFamily" class="form-control">
+            <option>Inter</option>
+            <option>Open Sans</option>
+            <option>Roboto</option>
+            <option>Lato</option>
+            <option>Source Sans Pro</option>
+          </select>
+        </div>
+      </div>
+      
+      <div class="separator"></div>
+      
+      <div class="action-group">
+        <h3>Page Settings</h3>
+        
+        <div class="form-group">
+          <label for="paperSize">Paper Size</label>
+          <select id="paperSize" class="form-control">
+            <option>A4</option>
+            <option>US Letter</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label>Margins</label>
+          <div class="margin-controls">
+            <div class="margin-control">
+              <input type="number" min="0" max="50" value="20" class="form-control">
+              <span>Top</span>
+            </div>
+            <div class="margin-control">
+              <input type="number" min="0" max="50" value="20" class="form-control">
+              <span>Right</span>
+            </div>
+            <div class="margin-control">
+              <input type="number" min="0" max="50" value="20" class="form-control">
+              <span>Bottom</span>
+            </div>
+            <div class="margin-control">
+              <input type="number" min="0" max="50" value="20" class="form-control">
+              <span>Left</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="separator"></div>
+      
+      <div class="action-group">
+        <h3>Sections</h3>
+        
+        <div class="section-toggles">
+          <div class="section-toggle">
+            <input type="checkbox" id="personalInfo" checked>
+            <label for="personalInfo">Personal Info</label>
+            <button class="btn btn--ghost btn--sm">
+              <fa-icon [icon]="faArrowUp"></fa-icon>
+            </button>
+            <button class="btn btn--ghost btn--sm">
+              <fa-icon [icon]="faArrowDown"></fa-icon>
+            </button>
+          </div>
+          
+          <div class="section-toggle">
+            <input type="checkbox" id="education" checked>
+            <label for="education">Education</label>
+            <button class="btn btn--ghost btn--sm">
+              <fa-icon [icon]="faArrowUp"></fa-icon>
+            </button>
+            <button class="btn btn--ghost btn--sm">
+              <fa-icon [icon]="faArrowDown"></fa-icon>
+            </button>
+          </div>
+          
+          <div class="section-toggle">
+            <input type="checkbox" id="experience" checked>
+            <label for="experience">Experience</label>
+            <button class="btn btn--ghost btn--sm">
+              <fa-icon [icon]="faArrowUp"></fa-icon>
+            </button>
+            <button class="btn btn--ghost btn--sm">
+              <fa-icon [icon]="faArrowDown"></fa-icon>
+            </button>
+          </div>
+          
+          <div class="section-toggle">
+            <input type="checkbox" id="skills" checked>
+            <label for="skills">Skills</label>
+            <button class="btn btn--ghost btn--sm">
+              <fa-icon [icon]="faArrowUp"></fa-icon>
+            </button>
+            <button class="btn btn--ghost btn--sm">
+              <fa-icon [icon]="faArrowDown"></fa-icon>
+            </button>
+          </div>
+          
+          <div class="section-toggle">
+            <input type="checkbox" id="projects" checked>
+            <label for="projects">Projects</label>
+            <button class="btn btn--ghost btn--sm">
+              <fa-icon [icon]="faArrowUp"></fa-icon>
+            </button>
+            <button class="btn btn--ghost btn--sm">
+              <fa-icon [icon]="faArrowDown"></fa-icon>
+            </button>
+          </div>
+          
+          <div class="section-toggle">
+            <input type="checkbox" id="awards" checked>
+            <label for="awards">Awards</label>
+            <button class="btn btn--ghost btn--sm">
+              <fa-icon [icon]="faArrowUp"></fa-icon>
+            </button>
+            <button class="btn btn--ghost btn--sm">
+              <fa-icon [icon]="faArrowDown"></fa-icon>
+            </button>
+          </div>
+          
+          <div class="section-toggle">
+            <input type="checkbox" id="languages" checked>
+            <label for="languages">Languages</label>
+            <button class="btn btn--ghost btn--sm">
+              <fa-icon [icon]="faArrowUp"></fa-icon>
+            </button>
+            <button class="btn btn--ghost btn--sm">
+              <fa-icon [icon]="faArrowDown"></fa-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="preview-document">
+    <div class="document-controls">
+      <div class="zoom-controls">
+        <button class="btn btn--ghost btn--sm" (click)="zoomOut()">
+          <fa-icon [icon]="faMinus"></fa-icon>
+        </button>
+        <span class="zoom-level">{{ zoomLevel }}%</span>
+        <button class="btn btn--ghost btn--sm" (click)="zoomIn()">
+          <fa-icon [icon]="faPlus"></fa-icon>
+        </button>
+      </div>
+      
+      <div class="page-controls">
+        <button class="btn btn--ghost btn--sm" [disabled]="currentPage === 1">
+          <fa-icon [icon]="faChevronLeft"></fa-icon>
+        </button>
+        <span class="page-indicator">Page {{ currentPage }} of {{ totalPages }}</span>
+        <button class="btn btn--ghost btn--sm" [disabled]="currentPage === totalPages">
+          <fa-icon [icon]="faChevronRight"></fa-icon>
+        </button>
+      </div>
+    </div>
+    
+    <div class="document-viewer" [style.transform]="'scale(' + (zoomLevel / 100) + ')'">
+      <!-- This is a placeholder for the actual resume document -->
+      <div class="resume-page">
+        <!-- Sample resume content for preview -->
+        <div class="resume-header">
+          <h1>John Doe</h1>
+          <h2>Senior Software Engineer</h2>
+          <div class="resume-contact">
+            <span><fa-icon [icon]="faEnvelope"></fa-icon> john.doe@example.com</span>
+            <span><fa-icon [icon]="faPhone"></fa-icon> (555) 123-4567</span>
+            <span><fa-icon [icon]="faMapMarker"></fa-icon> New York, NY</span>
+          </div>
+        </div>
+        
+        <div class="resume-section">
+          <h3>Summary</h3>
+          <p class="resume-summary">
+            Experienced software engineer with over 5 years of expertise in full-stack development, specializing in Angular, 
+            React, Node.js, and cloud infrastructure. Passionate about creating scalable and efficient applications.
+          </p>
+        </div>
+        
+        <div class="resume-section">
+          <h3>Experience</h3>
+          
+          <div class="resume-item">
+            <div class="resume-item-header">
+              <h4>Senior Software Engineer</h4>
+              <span class="resume-date">Jan 2021 - Present</span>
+            </div>
+            <h5>Google</h5>
+            <p>Lead developer for cloud infrastructure projects. Implemented scalable solutions using Kubernetes and Docker.</p>
+          </div>
+          
+          <div class="resume-item">
+            <div class="resume-item-header">
+              <h4>Software Developer</h4>
+              <span class="resume-date">Jun 2018 - Dec 2020</span>
+            </div>
+            <h5>Microsoft</h5>
+            <p>Developed enterprise applications using .NET Core and Azure cloud services.</p>
+          </div>
+        </div>
+        
+        <div class="resume-section">
+          <h3>Skills</h3>
+          <div class="resume-skills">
+            <div class="skill-group">
+              <h4>Programming Languages</h4>
+              <div class="skill-tags">
+                <span class="skill-tag">JavaScript</span>
+                <span class="skill-tag">TypeScript</span>
+                <span class="skill-tag">Python</span>
+                <span class="skill-tag">Java</span>
+                <span class="skill-tag">C#</span>
+              </div>
+            </div>
+            
+            <div class="skill-group">
+              <h4>Frameworks & Libraries</h4>
+              <div class="skill-tags">
+                <span class="skill-tag">Angular</span>
+                <span class="skill-tag">React</span>
+                <span class="skill-tag">Node.js</span>
+                <span class="skill-tag">Express</span>
+                <span class="skill-tag">Django</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- More sections would appear here -->
+      </div>
+    </div>
+  </div>
+</div>

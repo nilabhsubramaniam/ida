@@ -1,41 +1,109 @@
 :root {
-    // Light Theme
-    --bg-light: #f9f9f9;
-    --text-light: #1a1a1a;
-    --primary-light: #6ca0dc; // A balanced blue shade
-    --secondary-light: #5c6bc0;
-    --accent-light: #e91e63;
-    --border-light: #ddd;
+  // Layout Variables
+  --topbar-height: 64px;
   
-    // Dark Theme
-    --bg-dark: #121212;
-    --text-dark: #f5f5f5;
-    --primary-dark: #2a4d69; // A deeper blue shade
-    --secondary-dark: #9fa8da;
-    --accent-dark: #f06292;
-    --border-dark: #333;
+  // Color System
+  // Light Theme (Now based on main_theme.jpg)
+  --bg-light: #121223;
+  --text-light: #ffffff;
+  --primary-light: #4d9fff; // Bright blue matching the theme
+  --secondary-light: #836aec; // Purple accent
+  --accent-light: #41e9c5; // Teal accent to match theme
+  --border-light: #2a2a45;
+  --surface-light: rgba(30, 30, 47, 0.7);
+  --error-light: #ff5a65;
+  --success-light: #41e9c5;
+  --warning-light: #ffbe0b;
   
-    // Shared Spacing
-    --space-xs: 0.25rem;
-    --space-sm: 0.5rem;
-    --space-md: 1rem;
-    --space-lg: 2rem;
+  // Dark Theme (Even darker version of main theme)
+  --bg-dark: #0a0a14;
+  --text-dark: #f5f5f7;
+  --primary-dark: #5a9df8; // Brighter in dark mode for contrast
+  --secondary-dark: #9182e6;
+  --accent-dark: #3ad6b5; // Adjusted teal for dark mode
+  --border-dark: #1c1c30;
+  --surface-dark: rgba(18, 18, 30, 0.8);
+  --error-dark: #ff6b75;
+  --success-dark: #3ad6b5;
+  --warning-dark: #ffd166;
+  
+  // Typography
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  --font-size-xs: 0.75rem;    // 12px
+  --font-size-sm: 0.875rem;   // 14px
+  --font-size-base: 1rem;     // 16px
+  --font-size-md: 1.125rem;   // 18px
+  --font-size-lg: 1.25rem;    // 20px
+  --font-size-xl: 1.5rem;     // 24px
+  --font-size-2xl: 1.875rem;  // 30px
+  --font-size-3xl: 2.25rem;   // 36px
+  --font-size-4xl: 3rem;      // 48px
+  
+  // Font Weights
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  
+  // Spacing
+  --space-2xs: 0.25rem;  // 4px
+  --space-xs: 0.5rem;    // 8px
+  --space-sm: 0.75rem;   // 12px
+  --space-md: 1rem;      // 16px
+  --space-lg: 1.5rem;    // 24px
+  --space-xl: 2rem;      // 32px
+  --space-2xl: 3rem;     // 48px
+  --space-3xl: 4rem;     // 64px
+  
+  // Border Radius
+  --radius-sm: 0.25rem;  // 4px
+  --radius-md: 0.5rem;   // 8px
+  --radius-lg: 0.75rem;  // 12px
+  --radius-xl: 1rem;     // 16px
+  --radius-full: 9999px; // Full rounded
+  
+  // Shadows
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07), 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.12), 0 10px 10px rgba(0, 0, 0, 0.05);
+  
+  // Animation
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+  
+  // Z-index
+  --z-dropdown: 1000;
+  --z-sticky: 1020;
+  --z-fixed: 1030;
+  --z-modal-backdrop: 1040;
+  --z-modal: 1050;
+  --z-popover: 1060;
+  --z-tooltip: 1070;
 }
 
-$text-on-primary: #ffffff; // White for readability on primary blue
-$text-on-secondary: #ffffff; // White for readability on secondary colors
-$text-on-light: #1a1a1a; // Dark text for light backgrounds
-$text-on-dark: #f5f5f5; // Light text for dark backgrounds
+// Reusable mixins and extensions
+$text-on-primary: #ffffff;
+$text-on-secondary: #ffffff;
+$text-on-accent: #ffffff;
+$text-on-light: var(--text-light);
+$text-on-dark: var(--text-dark);
 
-$dark-bg-color: #121212;
+// Dark theme background with stars effect
+$dark-bg-color: var(--bg-dark);
 $dark-star-color: #ffffff;
 $dark-star-opacity: 0.2;
 
 * {
-  /* Removed debugging outline */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
   outline: none;
 }
 
+// Theme backgrounds
 .dark-theme {
   background-color: $dark-bg-color;
   color: $dark-star-color;
@@ -49,13 +117,68 @@ $dark-star-opacity: 0.2;
     left: 0;
     width: 100%;
     height: 100%;
-    background: radial-gradient(circle, $dark-star-color $dark-star-opacity, transparent 70%);
-    opacity: 0.1;
-    z-index: 0;
-  }
-
-  * {
-    z-index: 1;
-    position: relative;
+    background-image: 
+      radial-gradient(1px 1px at 25px 25px, $dark-star-color $dark-star-opacity, transparent),
+      radial-gradient(1px 1px at 50px 100px, $dark-star-color $dark-star-opacity, transparent),
+      radial-gradient(1px 1px at 125px 200px, $dark-star-color $dark-star-opacity, transparent),
+      radial-gradient(1.5px 1.5px at 200px 250px, $dark-star-color $dark-star-opacity, transparent),
+      radial-gradient(2px 2px at 300px 350px, $dark-star-color $dark-star-opacity, transparent);
+    background-size: 350px 350px;
+    z-index: -1;
   }
 }
+
+// Main theme background (based on main_theme.jpg)
+.main-theme-bg {
+  background: linear-gradient(rgba(12, 12, 30, 0.7), rgba(12, 12, 30, 0.8)), url('/assets/main_theme.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  color: white;
+}
+
+// Glassmorphism card style for consistent UI
+.glass-card {
+  background: rgba(30, 30, 47, 0.7);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+  
+  &:hover {
+    background: rgba(35, 35, 55, 0.75);
+    border-color: rgba(255, 255, 255, 0.15);
+    transform: translateY(-3px);
+  }
+}
+
+// Utility classes
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.fade-in {
+  animation: fadeIn var(--transition-normal);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+// Media query breakpoints
+$breakpoint-xs: 0px;
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+$breakpoint-xl: 1200px;
+$breakpoint-xxl: 1400px;

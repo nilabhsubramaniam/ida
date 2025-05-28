@@ -1,17 +1,15 @@
 @import 'variables';
 
-.layout-footer {
+.simple-footer {
+  width: 100%;
   text-align: center;
-  padding: var(--space-sm);
-  font-size: 0.875rem;
-  color: var(--text-light);
-  background-color: white;
-  border-top: 1px solid var(--border-light);
-  background: linear-gradient(to bottom, #d9e2ec, #f0f4f8);
-
-  body.dark-mode & {
-    background-color: var(--bg-dark);
-    color: var(--text-dark);
-    border-color: var(--border-dark);
+  padding: var(--space-md);
+  display: block;
+  
+  .copyright {
+    font-size: var(--font-size-sm);
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: var(--font-weight-light);
+    letter-spacing: 0.02em;
   }
 }

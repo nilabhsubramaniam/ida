@@ -1,1 +1,137 @@
-<p>dashboard works!</p>
+<div class="dashboard-container">
+  <div class="dashboard-header">
+    <h1>Your Dashboard</h1>
+    <p>Manage your resume collection and track your job applications</p>
+  </div>
+  
+  <div class="stats-container">
+    <div class="stat-card">
+      <fa-icon [icon]="faFileAlt" class="stat-icon"></fa-icon>
+      <h3>3</h3>
+      <p>Resumes Created</p>
+    </div>
+    <div class="stat-card">
+      <fa-icon [icon]="faDownload" class="stat-icon"></fa-icon>
+      <h3>15</h3>
+      <p>Downloads</p>
+    </div>
+    <div class="stat-card">
+      <fa-icon [icon]="faBriefcase" class="stat-icon"></fa-icon>
+      <h3>8</h3>
+      <p>Job Applications</p>
+    </div>
+    <div class="stat-card">
+      <fa-icon [icon]="faStar" class="stat-icon"></fa-icon>
+      <h3>85%</h3>
+      <p>Profile Completion</p>
+    </div>
+  </div>
+  
+  <div class="section-header">
+    <h2>Your Resumes</h2>
+    <button class="btn btn--secondary btn--with-icon">
+      <fa-icon [icon]="faSort"></fa-icon>
+      <span>Sort by</span>
+    </button>
+  </div>
+  
+  <div class="resume-grid">
+    <!-- Resume items -->
+    <div class="resume-card">
+      <div class="resume-preview">
+        <img src="assets/images/resume-thumb-1.png" alt="Resume Preview">
+      </div>
+      <div class="resume-info">
+        <h3>Software Developer Resume</h3>
+        <p>Modern template with technical focus</p>
+        <div class="resume-meta">
+          <span>Updated: 3 days ago</span>
+          <span><fa-icon [icon]="faDownload"></fa-icon> 8</span>
+        </div>
+      </div>
+      <div class="resume-actions">
+        <div class="action-buttons">
+          <button class="btn btn--primary btn--sm" (click)="editResume('1')">
+            <fa-icon [icon]="faEdit"></fa-icon> Edit
+          </button>
+          <button class="btn btn--secondary btn--sm" (click)="previewResume('1')">
+            <fa-icon [icon]="faEye"></fa-icon> Preview
+          </button>
+          <button class="btn btn--outline btn--sm">
+            <fa-icon [icon]="faEllipsisH"></fa-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="resume-card">
+      <div class="resume-preview">
+        <img src="assets/images/resume-thumb-2.png" alt="Resume Preview">
+      </div>
+      <div class="resume-info">
+        <h3>Project Manager CV</h3>
+        <p>Professional template for leadership roles</p>
+        <div class="resume-meta">
+          <span>Updated: 1 week ago</span>
+          <span><fa-icon [icon]="faDownload"></fa-icon> 5</span>
+        </div>
+      </div>
+      <div class="resume-actions">
+        <div class="action-buttons">
+          <button class="btn btn--primary btn--sm" (click)="editResume('2')">
+            <fa-icon [icon]="faEdit"></fa-icon> Edit
+          </button>
+          <button class="btn btn--secondary btn--sm" (click)="previewResume('2')">
+            <fa-icon [icon]="faEye"></fa-icon> Preview
+          </button>
+          <button class="btn btn--outline btn--sm">
+            <fa-icon [icon]="faEllipsisH"></fa-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Create new resume card -->
+    <div class="create-resume" (click)="createNewResume()">
+      <fa-icon [icon]="faPlus" class="icon"></fa-icon>
+      <h3>Create New Resume</h3>
+      <p>Start from scratch or use a template</p>
+    </div>
+  </div>
+  
+  <!-- Recent Activity Feed -->
+  <div class="section-header" style="margin-top: var(--space-2xl);">
+    <h2>Recent Activity</h2>
+    <a href="#" class="btn btn--text">View All</a>
+  </div>
+  
+  <div class="activity-feed">
+    <div class="activity-item">
+      <div class="activity-icon">
+        <fa-icon [icon]="faEdit"></fa-icon>
+      </div>
+      <div class="activity-content">
+        <div class="activity-title">Updated "Software Developer Resume"</div>
+        <div class="activity-time">Today, 10:25 AM</div>
+      </div>
+    </div>
+    <div class="activity-item">
+      <div class="activity-icon">
+        <fa-icon [icon]="faDownload"></fa-icon>
+      </div>
+      <div class="activity-content">
+        <div class="activity-title">Downloaded "Project Manager CV" as PDF</div>
+        <div class="activity-time">Yesterday, 3:45 PM</div>
+      </div>
+    </div>
+    <div class="activity-item">
+      <div class="activity-icon">
+        <fa-icon [icon]="faPlus"></fa-icon>
+      </div>
+      <div class="activity-content">
+        <div class="activity-title">Created new resume "Project Manager CV"</div>
+        <div class="activity-time">Jan 15, 2023</div>
+      </div>
+    </div>
+  </div>
+</div>

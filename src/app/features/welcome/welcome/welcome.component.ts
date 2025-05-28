@@ -11,7 +11,8 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrls: ['./welcome.component.scss']
 })
 export class WelcomeComponent implements OnInit {
-  userName: string = 'User';
+  userName: string | null = null;
+  isLoggedIn = false;
   resumeTip: string = 'Keep your resume concise and tailored to the job description.';
   features = [
     { icon: 'edit', title: 'Edit Your Resume', description: 'Easily edit and customize your resume.' },
@@ -22,7 +23,9 @@ export class WelcomeComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.userName = 'John Doe';
+    // This would eventually come from an auth service
+    this.isLoggedIn = false;
+    this.userName = this.isLoggedIn ? 'John Doe' : null;
   }
 
   startResumeBuilder(): void {

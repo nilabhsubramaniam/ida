@@ -1,4 +1,18 @@
 <nav class="navbar">
-  <a routerLink="/editor" routerLinkActive="active">Editor</a>
-  <a routerLink="/theme" routerLinkActive="active">Templates</a>
+  <a routerLink="/editor" routerLinkActive="active" class="navbar__link">
+    <mat-icon>edit</mat-icon>
+    <span>Editor</span>
+  </a>
+  <a routerLink="/theme" routerLinkActive="active" class="navbar__link">
+    <mat-icon>style</mat-icon>
+    <span>Templates</span>
+  </a>
+  <a routerLink="/preview" routerLinkActive="active" class="navbar__link">
+    <mat-icon>visibility</mat-icon>
+    <span>Preview</span>
+  </a>
+  <a routerLink="/export" routerLinkActive="active" class="navbar__link">
+    <mat-icon>cloud_download</mat-icon>
+    <span>Export</span>
+  </a>
 </nav>
