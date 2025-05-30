@@ -20,7 +20,7 @@ body {
   // Apply the space theme background from main_theme.jpg as seen in the screenshot
   background-image: 
     linear-gradient(to bottom, rgba(18, 18, 35, 0.6), rgba(10, 10, 20, 0.95)),
-    url('assets/main_theme.jpg');
+    url('/assets/main_theme.jpg');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -30,7 +30,7 @@ body {
     // Darker version of the main theme
     background-image: 
       linear-gradient(to bottom, rgba(8, 8, 16, 0.85), rgba(5, 5, 10, 0.98)),
-      url('assets/main_theme.jpg');
+      url('/assets/main_theme.jpg');
     background-blend-mode: soft-light;
     color: var(--text-light);
   }

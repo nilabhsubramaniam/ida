@@ -2,6 +2,13 @@ import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
+    // Special route to handle deep linking in GitHub Pages
+    { 
+        path: 'ida',  
+        children: [
+            { path: '**', redirectTo: '' }
+        ]
+    },
     {
         path: '',
         loadChildren: () => import('./features/welcome/welcome.module').then(m => m.WelcomeModule)
@@ -18,6 +25,10 @@ export const routes: Routes = [
     {
         path: 'resume-editor',
         canActivate: [authGuard],
+        loadChildren: () => import('./features/resume-editor/resume-editor.module').then(m => m.ResumeEditorModule)
+    },
+    {
+        path: 'resume-editor/demo',
         loadChildren: () => import('./features/resume-editor/resume-editor.module').then(m => m.ResumeEditorModule)
     },
     {
@@ -39,5 +50,10 @@ export const routes: Routes = [
         path: 'profile-settings',
         canActivate: [authGuard],
         loadChildren: () => import('./features/profile-settings/profile-settings.module').then(m => m.ProfileSettingsModule)
+    },
+    {
+        // Wildcard route for 404 handling - must be the last route
+        path: '**',
+        redirectTo: ''
     }
 ];

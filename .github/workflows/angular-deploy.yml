@@ -1,0 +1,60 @@
+name: Deploy Angular Application
+
+on:
+  push:
+    branches: [ main ]  # Change this to match your default branch name (e.g., main or master)
+  pull_request:
+    branches: [ main ]  # Change this to match your default branch name
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Required for github-pages-deploy-action
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'  # Using Node.js 20.x for better compatibility with Angular 19
+        cache: 'npm'
+    
+    - name: Get repository name
+      id: get-repo-name
+      run: |
+        echo "REPO_NAME=$(echo ${{ github.repository }} | cut -d '/' -f 2)" >> $GITHUB_ENV
+        echo "OWNER_NAME=$(echo ${{ github.repository }} | cut -d '/' -f 1)" >> $GITHUB_ENV
+    
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Update base-href in scripts
+      run: |
+        sed -i "s|https://nilabhsubramaniam.github.io/ida/|https://${{ env.OWNER_NAME }}.github.io/${{ env.REPO_NAME }}/|g" package.json
+        
+    - name: Build Angular project
+      run: npm run build:prod
+    
+    - name: Copy additional files to distribution folder
+      run: |
+        # Copy 404.html for client-side routing support in GitHub Pages
+        cp -f public/404.html dist/vyaktigatav-rtta/
+        
+        # Copy .htaccess for Apache servers
+        cp -f public/.htaccess dist/vyaktigatav-rtta/
+        
+        # Create a version file with timestamp
+        echo "v$(date +'%Y%m%d%H%M')" > dist/vyaktigatav-rtta/version.txt
+        
+        # Create .nojekyll file to disable Jekyll processing on GitHub Pages
+        touch dist/vyaktigatav-rtta/.nojekyll
+      
+    - name: Deploy to GitHub Pages
+      uses: JamesIves/github-pages-deploy-action@v4
+      with:
+        folder: dist/vyaktigatav-rtta  # Your Angular output directory
+        branch: gh-pages
+        clean: true  # Automatically remove deleted files from the deployment

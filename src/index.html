@@ -8,6 +8,21 @@
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  
+  <!-- GitHub Pages redirect handler for Angular routes -->
+  <script type="text/javascript">
+    (function() {
+      // Parse query params to handle redirects from 404.html
+      const locationSearch = window.location.search;
+      const redirectParam = new URLSearchParams(locationSearch).get('redirect');
+      if (redirectParam) {
+        // Remove the redirect param to avoid infinite loops
+        const cleanedSearch = locationSearch.replace(/[?&]redirect=[^&]*(&|$)/, '$1').replace(/^&/, '?');
+        const newUrl = redirectParam + cleanedSearch + window.location.hash;
+        window.history.replaceState(null, null, newUrl);
+      }
+    })();
+  </script>
 </head>
 <body class="mat-typography">
   <app-root></app-root>
