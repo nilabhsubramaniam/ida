@@ -1,12 +1,36 @@
-<div class="layout-container main-theme-bg">
+<div class="layout-container main-theme-bg" [class.layout-with-sidebar]="sidebarExpanded && !isMobile && isLoggedIn && isProtectedRoute">
 
-  <header class="layout__header">
-    <app-topbar></app-topbar>
+  <!-- Top hamburger for protected routes when sidebar is collapsed (both mobile and desktop) -->
+  <button *ngIf="isLoggedIn && isProtectedRoute && (!sidebarExpanded || (isMobile && !sidebarVisible))" 
+          class="nav-toggle-btn"
+          (click)="toggleSidebar()">
+    <span class="menu-icon">&#9776;</span>
+  </button>
+
+  <header class="layout__header" *ngIf="!isLoggedIn || !isProtectedRoute">
+    <app-topbar
+      [isLoggedIn]="isLoggedIn"
+      [sidebarExpanded]="sidebarExpanded"
+      [isMobile]="isMobile"
+      [isProtectedRoute]="isProtectedRoute"
+      (toggleSideNav)="toggleSidebar()">
+    </app-topbar>
   </header>
 
-  <main class="layout__main">
-    <router-outlet></router-outlet>
-  </main>
+  <div class="layout__body">
+    <!-- Sidebar will be rendered only for authenticated routes when expanded or on mobile when toggled -->
+    <app-sidebar 
+      *ngIf="isLoggedIn && isProtectedRoute && (sidebarExpanded || (isMobile && sidebarVisible))"
+      [isExpanded]="sidebarExpanded" 
+      [isMobile]="isMobile"
+      [isVisible]="sidebarVisible"
+      (toggleSidebar)="toggleSidebar()">
+    </app-sidebar>
+
+    <main class="layout__main" [class.with-sidebar]="sidebarExpanded && !isMobile && isLoggedIn && isProtectedRoute">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
 
   <footer class="layout__footer">
     <app-footer></app-footer>

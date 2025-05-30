@@ -169,11 +169,10 @@ export class ResumeSectionComponent {
   // Methods to handle section interactions
   addNewEducation(): void {
     // Implementation would open a form dialog or similar UI
-    console.log('Adding new education');
   }
   
   editEducation(index: number): void {
-    console.log(`Editing education at index ${index}`);
+    // Implementation for editing education
   }
   
   removeEducation(index: number): void {
@@ -181,11 +180,11 @@ export class ResumeSectionComponent {
   }
   
   addNewExperience(): void {
-    console.log('Adding new experience');
+    // Implementation for adding experience
   }
   
   editExperience(index: number): void {
-    console.log(`Editing experience at index ${index}`);
+    // Implementation for editing experience
   }
   
   removeExperience(index: number): void {
@@ -193,11 +192,11 @@ export class ResumeSectionComponent {
   }
   
   addNewSkillGroup(): void {
-    console.log('Adding new skill group');
+    // Implementation for adding skill group
   }
   
   editSkillGroup(index: number): void {
-    console.log(`Editing skill group at index ${index}`);
+    // Implementation for editing skill group
   }
   
   removeSkillGroup(index: number): void {
@@ -205,7 +204,7 @@ export class ResumeSectionComponent {
   }
   
   addSkillToGroup(groupIndex: number): void {
-    console.log(`Adding skill to group at index ${groupIndex}`);
+    // Implementation for adding skill to group
   }
   
   removeSkill(groupIndex: number, skillIndex: number): void {
@@ -213,11 +212,11 @@ export class ResumeSectionComponent {
   }
   
   addNewProject(): void {
-    console.log('Adding new project');
+    // Implementation for adding project
   }
   
   editProject(index: number): void {
-    console.log(`Editing project at index ${index}`);
+    // Implementation for editing project
   }
   
   removeProject(index: number): void {
@@ -225,11 +224,11 @@ export class ResumeSectionComponent {
   }
   
   addNewAward(): void {
-    console.log('Adding new award');
+    // Implementation for adding award
   }
   
   editAward(index: number): void {
-    console.log(`Editing award at index ${index}`);
+    // Implementation for editing award
   }
   
   removeAward(index: number): void {
@@ -237,11 +236,11 @@ export class ResumeSectionComponent {
   }
   
   addNewLanguage(): void {
-    console.log('Adding new language');
+    // Implementation for adding language
   }
   
   editLanguage(index: number): void {
-    console.log(`Editing language at index ${index}`);
+    // Implementation for editing language
   }
   
   removeLanguage(index: number): void {

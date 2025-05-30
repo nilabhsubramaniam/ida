@@ -1,21 +1,38 @@
 <div class="topbar" [ngClass]="{'topbar--transparent': isAtTop}">
   <div class="topbar__left">
+    <!-- Show sidebar toggle button when user is logged in -->
+    <button *ngIf="isUserAuthenticated" class="topbar__sidebar-toggle" (click)="toggleSidebar()">
+      <fa-icon [icon]="sidebarExpanded && !isMobile ? faTimes : faBars"></fa-icon>
+    </button>
     <a routerLink="/" class="topbar__logo">
-      <span class="logo-text">व्यक्तिगतवृत्त - <span>Resume builder</span>  </span>
+      <span class="logo-text">व्यक्तिगतवृत्त - <span>Resume builder</span></span>
     </a>
   </div>
 
   <div class="topbar__center">
-    <app-navbar></app-navbar>
+    <app-navbar *ngIf="!isProtectedRoute"></app-navbar>
   </div>
 
   <div class="topbar__right">
     <button class="topbar__theme-toggle" (click)="toggleDarkMode()" title="Toggle dark mode">
       <mat-icon>{{ isDarkMode ? 'light_mode' : 'dark_mode' }}</mat-icon>
     </button>
-    <a routerLink="/login" class="btn btn--ghost">Log in</a>
-    <a routerLink="/signup" class="btn btn--primary">Sign up</a>
-    <!-- Add mobile menu toggle button -->
+    
+    <!-- Show different buttons based on login state -->
+    <ng-container *ngIf="!isUserAuthenticated">
+      <a routerLink="/login" class="btn btn--ghost">Log in</a>
+      <a routerLink="/signup" class="btn btn--primary">Sign up</a>
+      <!-- For demo purposes only - This button simulates a login -->
+      <button class="btn btn--secondary" (click)="simulateLogin()">Demo</button>
+    </ng-container>
+    
+    <!-- Only show Home/Logout in topbar when not on protected route (when sidebar is not visible) -->
+    <ng-container *ngIf="isUserAuthenticated && !isProtectedRoute">
+      <a [routerLink]="['/']" [queryParams]="{fromLogin: true}" class="btn btn--ghost">Home</a>
+      <button class="btn btn--ghost" (click)="logout()">Logout</button>
+    </ng-container>
+    
+    <!-- Mobile menu toggle button -->
     <button class="topbar__mobile-toggle" (click)="toggleMobileMenu()">
       <mat-icon>{{ isMobileMenuOpen ? 'close' : 'menu' }}</mat-icon>
     </button>
@@ -25,11 +42,16 @@
 <!-- Mobile menu -->
 <div class="mobile-menu" [ngClass]="{'mobile-menu--open': isMobileMenuOpen}">
   <nav class="mobile-menu__nav">
+    <a [routerLink]="['/']" [queryParams]="{fromLogin: true}" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
     <a routerLink="/editor" routerLinkActive="active">Editor</a>
     <a routerLink="/theme" routerLinkActive="active">Templates</a>
+    <a routerLink="/dashboard" routerLinkActive="active" *ngIf="isUserAuthenticated">Dashboard</a>
     <div class="mobile-menu__auth">
-      <a routerLink="/login" class="btn btn--ghost">Log in</a>
-      <a routerLink="/signup" class="btn btn--primary">Sign up</a>
+      <ng-container *ngIf="!isUserAuthenticated">
+        <a routerLink="/login" class="btn btn--ghost">Log in</a>
+        <a routerLink="/signup" class="btn btn--primary">Sign up</a>
+      </ng-container>
+      <button *ngIf="isUserAuthenticated && !isProtectedRoute" class="btn btn--ghost" (click)="logout()">Logout</button>
     </div>
   </nav>
 </div>

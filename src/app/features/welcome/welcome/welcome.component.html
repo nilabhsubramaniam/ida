@@ -4,20 +4,82 @@
     <div class="welcome__header">
       <h1 *ngIf="isLoggedIn">Welcome back, <span class="highlight">{{ userName }}</span>!</h1>
       <h1 *ngIf="!isLoggedIn">Create Your Professional <span class="highlight">Resume</span> Today</h1>
-      <p class="welcome__subtitle">Your journey to building the perfect resume starts here.</p>
+      <p class="welcome__subtitle" *ngIf="isLoggedIn">Your resume dashboard is ready to help you advance your career.</p>
+      <p class="welcome__subtitle" *ngIf="!isLoggedIn">Your journey to building the perfect resume starts here.</p>
     </div>
 
     <div class="welcome__cta">
-      <button class="btn btn--primary btn--icon btn--large btn--glow" (click)="startResumeBuilder()">
-        <mat-icon>edit</mat-icon>
-        <span>Start Building Your Resume</span>
-      </button>
-      <button class="btn btn--secondary btn--icon btn--large btn--glow" (click)="exploreTemplates()">
-        <mat-icon>style</mat-icon>
-        <span>Explore Templates</span>
-      </button>
+      <ng-container *ngIf="!isLoggedIn" class="welcome__cta-buttons">
+        <div class="action-buttons-container">
+          <button class="btn btn--primary btn--icon btn--large btn--glow" (click)="startResumeBuilder()">
+            <mat-icon>description</mat-icon>
+            <span>Create Resume</span>
+          </button>
+          <button class="btn btn--secondary btn--icon btn--large btn--glow" (click)="exploreTemplates()">
+            <mat-icon>style</mat-icon>
+            <span>Explore Templates</span>
+          </button>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="isLoggedIn">
+        <!-- Stats Overview Section -->
+        <div class="welcome__stats-overview">
+          <div class="stats-card" *ngFor="let stat of statistics">
+            <div class="stats-icon" [style.background-color]="stat.color">
+              <mat-icon>{{ stat.icon }}</mat-icon>
+            </div>
+            <div class="stats-info">
+              <div class="stats-value">{{ stat.value }}</div>
+              <div class="stats-title">{{ stat.title }}</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Actions Grid -->
+        <div class="welcome__actions-grid">
+          <button class="btn btn--primary btn--icon btn--large" routerLink="/dashboard">
+            <mat-icon>dashboard</mat-icon>
+            <span>My Dashboard</span>
+          </button>
+          <button class="btn btn--accent btn--icon btn--large" routerLink="/resume-editor/new">
+            <mat-icon>add_circle</mat-icon>
+            <span>New Resume</span>
+          </button>
+          <button class="btn btn--secondary btn--icon btn--large" routerLink="/resume-theme">
+            <mat-icon>style</mat-icon>
+            <span>Browse Templates</span>
+          </button>
+          <button class="btn btn--info btn--icon btn--large" routerLink="/export-resume">
+            <mat-icon>cloud_download</mat-icon>
+            <span>Export Options</span>
+          </button>
+        </div>
+        
+        <!-- Recent Activity Section -->
+        <div class="welcome__recent">
+          <h3><mat-icon>history</mat-icon> Recent Activity</h3>
+          <div class="recent-items">
+            <div class="recent-item" *ngFor="let activity of recentActivities">
+              <div class="recent-icon">
+                <mat-icon>{{ activity.icon }}</mat-icon>
+              </div>
+              <div class="recent-content">
+                <span class="recent-action">{{ activity.action }} <strong>"{{ activity.resumeTitle }}"</strong></span>
+                <small class="recent-time">{{ activity.time }}</small>
+              </div>
+            </div>
+            
+            <button *ngIf="recentActivities.length > 0" class="btn btn--text" routerLink="/dashboard">
+              <span>View all activity</span>
+              <mat-icon>arrow_forward</mat-icon>
+            </button>
+          </div>
+        </div>
+      </ng-container>
     </div>
 
+    <!-- Features Section - Shown to all users -->
     <div class="welcome__features">
       <div class="feature-card" *ngFor="let feature of features">
         <div class="feature-card__icon">
@@ -30,9 +92,18 @@
       </div>
     </div>
 
+    <!-- Tips Section - Enhanced with categories and next tip button -->
     <div class="welcome__tips">
       <h3>Resume Tip of the Day</h3>
-      <p class="tip-text">{{ resumeTip }}</p>
+      <div class="tip-container">
+        <span class="tip-category">{{ resumeTip.category }}</span>
+        <p class="tip-text">{{ resumeTip.text }}</p>
+        <button class="btn btn--text btn--sm tip-nav" (click)="getNextTip()">
+          <span>Next Tip</span>
+          <mat-icon>arrow_forward</mat-icon>
+        </button>
+      </div>
+      
       <button class="btn btn--text" (click)="openFeedbackForm()">
         <mat-icon>feedback</mat-icon>
         <span>Share Your Feedback</span>

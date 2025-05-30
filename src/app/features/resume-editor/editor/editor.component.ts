@@ -107,7 +107,6 @@ export class EditorComponent implements OnInit {
   
   saveAndContinue(): void {
     if (this.personalInfoForm.valid) {
-      console.log('Form data:', this.personalInfoForm.value);
       // Save data and move to next section
       const currentIndex = this.resumeSections.findIndex(section => section.id === this.currentSection);
       if (currentIndex < this.resumeSections.length - 1) {
@@ -129,7 +128,6 @@ export class EditorComponent implements OnInit {
   }
   
   previewResume(): void {
-    console.log('Navigating to preview');
     // Navigate to preview component
   }
 }

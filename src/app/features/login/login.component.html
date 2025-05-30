@@ -109,8 +109,9 @@
           color="accent" 
           class="login-btn btn--glow" 
           type="submit" 
-          [disabled]="loginForm.invalid">
-          Sign in
+          [disabled]="loginForm.invalid || isLoading">
+          <span *ngIf="!isLoading">Sign in</span>
+          <mat-icon *ngIf="isLoading">sync</mat-icon>
         </button>
       </form>
       

@@ -4,8 +4,36 @@
 :host {
   background-color: black;
   color: white;
-  display: block; /* Ensure the styles apply to the entire layout */
-  min-height: 100vh; /* Cover the full viewport height */
+  display: block;
+  min-height: 100vh;
+}
+
+// Hamburger menu toggle button for protected routes
+.nav-toggle-btn {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  z-index: 1050;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 4px;
+  border: 1px solid var(--border-light);
+  color: white;
+  font-size: 24px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    background-color: var(--primary-light);
+  }
+  
+  .menu-icon {
+    line-height: 1;
+  }
 }
 
 .layout-container {
@@ -15,66 +43,70 @@
   color: white;
   position: relative;
   z-index: 0;
+  transition: padding-left 0.3s ease;
+  background-color: #121223; /* Match dashboard background */
   
-  /* Ensure the footer stays at the bottom */
-  & > * {
-    width: 100%;
+  &.layout-with-sidebar {
+    padding-left: 280px; // Width of the expanded sidebar
+    
+    @media (max-width: 991px) {
+      padding-left: 0;
+    }
+  }
+  
+  // When not in layout-with-sidebar, ensure the content has proper margin
+  &:not(.layout-with-sidebar) {
+    .layout__main {
+      margin-left: 0;
+      width: 100%;
+    }
   }
 }
 
-.layout__main {
-  margin-top: var(--topbar-height, 64px); /* Use margin instead of padding to ensure proper spacing */
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  z-index: 1;
-}
-
-.layout__topbar {
-  background: transparent; /* Removed white background */
-  color: #fff; /* Set text color to white */
-  padding: var(--space-sm);
-  position: relative;
-  z-index: 2;
-
-  &.dark-mode {
-    background-color: var(--primary-dark);
-  }
-}
-
-.layout__navbar {
-  background: linear-gradient(to bottom, #1e1e2f, #000000); /* Added dark gradient background */
-  color: #fff; /* Ensure text is visible on dark background */
-  padding: var(--space-sm);
-  position: relative;
-  z-index: 2;
-
-  &.dark-mode {
-    background-color: var(--secondary-dark);
-  }
+.layout__header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  width: 100%;
 }
 
 .layout__body {
   display: flex;
   flex: 1;
-  min-height: 0;
-  /* Removed margin-top as the issue is resolved */
+  margin-top: var(--topbar-height);
+  position: relative;
+  min-height: calc(100vh - var(--topbar-height) - 50px); // Adjusted for footer
 }
 
-.layout__sidebar {
-  background: linear-gradient(to bottom, #1e1e2f, #000000); /* Added dark gradient background */
-  color: #fff; /* Ensure text is visible on dark background */
-  padding: var(--space-sm);
+.layout__main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
   position: relative;
-  z-index: 2;
-  width: 250px;
-  border-right: 1px solid var(--border-light);
-  overflow-y: auto;
-
-  &.dark-mode {
-    background-color: #1e1e1e;
-    border-color: var(--border-dark);
+  z-index: 1;
+  background-color: #121223; /* Solid background color for dashboard */
+  width: 100%;
+  transition: margin-left 0.3s ease, width 0.3s ease;
+  overflow-x: hidden;
+  padding: var(--space-lg);
+  min-height: calc(100vh - var(--topbar-height));
+  
+  @media (max-width: 768px) {
+    padding: var(--space-md);
+  }
+  
+  @media (max-width: 576px) {
+    padding: var(--space-sm);
+  }
+  
+  &.with-sidebar {
+    /* When in desktop mode with sidebar expanded, content stays in place due to padding-left on layout-container */
+    @media (min-width: 992px) {
+      margin-left: 0;
+      width: calc(100% - 280px); /* Adjust width to account for sidebar */
+    }
   }
 }
 
@@ -82,14 +114,27 @@
   width: 100%;
   text-align: center;
   padding: var(--space-sm);
-  position: relative;
-  z-index: 2;
   background: rgba(18, 18, 35, 0.95);
   border-top: 1px solid var(--border-light);
   color: #fff;
+  z-index: 2;
+  position: relative;
+  height: 50px; // Set a fixed height for the footer
 }
 
-.layout__header {
+// Animation for page transitions
+.router-animation {
   position: relative;
-  z-index: 2;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

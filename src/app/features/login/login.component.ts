@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { RouterModule } from '@angular/router';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -46,8 +47,15 @@ export class LoginComponent implements OnInit, OnDestroy {
       author: "Bhagavad Gita"
     }
   ];
+  isLoading = false;
+  returnUrl: string = '/dashboard';
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(
+    private fb: FormBuilder, 
+    private router: Router,
+    private authService: AuthService,
+    private route: ActivatedRoute
+  ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
@@ -58,6 +66,9 @@ export class LoginComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     // Auto-rotate quotes
     this.startQuoteRotation();
+    
+    // Get return url from route parameters or default to '/dashboard'
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/dashboard';
   }
 
   ngOnDestroy(): void {
@@ -85,8 +96,25 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   onSubmit(): void {
     if (this.loginForm.valid) {
-      console.log('Login successful', this.loginForm.value);
-      this.router.navigate(['/dashboard']);
+      this.isLoading = true;
+      const credentials = {
+        email: this.loginForm.value.email,
+        password: this.loginForm.value.password
+      };
+      
+      this.authService.login(credentials)
+        .then(success => {
+          if (success) {
+            this.router.navigateByUrl(this.returnUrl);
+          } else {
+            // Handle login failure
+          }
+          this.isLoading = false;
+        })
+        .catch(error => {
+          this.isLoading = false;
+          // Handle login error
+        });
     }
   }
 }
