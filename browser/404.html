@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>VyaktigatavRtta Resume Builder</title>
+  <script>
+    // GitHub Pages 404 handler for Angular client-side routing
+    (function() {
+      // Get the path from the URL
+      var path = window.location.pathname;
+      var pathSegments = path.split('/');
+      
+      // Extract repo name (adjust this if your repository name changes)
+      var repoName = '';
+      for (var i = 1; i < pathSegments.length; i++) {
+        if (pathSegments[i]) {
+          repoName = pathSegments[i];
+          break;
+        }
+      }
+      
+      // Redirect to the root with all the parameters preserved
+      var redirectUrl = window.location.origin + '/' + repoName + '/?redirect=' 
+                      + encodeURIComponent(path.replace('/' + repoName, ''))
+                      + window.location.search 
+                      + window.location.hash;
+                      
+      window.location.replace(redirectUrl);
+    })();
+  </script>
+</head>
+<body>
+  <p>Redirecting to the application...</p>
+</body>
+</html>
