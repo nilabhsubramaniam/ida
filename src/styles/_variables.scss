@@ -133,12 +133,14 @@ $dark-star-opacity: 0.2;
   color: var(--text-light);
 }
 
-// Main theme background (based on main_theme.jpg)
+// Main theme background (based on main_theme.jpg) - No gradients to see full image
 .main-theme-bg {
-  background: linear-gradient(rgba(12, 12, 30, 0.7), rgba(12, 12, 30, 0.8)), url('/assets/main_theme.jpg');
+  // Using only the image without any gradient overlay
+  background: url('/assets/main_theme.jpg');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
+  background-repeat: no-repeat;
   color: white;
 }
 
@@ -149,13 +151,11 @@ $dark-star-opacity: 0.2;
   border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
-  transition: all 0.3s ease;
-  
-  &:hover {
-    background: rgba(35, 35, 55, 0.75);
-    border-color: rgba(255, 255, 255, 0.15);
-    transform: translateY(-3px);
-  }
+}
+
+// Text enhancement for better readability over the space background
+.text-enhanced {
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
 }
 
 // Utility classes

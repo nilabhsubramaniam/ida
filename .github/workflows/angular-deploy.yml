@@ -46,6 +46,10 @@ jobs:
         # Copy .htaccess for Apache servers
         cp -f public/.htaccess dist/vyaktigatav-rtta/
         
+        # Ensure assets directory exists and copy images
+        mkdir -p dist/vyaktigatav-rtta/assets
+        cp -rf public/assets/* dist/vyaktigatav-rtta/assets/
+        
         # Create a version file with timestamp
         echo "v$(date +'%Y%m%d%H%M')" > dist/vyaktigatav-rtta/version.txt
         

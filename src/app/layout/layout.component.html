@@ -1,4 +1,4 @@
-<div class="layout-container main-theme-bg" [class.layout-with-sidebar]="sidebarExpanded && !isMobile && isLoggedIn && isProtectedRoute">
+<div class="layout-container" [class.layout-with-sidebar]="sidebarExpanded && !isMobile && isLoggedIn && isProtectedRoute">
 
   <!-- Top hamburger for protected routes when sidebar is collapsed (both mobile and desktop) -->
   <button *ngIf="isLoggedIn && isProtectedRoute && (!sidebarExpanded || (isMobile && !sidebarVisible))" 

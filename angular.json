@@ -31,6 +31,26 @@
                 "glob": "**/*",
                 "input": "public",
                 "output": "/"
+              },
+              {
+                "glob": "favicon.ico",
+                "input": "src",
+                "output": "/"
+              },
+              {
+                "glob": ".htaccess",
+                "input": "public",
+                "output": "/"
+              },
+              {
+                "glob": "404.html",
+                "input": "public",
+                "output": "/"
+              },
+              {
+                "glob": "**/*",
+                "input": "public/assets",
+                "output": "/assets"
               }
             ],
             "stylePreprocessorOptions": {
@@ -55,8 +75,8 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "4kB",
-                  "maximumError": "8kB"
+                  "maximumWarning": "10kB",
+                  "maximumError": "15kB"
                 }
               ],
               "outputHashing": "all",

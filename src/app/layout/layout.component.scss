@@ -1,11 +1,15 @@
-@import 'variables';
-@import 'layout/mixins';
+@use 'variables' as *;
+@use 'layout/mixins' as *;
 
 :host {
-  background-color: black;
+  @extend .main-theme-bg;
+  background-color: transparent !important; // Force transparency with !important
   color: white;
   display: block;
   min-height: 100vh;
+  width: 100%; // Ensure full width
+  position: relative; // For proper stacking context
+  z-index: 1; // Keep above background
 }
 
 // Hamburger menu toggle button for protected routes
@@ -44,7 +48,7 @@
   position: relative;
   z-index: 0;
   transition: padding-left 0.3s ease;
-  background-color: #121223; /* Match dashboard background */
+  background: transparent;
   
   &.layout-with-sidebar {
     padding-left: 280px; // Width of the expanded sidebar
@@ -86,7 +90,7 @@
   flex-direction: column;
   position: relative;
   z-index: 1;
-  background-color: #121223; /* Solid background color for dashboard */
+  background: transparent;
   width: 100%;
   transition: margin-left 0.3s ease, width 0.3s ease;
   overflow-x: hidden;

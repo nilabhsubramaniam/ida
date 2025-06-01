@@ -1,37 +1,39 @@
 // Main styles entry point
-@import 'variables';
-@import 'layout/mixins';
-@import 'layout/layout';
-@import 'buttons';
-@import 'typography'; // Add the new typography file
+@use '_variables' as *;
+@use 'layout/_mixins' as mix;
+@use 'layout/_layout' as *;
+@use '_buttons' as *;
+@use '_typography' as *; // Add the new typography file
 
 html {
   scroll-behavior: smooth;
 }
 
 body {
-  color: var(--text-dark);
-  background-color: var(--bg-dark);
+  color: var(--text-light);
   font-family: var(--font-family);
   margin: 0;
   padding: 0;
   min-height: 100vh;
   
-  // Apply the space theme background from main_theme.jpg as seen in the screenshot
-  background-image: 
-    linear-gradient(to bottom, rgba(18, 18, 35, 0.6), rgba(10, 10, 20, 0.95)),
-    url('/assets/main_theme.jpg');
+  // Apply the space background directly
+  background: url('/assets/main_theme.jpg');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
-  background-blend-mode: soft-light;
+  background-repeat: no-repeat;
   
   &.dark-theme {
-    // Darker version of the main theme
-    background-image: 
-      linear-gradient(to bottom, rgba(8, 8, 16, 0.85), rgba(5, 5, 10, 0.98)),
-      url('/assets/main_theme.jpg');
-    background-blend-mode: soft-light;
+    // Darker version with a subtle black overlay
+    background: linear-gradient(
+                  rgba(0, 0, 0, 0.5),
+                  rgba(0, 0, 0, 0.5)
+                ),
+                url('/assets/main_theme.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
     color: var(--text-light);
   }
 }

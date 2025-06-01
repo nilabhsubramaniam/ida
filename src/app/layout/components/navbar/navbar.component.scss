@@ -1,4 +1,4 @@
-@import 'variables';
+@use 'variables' as *;
 
 :host {
   display: contents; // let it behave as if it's part of the parent layout

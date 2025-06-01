@@ -1,30 +1,9 @@
-# VyaktigatavRtta
-VyaktigatavRtta is a modern and modular resume builder application. It uses **Angular (latest)** for the frontend, **Golang** for the backend, and **PostgreSQL** as the database.
+# IDA - Interactive Development Assistant
+
+IDA is a modern and modular resume builder application. It uses **Angular 19** for the frontend, **Golang** for the backend, and **PostgreSQL** as the database.
 
 The UI is built using reusable, standalone components, smart services, and a scalable layout system. It features a drag-and-drop resume editor, theme selector, preview engine, and export functionality.
 
-[![Deploy Angular Application](https://github.com/nilabhsubramaniam/ida/actions/workflows/angular-deploy.yml/badge.svg)](https://github.com/nilabhsubramaniam/ida/actions/workflows/angular-deploy.yml)
-
-## 🚀 Deployment
-
-This project is configured for automatic deployment to GitHub Pages using GitHub Actions. When you push to the main branch, the application will be automatically built and deployed.
-
-### Setup GitHub Pages Deployment
-
-1. Update your GitHub repository settings:
-   - Go to your repository Settings > Pages
-   - Set the Source to "Deploy from a branch"
-   - Select the branch "gh-pages" and folder "/ (root)"
-   - Click Save
-
-2. The deployment is now fully automated:
-   ```json
-   "deploy:gh-pages": "ng build --configuration production --base-href \"/ida/\""
-   ```
-   
-   No need to manually set your username - the GitHub Actions workflow will handle this automatically.
-
-3. Simply push your changes to the main branch to trigger the automatic deployment workflow. The deployment will be available at `https://nilabhsubramaniam.github.io/ida/` (or your equivalent GitHub Pages URL).
 
 ## 📁 Project Structure
 
