@@ -12,30 +12,27 @@
   <!-- GitHub Pages redirect handler for Angular routes -->
   <script type="text/javascript">
     (function() {
-      // Check for the redirect in sessionStorage
-      const redirect = sessionStorage.getItem('redirect');
-      if (redirect) {
-        // Remove the redirect from sessionStorage
+      const repoName = 'ida';  // Hardcode the repo name for reliability
+      
+      // Handle redirect from 404.html
+      const storedRedirect = sessionStorage.getItem('redirect');
+      if (storedRedirect) {
         sessionStorage.removeItem('redirect');
-
-        // Get the repository name from the current path
-        const pathSegments = window.location.pathname.split('/');
-        const repoName = pathSegments[1] || '';  // Should be 'ida'
-
-        // Parse the redirect URL
-        const redirectUrl = new URL(redirect);
-        let path = redirectUrl.pathname;
         
-        // Remove the repository name from the path if it exists
-        if (path.startsWith('/' + repoName + '/')) {
-          path = path.substring(repoName.length + 2);
+        // Check if we're at the repo root
+        const currentPath = window.location.pathname;
+        if (currentPath === `/${repoName}/`) {
+          // Apply the stored redirect path
+          const newPath = `/${repoName}${storedRedirect}`;
+          window.history.replaceState(null, null, newPath);
         }
-
-        // Reconstruct the final URL
-        const finalPath = path + redirectUrl.search + redirectUrl.hash;
-        
-        // Use replaceState to update the URL without causing a page reload
-        window.history.replaceState(null, null, finalPath);
+      } else {
+        // Handle direct navigation to deep links
+        const currentPath = window.location.pathname;
+        if (currentPath.startsWith(`/${repoName}/`)) {
+          const path = currentPath.substring(repoName.length + 1) || '/';
+          window.history.replaceState(null, null, path);
+        }
       }
     })();
   </script>
