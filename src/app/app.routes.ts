@@ -2,13 +2,6 @@ import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
-    // Special route to handle deep linking in GitHub Pages
-    { 
-        path: 'ida',  
-        children: [
-            { path: '**', redirectTo: '' }
-        ]
-    },
     {
         path: '',
         loadChildren: () => import('./features/welcome/welcome.module').then(m => m.WelcomeModule)

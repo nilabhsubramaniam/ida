@@ -41,14 +41,24 @@ jobs:
         
     - name: Copy additional files to distribution folder
       run: |
-        # Copy 404.html for client-side routing support in GitHub Pages
+        # Copy files for client-side routing support in GitHub Pages
         cp -f public/404.html dist/vyaktigatav-rtta/
         
         # Copy .htaccess for Apache servers
         cp -f public/.htaccess dist/vyaktigatav-rtta/
         
-        # Ensure assets directory exists and copy images
-        mkdir -p dist/vyaktigatav-rtta/assets
+        # Create a sitemap.xml for SEO
+        echo '<?xml version="1.0" encoding="UTF-8"?>
+        <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+          <url><loc>https://${{ env.OWNER_NAME }}.github.io/${{ env.REPO_NAME }}/</loc></url>
+        </urlset>' > dist/vyaktigatav-rtta/sitemap.xml
+        
+        # Create a robots.txt file
+        echo 'User-agent: *
+        Allow: /' > dist/vyaktigatav-rtta/robots.txt
+        
+        # Copy all assets
+        cp -r public/assets/* dist/vyaktigatav-rtta/assets/
         cp -rf public/assets/* dist/vyaktigatav-rtta/assets/
         
         # Create a version file with timestamp

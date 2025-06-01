@@ -12,14 +12,30 @@
   <!-- GitHub Pages redirect handler for Angular routes -->
   <script type="text/javascript">
     (function() {
-      // Parse query params to handle redirects from 404.html
-      const locationSearch = window.location.search;
-      const redirectParam = new URLSearchParams(locationSearch).get('redirect');
-      if (redirectParam) {
-        // Remove the redirect param to avoid infinite loops
-        const cleanedSearch = locationSearch.replace(/[?&]redirect=[^&]*(&|$)/, '$1').replace(/^&/, '?');
-        const newUrl = redirectParam + cleanedSearch + window.location.hash;
-        window.history.replaceState(null, null, newUrl);
+      // Check for the redirect in sessionStorage
+      const redirect = sessionStorage.getItem('redirect');
+      if (redirect) {
+        // Remove the redirect from sessionStorage
+        sessionStorage.removeItem('redirect');
+
+        // Get the repository name from the current path
+        const pathSegments = window.location.pathname.split('/');
+        const repoName = pathSegments[1] || '';  // Should be 'ida'
+
+        // Parse the redirect URL
+        const redirectUrl = new URL(redirect);
+        let path = redirectUrl.pathname;
+        
+        // Remove the repository name from the path if it exists
+        if (path.startsWith('/' + repoName + '/')) {
+          path = path.substring(repoName.length + 2);
+        }
+
+        // Reconstruct the final URL
+        const finalPath = path + redirectUrl.search + redirectUrl.hash;
+        
+        // Use replaceState to update the URL without causing a page reload
+        window.history.replaceState(null, null, finalPath);
       }
     })();
   </script>
