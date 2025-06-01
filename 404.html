@@ -6,32 +6,22 @@
   <script>
     // GitHub Pages 404 handler for Angular client-side routing
     (function() {
-      // Get the path from the URL
-      var path = window.location.pathname;
-      var pathSegments = path.split('/');
+      var segmentCount = 0;
+      var location = window.location;
+      var baseUrl = location.origin;
       
-      // Extract repo name (adjust this if your repository name changes)
-      var repoName = '';
-      for (var i = 1; i < pathSegments.length; i++) {
-        if (pathSegments[i]) {
-          repoName = pathSegments[i];
-          break;
-        }
+      // Get repository name from path
+      var pathSegments = location.pathname.split('/');
+      var repoName = pathSegments[1] || '';  // Should be 'ida' in this case
+      
+      // Store the full URL with hash in sessionStorage
+      var l = location.pathname.split('/').slice(0, 1 + segmentCount).join('/') + '/ida';
+      l = l + location.pathname.slice(l.length);
+      
+      if (l !== location.pathname) {
+        sessionStorage.setItem('redirect', baseUrl + l + location.search + location.hash);
+        window.location.replace(baseUrl + '/' + repoName + '/');
       }
-      
-      // Clean up existing redirect parameters if any
-      var search = window.location.search;
-      if (search.includes('redirect=')) {
-        search = search.split('redirect=')[0].replace(/[?&]$/, '');
-      }
-      
-      // Create the redirect URL with only one redirect parameter
-      var redirectUrl = window.location.origin + '/' + repoName + '/' +
-                     (search ? search + '&' : '?') +
-                     'redirect=' + encodeURIComponent(path.replace('/' + repoName, '')) +
-                     window.location.hash;
-                      
-      window.location.replace(redirectUrl);
     })();
   </script>
 </head>
