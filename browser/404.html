@@ -6,22 +6,24 @@
   <script>
     // GitHub Pages 404 handler for Angular client-side routing
     (function() {
-      var segmentCount = 0;
-      var location = window.location;
-      var baseUrl = location.origin;
+      const location = window.location;
+      const pathSegments = location.pathname.split('/');
+      const repoName = 'ida';  // Hardcode the repo name for reliability
       
-      // Get repository name from path
-      var pathSegments = location.pathname.split('/');
-      var repoName = pathSegments[1] || '';  // Should be 'ida' in this case
+      // Remove the repository name from path if it exists
+      const path = pathSegments
+        .filter(segment => segment !== repoName)
+        .filter(Boolean)
+        .join('/');
       
-      // Store the full URL with hash in sessionStorage
-      var l = location.pathname.split('/').slice(0, 1 + segmentCount).join('/') + '/ida';
-      l = l + location.pathname.slice(l.length);
-      
-      if (l !== location.pathname) {
-        sessionStorage.setItem('redirect', baseUrl + l + location.search + location.hash);
-        window.location.replace(baseUrl + '/' + repoName + '/');
+      // Store the path for redirect after navigation
+      const redirectPath = path ? `/${path}${location.search}${location.hash}` : '';
+      if (redirectPath) {
+        sessionStorage.setItem('redirect', redirectPath);
       }
+      
+      // Redirect to the app's base URL
+      window.location.replace(`${location.origin}/${repoName}/`);
     })();
   </script>
 </head>
