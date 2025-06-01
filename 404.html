@@ -19,11 +19,17 @@
         }
       }
       
-      // Redirect to the root with all the parameters preserved
-      var redirectUrl = window.location.origin + '/' + repoName + '/?redirect=' 
-                      + encodeURIComponent(path.replace('/' + repoName, ''))
-                      + window.location.search 
-                      + window.location.hash;
+      // Clean up existing redirect parameters if any
+      var search = window.location.search;
+      if (search.includes('redirect=')) {
+        search = search.split('redirect=')[0].replace(/[?&]$/, '');
+      }
+      
+      // Create the redirect URL with only one redirect parameter
+      var redirectUrl = window.location.origin + '/' + repoName + '/' +
+                     (search ? search + '&' : '?') +
+                     'redirect=' + encodeURIComponent(path.replace('/' + repoName, '')) +
+                     window.location.hash;
                       
       window.location.replace(redirectUrl);
     })();
