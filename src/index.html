@@ -12,27 +12,35 @@
   <!-- GitHub Pages redirect handler for Angular routes -->
   <script type="text/javascript">
     (function() {
-      const repoName = 'ida';  // Hardcode the repo name for reliability
+      // Clear any redirect flags immediately to prevent loops
+      sessionStorage.removeItem('redirecting');
       
-      // Handle redirect from 404.html
-      const storedRedirect = sessionStorage.getItem('redirect');
-      if (storedRedirect) {
-        sessionStorage.removeItem('redirect');
+      try {
+        const repoName = 'ida';  // Hardcode the repo name for reliability
+        console.log('Current path:', window.location.pathname);
         
-        // Check if we're at the repo root
-        const currentPath = window.location.pathname;
-        if (currentPath === `/${repoName}/`) {
-          // Apply the stored redirect path
-          const newPath = `/${repoName}${storedRedirect}`;
-          window.history.replaceState(null, null, newPath);
+        // Handle redirect from 404.html
+        const storedRedirect = sessionStorage.getItem('redirect');
+        console.log('Stored redirect:', storedRedirect);
+        
+        if (storedRedirect) {
+          sessionStorage.removeItem('redirect');
+          
+          // Check if we're at the repo root
+          const currentPath = window.location.pathname;
+          if (currentPath === `/${repoName}/`) {
+            // Apply the stored redirect path to Angular router
+            if (storedRedirect.startsWith('/')) {
+              const newPath = `/${repoName}${storedRedirect}`;
+              console.log('Applying redirect to:', newPath);
+              window.history.replaceState(null, null, newPath);
+            } else {
+              console.log('Invalid redirect path, not applying');
+            }
+          }
         }
-      } else {
-        // Handle direct navigation to deep links
-        const currentPath = window.location.pathname;
-        if (currentPath.startsWith(`/${repoName}/`)) {
-          const path = currentPath.substring(repoName.length + 1) || '/';
-          window.history.replaceState(null, null, path);
-        }
+      } catch (e) {
+        console.error('Error in redirect handler:', e);
       }
     })();
   </script>

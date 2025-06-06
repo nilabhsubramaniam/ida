@@ -6,24 +6,45 @@
   <script>
     // GitHub Pages 404 handler for Angular client-side routing
     (function() {
+      // Prevent redirect loops
+      if (sessionStorage.getItem('redirecting')) {
+        console.error('Redirect loop detected, stopping navigation');
+        sessionStorage.removeItem('redirecting');
+        return;
+      }
+      
       const location = window.location;
       const pathSegments = location.pathname.split('/');
       const repoName = 'ida';  // Hardcode the repo name for reliability
       
-      // Remove the repository name from path if it exists
-      const path = pathSegments
-        .filter(segment => segment !== repoName)
-        .filter(Boolean)
-        .join('/');
-      
-      // Store the path for redirect after navigation
-      const redirectPath = path ? `/${path}${location.search}${location.hash}` : '';
-      if (redirectPath) {
-        sessionStorage.setItem('redirect', redirectPath);
+      // Only redirect if we're not already at the root
+      if (location.pathname !== '/' + repoName + '/') {
+        // Set a flag to detect infinite loops
+        sessionStorage.setItem('redirecting', 'true');
+        
+        // Extract the path portion after the repo name or remove repo name if it exists
+        let path = '';
+        const repoIndex = pathSegments.indexOf(repoName);
+        
+        if (repoIndex !== -1 && repoIndex + 1 < pathSegments.length) {
+          // Path includes segments after repo name
+          path = '/' + pathSegments.slice(repoIndex + 1).join('/');
+        } else if (repoIndex === -1) {
+          // Path doesn't contain repo name at all
+          path = location.pathname;
+        }
+        
+        // Store the path for redirect after navigation
+        sessionStorage.setItem('redirect', path + location.search + location.hash);
+        
+        // Set a timeout to clear the redirecting flag in case the redirect fails
+        setTimeout(function() {
+          sessionStorage.removeItem('redirecting');
+        }, 5000);
+        
+        // Redirect to the app's base URL
+        window.location.replace(`${location.origin}/${repoName}/`);
       }
-      
-      // Redirect to the app's base URL
-      window.location.replace(`${location.origin}/${repoName}/`);
     })();
   </script>
 </head>
