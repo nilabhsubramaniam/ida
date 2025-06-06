@@ -4,58 +4,29 @@
   <meta charset="utf-8">
   <title>VyaktigatavRtta Resume Builder</title>
   <script>
-    // GitHub Pages 404 handler for Angular client-side routing
+    // Simple 404 handler for Angular SPA on GitHub Pages
     (function() {
-      // Only run on GitHub Pages
-      const isGitHubPages = window.location.hostname.includes('github.io');
-      if (!isGitHubPages) {
-        console.log("Local environment detected, not handling 404 redirect");
-        return; // Exit early for local development
-      }
+      const repoName = 'ida';
       
-      // Very simple and reliable SPA redirect for GitHub Pages
-      // Using a simplified approach to avoid any complexity
-      
-      // First, check for redirect loops
-      const loopCount = parseInt(sessionStorage.getItem('redirectCount') || '0');
-      if (loopCount > 2) {
-        // We've redirected too many times, break the loop
-        sessionStorage.removeItem('redirectCount');
-        sessionStorage.removeItem('redirecting');
-        sessionStorage.removeItem('redirect');
-        document.write('<h1>Redirect Loop Detected</h1><p>Please go to <a href="/ida/">homepage</a></p>');
+      // Safety check to prevent loops
+      if (sessionStorage.getItem('redirected') === 'true') {
+        sessionStorage.removeItem('redirected');
+        console.error('Redirect loop detected');
+        document.write('<h1>Error: Redirect loop detected</h1><p>Please go to the <a href="/' + repoName + '/">homepage</a>.</p>');
         return;
       }
       
-      // Increment the redirect counter
-      sessionStorage.setItem('redirectCount', (loopCount + 1).toString());
+      // Mark that we're redirecting to prevent loops
+      sessionStorage.setItem('redirected', 'true');
       
-      // Capture the current URL for later use
-      const repoName = 'ida';
-      const currentPath = window.location.pathname;
-      const currentSearch = window.location.search;
-      const currentHash = window.location.hash;
+      // Clear any other redirect flags that might cause problems
+      sessionStorage.removeItem('redirect');
+      sessionStorage.removeItem('redirecting');
+      sessionStorage.removeItem('redirectCount');
       
-      // Create a clean path
-      let path = '';
-      
-      // Check if path starts with /repoName/
-      if (currentPath.startsWith('/' + repoName + '/')) {
-        // Just capture the part after /repoName/
-        path = currentPath.substring(repoName.length + 1);
-      } else {
-        // Otherwise use the whole path
-        path = currentPath;
-      }
-      
-      // Store the path for the application
-      const fullRedirectPath = path + currentSearch + currentHash;
-      sessionStorage.setItem('redirect', fullRedirectPath);
-      
-      // Redirect to the app base URL
-      window.location.href = window.location.origin + '/' + repoName + '/';
+      // Always redirect to the index.html in the repo
+      window.location.href = '/' + repoName + '/';
     })();
-  </script>
   </script>
 </head>
 <body>
