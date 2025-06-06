@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>GitHub Pages Deployment Test</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+      background: #f5f5f5;
+      line-height: 1.6;
+    }
+    h1 {
+      color: #121223;
+      border-bottom: 2px solid #121223;
+      padding-bottom: 10px;
+    }
+    section {
+      background: white;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    pre {
+      background: #f0f0f0;
+      padding: 10px;
+      border-radius: 3px;
+      overflow-x: auto;
+    }
+    .btn {
+      display: inline-block;
+      padding: 8px 16px;
+      background: #121223;
+      color: white;
+      border-radius: 4px;
+      text-decoration: none;
+      margin: 5px;
+    }
+    .btn:hover {
+      background: #2a2a4a;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    table td, table th {
+      border: 1px solid #ddd;
+      padding: 8px;
+    }
+    table tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+  <h1>GitHub Pages Deployment Test</h1>
+  
+  <section>
+    <h2>Deployment Status</h2>
+    <p id="status">Checking deployment status...</p>
+    <p>Deployment Time: <span id="deploy-time">Checking...</span></p>
+  </section>
+  
+  <section>
+    <h2>Environment Information</h2>
+    <table>
+      <tr>
+        <td>Current URL</td>
+        <td id="current-url"></td>
+      </tr>
+      <tr>
+        <td>Path</td>
+        <td id="path"></td>
+      </tr>
+      <tr>
+        <td>User Agent</td>
+        <td id="user-agent"></td>
+      </tr>
+      <tr>
+        <td>Redirect Data</td>
+        <td id="redirect-data"></td>
+      </tr>
+    </table>
+  </section>
+  
+  <section>
+    <h2>Test Navigation Links</h2>
+    <p>Click these links to test different routes:</p>
+    <div>
+      <a href="/ida/" class="btn">Home</a>
+      <a href="/ida/dashboard" class="btn">Dashboard</a>
+      <a href="/ida/login" class="btn">Login</a>
+      <a href="/ida/not-a-real-page" class="btn">404 Test</a>
+    </div>
+  </section>
+  
+  <section>
+    <h2>Redirect Test</h2>
+    <button id="clear-storage" class="btn">Clear Session Storage</button>
+    <pre id="session-data"></pre>
+  </section>
+  
+  <script>
+    // Display environment info
+    document.getElementById('current-url').textContent = window.location.href;
+    document.getElementById('path').textContent = window.location.pathname;
+    document.getElementById('user-agent').textContent = navigator.userAgent;
+    
+    // Check redirect data
+    const redirectData = {
+      'redirect': sessionStorage.getItem('redirect'),
+      'redirecting': sessionStorage.getItem('redirecting'),
+      'redirectCount': sessionStorage.getItem('redirectCount')
+    };
+    document.getElementById('redirect-data').textContent = 
+      JSON.stringify(redirectData, null, 2);
+    
+    // Display session storage
+    function updateSessionData() {
+      const data = {};
+      for (let i = 0; i < sessionStorage.length; i++) {
+        const key = sessionStorage.key(i);
+        data[key] = sessionStorage.getItem(key);
+      }
+      document.getElementById('session-data').textContent = 
+        JSON.stringify(data, null, 2);
+    }
+    updateSessionData();
+    
+    // Add clear storage button handler
+    document.getElementById('clear-storage').addEventListener('click', function() {
+      sessionStorage.clear();
+      updateSessionData();
+      document.getElementById('redirect-data').textContent = 'All redirect data cleared';
+    });
+    
+    // Fetch deployed time
+    fetch('version.txt')
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById('deploy-time').textContent = data;
+        document.getElementById('status').textContent = 'Deployment appears successful!';
+      })
+      .catch(err => {
+        document.getElementById('deploy-time').textContent = 'Error: ' + err;
+        document.getElementById('status').textContent = 'Deployment check failed!';
+      });
+  </script>
+</body>
+</html>
