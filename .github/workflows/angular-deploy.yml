@@ -50,17 +50,19 @@ jobs:
         
     - name: Copy additional files to distribution folder
       run: |
-        # Create required directories
+        # Angular 17+ builds to a browser subdirectory - make sure all files are in the right place
+        echo "Moving files from browser directory to root..."
+        find dist/vyaktigatav-rtta/browser -mindepth 1 -maxdepth 1 -exec mv {} dist/vyaktigatav-rtta/ \;
+        rm -rf dist/vyaktigatav-rtta/browser
+        
+        # Create required directories if they don't exist
         mkdir -p dist/vyaktigatav-rtta/assets
         
         # Create .nojekyll file to disable Jekyll processing
         touch dist/vyaktigatav-rtta/.nojekyll
         
-        # Copy index.html to root with JavaScript redirect - more reliable than meta redirect
-        cp -f public/index-js-redirect.html dist/vyaktigatav-rtta/index.html
-        
-        # Copy files for client-side routing support in GitHub Pages with JavaScript redirect
-        cp -f public/404-js-redirect.html dist/vyaktigatav-rtta/404.html
+        # Use direct Angular app instead of redirects
+        # The hash-based routing is already configured in the Angular app
         cp -f public/.nojekyll dist/vyaktigatav-rtta/
         
         # Copy .htaccess for Apache servers if it exists
@@ -69,14 +71,9 @@ jobs:
         # Create a verification file to confirm deployment
         echo "v$(date +'%Y%m%d%H%M')" > dist/vyaktigatav-rtta/version.txt
         
-        # Copy test pages and documentation
-        cp -f public/test.html dist/vyaktigatav-rtta/
-        cp -f public/deploy-test.html dist/vyaktigatav-rtta/
-        cp -f public/routing-test.html dist/vyaktigatav-rtta/
-        cp -f public/hash-routing-diagnostic.html dist/vyaktigatav-rtta/
-        cp -f public/redirect-test.html dist/vyaktigatav-rtta/
-        cp -f public/GITHUB-PAGES-README.md dist/vyaktigatav-rtta/README.md
-        cp -f FINAL-SOLUTION.md dist/vyaktigatav-rtta/
+        # Only copy essential files needed for production
+        echo "Adding minimal documentation"
+        echo "# व्यक्तिगतवृत्त Resume Builder" > dist/vyaktigatav-rtta/README.md
         
         # Ensure assets are copied properly
         if [ -d "public/assets" ]; then
@@ -112,15 +109,15 @@ jobs:
         # Create .nojekyll file to disable Jekyll processing on GitHub Pages
         touch dist/vyaktigatav-rtta/.nojekyll
         
-        # Verify the HTML files to ensure they're properly set up
-        echo "Verifying index.html contains meta refresh tag:"
-        grep -q "meta http-equiv=\"refresh\"" dist/vyaktigatav-rtta/index.html && echo "✅ Success" || echo "❌ Failed"
+        # Verify the build files are properly set up
+        echo "Verifying Angular build files:"
+        grep -q "<app-root" dist/vyaktigatav-rtta/index.html && echo "✅ Angular app root found" || echo "❌ Angular app root not found"
         
-        echo "Verifying 404.html contains meta refresh tag:"
-        grep -q "meta http-equiv=\"refresh\"" dist/vyaktigatav-rtta/404.html && echo "✅ Success" || echo "❌ Failed"
+        echo "Verifying hash routing is enabled:"
+        grep -q "base href=\"/ida/\"" dist/vyaktigatav-rtta/index.html && echo "✅ Base href is set" || echo "❌ Base href not found"
         
-        echo "Verifying cache busting in redirects:"
-        grep -q "cachebuster" dist/vyaktigatav-rtta/index.html && echo "✅ Success" || echo "❌ Failed"
+        # Check that main JavaScript file exists
+        find dist/vyaktigatav-rtta -name "main-*.js" | grep -q . && echo "✅ Main JS file found" || echo "❌ Main JS file not found"
       
     - name: Deploy to GitHub Pages
       uses: JamesIves/github-pages-deploy-action@v4
