@@ -35,8 +35,11 @@ jobs:
       run: |
         sed -i "s|https://nilabhsubramaniam.github.io/ida/|https://${{ env.OWNER_NAME }}.github.io/${{ env.REPO_NAME }}/|g" package.json
 
-    - name: Build Angular project
+    - name: Build Angular project with hash routing
       run: |
+        # First copy the hash routing config
+        cp src/app/app.config.hash.ts src/app/app.config.ts
+        # Then build with hash routing
         npm run build:prod -- --base-href "/${{ env.REPO_NAME }}/"
     
     - name: Debug build output
@@ -53,11 +56,11 @@ jobs:
         # Create .nojekyll file to disable Jekyll processing
         touch dist/vyaktigatav-rtta/.nojekyll
         
-        # Copy index.html to root - important for GitHub Pages
-        cp -f public/index.html dist/vyaktigatav-rtta/index.html
+        # Copy index.html to root with cache busting - important for GitHub Pages
+        cp -f public/index-cachebuster.html dist/vyaktigatav-rtta/index.html
         
-        # Copy files for client-side routing support in GitHub Pages
-        cp -f public/404.html dist/vyaktigatav-rtta/
+        # Copy files for client-side routing support in GitHub Pages with cache busting
+        cp -f public/404-cachebuster.html dist/vyaktigatav-rtta/404.html
         cp -f public/.nojekyll dist/vyaktigatav-rtta/
         
         # Copy .htaccess for Apache servers if it exists
@@ -71,7 +74,9 @@ jobs:
         cp -f public/deploy-test.html dist/vyaktigatav-rtta/
         cp -f public/routing-test.html dist/vyaktigatav-rtta/
         cp -f public/hash-routing-diagnostic.html dist/vyaktigatav-rtta/
+        cp -f public/redirect-test.html dist/vyaktigatav-rtta/
         cp -f public/GITHUB-PAGES-README.md dist/vyaktigatav-rtta/README.md
+        cp -f FINAL-SOLUTION.md dist/vyaktigatav-rtta/
         
         # Ensure assets are copied properly
         if [ -d "public/assets" ]; then
@@ -106,6 +111,16 @@ jobs:
         
         # Create .nojekyll file to disable Jekyll processing on GitHub Pages
         touch dist/vyaktigatav-rtta/.nojekyll
+        
+        # Verify the HTML files to ensure they're properly set up
+        echo "Verifying index.html contains meta refresh tag:"
+        grep -q "meta http-equiv=\"refresh\"" dist/vyaktigatav-rtta/index.html && echo "✅ Success" || echo "❌ Failed"
+        
+        echo "Verifying 404.html contains meta refresh tag:"
+        grep -q "meta http-equiv=\"refresh\"" dist/vyaktigatav-rtta/404.html && echo "✅ Success" || echo "❌ Failed"
+        
+        echo "Verifying cache busting in redirects:"
+        grep -q "cachebuster" dist/vyaktigatav-rtta/index.html && echo "✅ Success" || echo "❌ Failed"
       
     - name: Deploy to GitHub Pages
       uses: JamesIves/github-pages-deploy-action@v4

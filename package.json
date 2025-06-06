@@ -8,7 +8,8 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "build:prod": "ng build --configuration production",
-    "deploy:gh-pages": "ng build --configuration production --base-href \"/ida/\""
+    "deploy:gh-pages": "ng build --configuration production --base-href \"/ida/\"",
+    "build:hash": "cp src/app/app.config.hash.ts src/app/app.config.ts && ng build --configuration production"
   },
   "private": true,
   "dependencies": {
