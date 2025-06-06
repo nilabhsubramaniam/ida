@@ -4,29 +4,9 @@
   <meta charset="utf-8">
   <title>VyaktigatavRtta Resume Builder</title>
   <script>
-    // Simple 404 handler for Angular SPA on GitHub Pages
-    (function() {
-      const repoName = 'ida';
-      
-      // Safety check to prevent loops
-      if (sessionStorage.getItem('redirected') === 'true') {
-        sessionStorage.removeItem('redirected');
-        console.error('Redirect loop detected');
-        document.write('<h1>Error: Redirect loop detected</h1><p>Please go to the <a href="/' + repoName + '/">homepage</a>.</p>');
-        return;
-      }
-      
-      // Mark that we're redirecting to prevent loops
-      sessionStorage.setItem('redirected', 'true');
-      
-      // Clear any other redirect flags that might cause problems
-      sessionStorage.removeItem('redirect');
-      sessionStorage.removeItem('redirecting');
-      sessionStorage.removeItem('redirectCount');
-      
-      // Always redirect to the index.html in the repo
-      window.location.href = '/' + repoName + '/';
-    })();
+    // Ultra-simple SPA redirect - No sessionStorage, no complex logic
+    // This is the most reliable approach for GitHub Pages
+    window.location.replace('/ida/');
   </script>
 </head>
 <body>

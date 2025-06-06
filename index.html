@@ -4,21 +4,13 @@
   <meta charset="utf-8">
   <title>व्यक्तिगतवृत्त - Resume Builder</title>
   <script>
-    // Simple redirect from root domain to app
-    (function() {
-      // Clear all redirect flags
-      sessionStorage.removeItem('redirected');
-      sessionStorage.removeItem('redirect');
-      sessionStorage.removeItem('redirecting');
-      sessionStorage.removeItem('redirectCount');
-      
-      // Only redirect on GitHub Pages environment
-      if (window.location.hostname.includes('github.io')) {
-        window.location.replace("/ida/");
-      } else {
-        console.log("Local environment detected, not redirecting");
-      }
-    })();
+    // Ultra-simple redirect - no sessionStorage, no complex logic
+    if (window.location.hostname.includes('github.io')) {
+      // Direct, reliable redirect
+      window.location.replace("/ida/");
+    } else {
+      console.log("Local environment detected, not redirecting");
+    }
   </script>
   <style>
     body {
