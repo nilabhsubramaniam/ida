@@ -7,10 +7,23 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
-  <!-- Simple meta redirect with anti-cache timestamp -->
-  <meta http-equiv="refresh" content="0;url=/ida/#/?t=cachebuster-202506062050">
-  <!-- The redirect URL is relative so it works in any environment -->
-  <link rel="canonical" href="/ida/#/">
+  <script>
+    // Get the current URL and domain
+    const currentURL = window.location.href;
+    const isGithubPages = currentURL.includes('github.io');
+    const timestamp = new Date().getTime();
+    
+    // Use relative URL for better portability across environments
+    const baseURL = '/ida/#/';
+    
+    // Add cache-busting parameter
+    const targetURL = `${baseURL}?t=${timestamp}`;
+    
+    // Perform the redirect
+    window.location.replace(targetURL);
+  </script>
+  <!-- Fallback meta redirect -->
+  <meta http-equiv="refresh" content="2;url=/ida/#/">
 </head>
 <body>
   <h2>व्यक्तिगतवृत्त - Resume Builder</h2>

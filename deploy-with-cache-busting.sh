@@ -23,6 +23,14 @@ echo "Updating cache-buster timestamp in redirect files to: $TIMESTAMP"
 sed -i "s/cachebuster-[0-9]*/cachebuster-$TIMESTAMP/g" "$PUBLIC_DIR/index-cachebuster.html"
 sed -i "s/cachebuster-[0-9]*/cachebuster-$TIMESTAMP/g" "$PUBLIC_DIR/404-cachebuster.html"
 
+# Ensure we're using absolute URLs in the redirect files
+GITHUB_URL="https://nilabhsubramaniam.github.io"
+echo "Setting absolute URLs for GitHub Pages: $GITHUB_URL"
+sed -i "s|url=\(/ida/\)|url=$GITHUB_URL/ida/|g" "$PUBLIC_DIR/index-cachebuster.html"
+sed -i "s|url=\(/ida/\)|url=$GITHUB_URL/ida/|g" "$PUBLIC_DIR/404-cachebuster.html"
+sed -i "s|href=\"/ida/|href=\"$GITHUB_URL/ida/|g" "$PUBLIC_DIR/index-cachebuster.html"
+sed -i "s|href=\"/ida/|href=\"$GITHUB_URL/ida/|g" "$PUBLIC_DIR/404-cachebuster.html"
+
 # Backup the current config
 echo "Backing up current app.config.ts"
 cp "$CONFIG_FILE" "$BACKUP_CONFIG"
@@ -49,9 +57,13 @@ echo "Setting up GitHub Pages files"
 # Create .nojekyll file
 touch "$DIST_DIR/.nojekyll"
 
-# Copy the cache-busting meta redirect files
-cp "$PUBLIC_DIR/index-cachebuster.html" "$DIST_DIR/index.html"
-cp "$PUBLIC_DIR/404-cachebuster.html" "$DIST_DIR/404.html"
+# Copy the JavaScript-based redirect files (more reliable)
+cp "$PUBLIC_DIR/index-js-redirect.html" "$DIST_DIR/index.html"
+cp "$PUBLIC_DIR/404-js-redirect.html" "$DIST_DIR/404.html"
+
+# Also copy the meta redirect versions as alternatives
+cp "$PUBLIC_DIR/index-cachebuster.html" "$DIST_DIR/index-meta.html"
+cp "$PUBLIC_DIR/404-cachebuster.html" "$DIST_DIR/404-meta.html"
 
 # Copy diagnostic tools
 cp "$PUBLIC_DIR/hash-routing-diagnostic.html" "$DIST_DIR/"

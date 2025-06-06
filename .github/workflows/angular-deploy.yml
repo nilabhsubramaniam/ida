@@ -56,11 +56,11 @@ jobs:
         # Create .nojekyll file to disable Jekyll processing
         touch dist/vyaktigatav-rtta/.nojekyll
         
-        # Copy index.html to root with cache busting - important for GitHub Pages
-        cp -f public/index-cachebuster.html dist/vyaktigatav-rtta/index.html
+        # Copy index.html to root with JavaScript redirect - more reliable than meta redirect
+        cp -f public/index-js-redirect.html dist/vyaktigatav-rtta/index.html
         
-        # Copy files for client-side routing support in GitHub Pages with cache busting
-        cp -f public/404-cachebuster.html dist/vyaktigatav-rtta/404.html
+        # Copy files for client-side routing support in GitHub Pages with JavaScript redirect
+        cp -f public/404-js-redirect.html dist/vyaktigatav-rtta/404.html
         cp -f public/.nojekyll dist/vyaktigatav-rtta/
         
         # Copy .htaccess for Apache servers if it exists
