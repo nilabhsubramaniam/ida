@@ -58,6 +58,32 @@ if [ -f "public/CNAME" ]; then
   cp -f public/CNAME $DIST_DIR/
 fi
 
+# Copy assets
+echo "Setting up assets for the deployment..."
+if [ -d "public/assets" ]; then
+  echo "Copying assets from public/assets to dist..."
+  mkdir -p "$DIST_DIR/assets"
+  cp -a public/assets/* "$DIST_DIR/assets/"
+  echo "✅ Assets copied successfully"
+  ls -la "$DIST_DIR/assets/"
+
+  # Fix asset URLs in CSS files for GitHub Pages deployment
+  echo "Fixing asset URLs in CSS files..."
+  
+  # Find all CSS files
+  CSSFILES=$(find "$DIST_DIR" -name "*.css")
+  
+  # For each CSS file, replace absolute asset paths with relative ones
+  for file in $CSSFILES; do
+    echo "Processing $file"
+    # Replace "/assets/" with "assets/" (remove leading slash)
+    sed -i 's|url(/assets/|url(assets/|g' "$file"
+    echo "✅ Fixed asset paths in $(basename "$file")"
+  done
+else
+  echo "⚠️ WARNING: No assets directory found in public/"
+fi
+
 # Verify the build
 echo "Verifying Angular build files:"
 grep -q "<app-root" $DIST_DIR/index.html && echo "✅ Angular app root found" || echo "❌ Angular app root not found"

@@ -75,13 +75,36 @@ jobs:
         echo "Adding minimal documentation"
         echo "# व्यक्तिगतवृत्त Resume Builder" > dist/vyaktigatav-rtta/README.md
         
-        # Ensure assets are copied properly
+        # Ensure assets are properly copied
+        echo "Setting up assets for deployment..."
         if [ -d "public/assets" ]; then
+          mkdir -p dist/vyaktigatav-rtta/assets
           cp -rf public/assets/* dist/vyaktigatav-rtta/assets/ || echo "No assets to copy"
-          echo "Assets copied successfully"
+          echo "✅ Assets copied successfully"
           ls -la dist/vyaktigatav-rtta/assets/
+          
+          # Fix asset URLs in CSS files for GitHub Pages deployment
+          echo "Fixing asset URLs in CSS files..."
+          
+          # Find all CSS files
+          CSSFILES=$(find "dist/vyaktigatav-rtta" -name "*.css")
+          
+          # For each CSS file, replace absolute asset paths with relative ones
+          for file in $CSSFILES; do
+            echo "Processing $file"
+            # Replace "/assets/" with "assets/" (remove leading slash)
+            sed -i 's|url(/assets/|url(assets/|g' "$file"
+            echo "✅ Fixed asset paths in $(basename "$file")"
+          done
         else
-          echo "No assets directory found in public/"
+          echo "⚠️ WARNING: No assets directory found in public/"
+        fi
+        
+        # Copy assets from src/assets if they exist
+        if [ -d "src/assets" ]; then
+          mkdir -p dist/vyaktigatav-rtta/assets
+          cp -rf src/assets/* dist/vyaktigatav-rtta/assets/ || echo "No src assets to copy"
+          echo "✅ Src assets copied successfully"
         fi
         
         # Copy CNAME file if it exists

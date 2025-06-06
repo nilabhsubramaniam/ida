@@ -35,18 +35,27 @@ if [ ! -d "$DIST_DIR" ]; then
   exit 1
 fi
 
-# Move files from browser directory to the root
-echo "Moving files from browser directory to root..."
-cp -a $DIST_DIR/browser/* $DIST_DIR/
-rm -rf $DIST_DIR/browser
+# Check if browser directory exists (Angular 17+ outputs to a browser subdirectory)
+if [ -d "$DIST_DIR/browser" ]; then
+  echo "Moving files from browser directory to root..."
+  cp -a $DIST_DIR/browser/* $DIST_DIR/
+  rm -rf $DIST_DIR/browser
+fi
 
 # Create .nojekyll file to disable Jekyll processing
+echo "Creating .nojekyll file to disable GitHub Pages Jekyll processing..."
 touch "$DIST_DIR/.nojekyll"
 
 # Create a favicon if missing
 if [ ! -f "$DIST_DIR/favicon.ico" ]; then
   echo "Adding default favicon"
   cp -f public/favicon.ico $DIST_DIR/ || echo "No favicon found"
+fi
+
+# Copy CNAME file if it exists
+if [ -f "public/CNAME" ]; then
+  echo "Copying CNAME file for custom domain..."
+  cp -f public/CNAME $DIST_DIR/
 fi
 
 # Verify the build
@@ -56,19 +65,76 @@ grep -q "<app-root" $DIST_DIR/index.html && echo "✅ Angular app root found" ||
 echo "Verifying hash routing is enabled:"
 grep -q "base href=\"/ida/\"" $DIST_DIR/index.html && echo "✅ Base href is set" || echo "❌ Base href not found"
 
-# Test the build with a local server
-echo
-echo "==============================================="
-echo "  Starting test server"
-echo "==============================================="
-echo "Starting server on port 8080..."
-echo "Press Ctrl+C to stop the server"
-echo
-echo "To test the application visit: http://localhost:8080/"
-echo
+# Check for main JavaScript file
+echo "Checking for main JS file:"
+find $DIST_DIR -name "main-*.js" | grep -q . && echo "✅ Main JS file found" || echo "❌ Main JS file not found"
+
+# Create a version file with timestamp
+TIMESTAMP=$(date +'%Y%m%d%H%M')
+echo "v$TIMESTAMP" > "$DIST_DIR/version.txt"
+echo "✅ Version file created: v$TIMESTAMP"
 
 # Restore original config
+echo "Restoring original app.config.ts"
 cp "$BACKUP_CONFIG" "$CONFIG_FILE"
 
-# Start a local server
-cd $DIST_DIR && python3 -m http.server 8080
+# Ask user what to do next
+echo
+echo "==============================================="
+echo "  Deployment Options"
+echo "==============================================="
+echo "Build completed successfully! What would you like to do next?"
+echo
+echo "1) Test locally with a development server"
+echo "2) Deploy to GitHub Pages"
+echo "3) Exit"
+echo
+
+read -p "Enter your choice (1-3): " choice
+
+case $choice in
+  1)
+    echo
+    echo "==============================================="
+    echo "  Starting test server"
+    echo "==============================================="
+    echo "Starting server on port 8080..."
+    echo "Press Ctrl+C to stop the server"
+    echo
+    echo "To test the application visit: http://localhost:8080/"
+    echo
+    cd $DIST_DIR && python3 -m http.server 8080
+    ;;
+  2)
+    echo
+    echo "==============================================="
+    echo "  Deploying to GitHub Pages"
+    echo "==============================================="
+    echo "Committing and pushing changes..."
+    
+    # Check if there are changes to commit
+    if git diff --quiet; then
+      echo "No changes detected. Committing only build changes."
+      git add $DIST_DIR
+    else
+      echo "Changes detected. Committing all changes."
+      git add .
+    fi
+    
+    # Commit and push
+    git commit -m "Deploy to GitHub Pages: v$TIMESTAMP"
+    git push origin main
+    
+    echo
+    echo "Deployment initiated. GitHub Actions will deploy the changes to GitHub Pages."
+    echo "Check the status at: https://github.com/nilabhsubramaniam/ida/actions"
+    echo
+    echo "Once deployed, your site will be available at: https://nilabhsubramaniam.github.io/ida/"
+    ;;
+  3)
+    echo "Exiting without testing or deployment."
+    ;;
+  *)
+    echo "Invalid choice. Exiting."
+    ;;
+esac
