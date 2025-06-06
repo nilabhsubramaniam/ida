@@ -66,8 +66,9 @@ jobs:
         # Create a verification file to confirm deployment
         echo "v$(date +'%Y%m%d%H%M')" > dist/vyaktigatav-rtta/version.txt
         
-        # Copy test page
+        # Copy test pages
         cp -f public/test.html dist/vyaktigatav-rtta/
+        cp -f public/deploy-test.html dist/vyaktigatav-rtta/
         
         # Ensure assets are copied properly
         if [ -d "public/assets" ]; then

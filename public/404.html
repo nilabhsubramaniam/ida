@@ -6,49 +6,56 @@
   <script>
     // GitHub Pages 404 handler for Angular client-side routing
     (function() {
-      // Simple but reliable 404 handler for GitHub Pages + Angular
-      // Based on: https://github.com/rafgraph/spa-github-pages
+      // Only run on GitHub Pages
+      const isGitHubPages = window.location.hostname.includes('github.io');
+      if (!isGitHubPages) {
+        console.log("Local environment detected, not handling 404 redirect");
+        return; // Exit early for local development
+      }
       
-      // Prevent redirect loops by checking sessionStorage
-      if (sessionStorage.getItem('redirecting')) {
-        console.error('Redirect loop detected, stopping navigation');
+      // Very simple and reliable SPA redirect for GitHub Pages
+      // Using a simplified approach to avoid any complexity
+      
+      // First, check for redirect loops
+      const loopCount = parseInt(sessionStorage.getItem('redirectCount') || '0');
+      if (loopCount > 2) {
+        // We've redirected too many times, break the loop
+        sessionStorage.removeItem('redirectCount');
         sessionStorage.removeItem('redirecting');
-        document.write('Redirect loop detected. <a href="/ida/">Click here</a> to go to homepage.');
+        sessionStorage.removeItem('redirect');
+        document.write('<h1>Redirect Loop Detected</h1><p>Please go to <a href="/ida/">homepage</a></p>');
         return;
       }
       
-      const location = window.location;
-      const pathSegments = location.pathname.split('/');
-      const repoName = 'ida';  // Hardcode the repo name for reliability
+      // Increment the redirect counter
+      sessionStorage.setItem('redirectCount', (loopCount + 1).toString());
       
-      // Simple path handling
-      const pathname = location.pathname;
+      // Capture the current URL for later use
+      const repoName = 'ida';
+      const currentPath = window.location.pathname;
+      const currentSearch = window.location.search;
+      const currentHash = window.location.hash;
       
-      // Only redirect if not already at the repo root
-      if (pathname !== '/' + repoName + '/') {
-        // Set a flag to detect infinite loops
-        sessionStorage.setItem('redirecting', 'true');
-        
-        // Create a clean path (without repo name if it's included)
-        let cleanPath = pathname;
-        if (pathname.indexOf('/' + repoName + '/') === 0) {
-          // Remove the /repoName/ prefix if present
-          cleanPath = pathname.substr(repoName.length + 2) || '/';
-        }
-        
-        // Store the path for redirect after navigation
-        sessionStorage.setItem('redirect', cleanPath + location.search + location.hash);
-        console.log('Storing redirect path:', cleanPath);
-        
-        // Set a timeout to clear the redirecting flag in case the redirect fails
-        setTimeout(function() {
-          sessionStorage.removeItem('redirecting');
-        }, 1000);
-        
-        // Redirect to the app's base URL
-        window.location.replace(location.origin + '/' + repoName + '/');
+      // Create a clean path
+      let path = '';
+      
+      // Check if path starts with /repoName/
+      if (currentPath.startsWith('/' + repoName + '/')) {
+        // Just capture the part after /repoName/
+        path = currentPath.substring(repoName.length + 1);
+      } else {
+        // Otherwise use the whole path
+        path = currentPath;
       }
+      
+      // Store the path for the application
+      const fullRedirectPath = path + currentSearch + currentHash;
+      sessionStorage.setItem('redirect', fullRedirectPath);
+      
+      // Redirect to the app base URL
+      window.location.href = window.location.origin + '/' + repoName + '/';
     })();
+  </script>
   </script>
 </head>
 <body>
