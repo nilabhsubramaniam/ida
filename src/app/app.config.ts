@@ -1,7 +1,7 @@
 import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withHashLocation } from '@angular/router';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { APP_BASE_HREF } from '@angular/common';
+import { APP_BASE_HREF, HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 import { routes } from './app.routes';
 
@@ -20,9 +20,12 @@ const getBaseHref = () => {
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideZoneChangeDetection({ eventCoalescing: true }), 
-    provideRouter(routes),
+    provideZoneChangeDetection({ eventCoalescing: true }),
+    // Using hash location strategy which is more compatible with GitHub Pages
+    provideRouter(routes, withHashLocation()),
     provideAnimations(),
-    { provide: APP_BASE_HREF, useFactory: getBaseHref }
+    { provide: APP_BASE_HREF, useFactory: getBaseHref },
+    // This ensures URLs look like /ida/#/route instead of /ida/route
+    { provide: LocationStrategy, useClass: HashLocationStrategy }
   ]
 };

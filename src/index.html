@@ -9,9 +9,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   
-  <!-- No redirect handling in the main app, rely on Angular routing only -->
+  <!-- App initialization with hash routing -->
   <script type="text/javascript">
-    console.log('Angular application initialized');
+    console.log('Angular application initialized at:', window.location.href);
+    console.log('Using hash routing for GitHub Pages compatibility');
+    
+    // Print diagnostics about the current environment
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('DOM loaded, base href:', document.querySelector('base').getAttribute('href'));
+      console.log('Location path:', window.location.pathname);
+      console.log('Location hash:', window.location.hash);
+    });
   </script>
 </head>
 <body class="mat-typography">

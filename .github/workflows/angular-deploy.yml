@@ -70,6 +70,7 @@ jobs:
         cp -f public/test.html dist/vyaktigatav-rtta/
         cp -f public/deploy-test.html dist/vyaktigatav-rtta/
         cp -f public/routing-test.html dist/vyaktigatav-rtta/
+        cp -f public/hash-routing-diagnostic.html dist/vyaktigatav-rtta/
         cp -f public/GITHUB-PAGES-README.md dist/vyaktigatav-rtta/README.md
         
         # Ensure assets are copied properly
