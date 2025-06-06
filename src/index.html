@@ -17,30 +17,34 @@
       
       try {
         const repoName = 'ida';  // Hardcode the repo name for reliability
+        console.log('GitHub Pages SPA Router: Initializing');
         console.log('Current path:', window.location.pathname);
         
         // Handle redirect from 404.html
         const storedRedirect = sessionStorage.getItem('redirect');
-        console.log('Stored redirect:', storedRedirect);
+        console.log('Stored redirect path:', storedRedirect);
         
         if (storedRedirect) {
+          // Clear the stored redirect to prevent future redirects
           sessionStorage.removeItem('redirect');
           
-          // Check if we're at the repo root
+          // Get current path
           const currentPath = window.location.pathname;
+          
+          // Only apply redirect if we're at the repo root
           if (currentPath === `/${repoName}/`) {
-            // Apply the stored redirect path to Angular router
-            if (storedRedirect.startsWith('/')) {
-              const newPath = `/${repoName}${storedRedirect}`;
-              console.log('Applying redirect to:', newPath);
-              window.history.replaceState(null, null, newPath);
-            } else {
-              console.log('Invalid redirect path, not applying');
-            }
+            // Apply the redirect path for the Angular router
+            const newPath = `/${repoName}${storedRedirect.startsWith('/') ? storedRedirect : '/' + storedRedirect}`;
+            console.log('Applying redirect to:', newPath);
+            window.history.replaceState(null, null, newPath);
+          } else {
+            console.log('Not at repo root, skipping redirect application');
           }
+        } else {
+          console.log('No stored redirect found');
         }
       } catch (e) {
-        console.error('Error in redirect handler:', e);
+        console.error('Error in GitHub Pages SPA Router:', e);
       }
     })();
   </script>
