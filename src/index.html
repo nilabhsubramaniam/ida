@@ -9,39 +9,16 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   
-  <!-- GitHub Pages redirect handler for Angular routes -->
+  <!-- SPA initialization script - very simple implementation -->
   <script type="text/javascript">
     document.addEventListener('DOMContentLoaded', function() {
-      // Wait for DOM to be loaded before handling redirects
-      // This helps with MutationObserver errors from adblockers
-      setTimeout(function() {
-        // Clear any redirect flags to prevent loops
-        sessionStorage.removeItem('redirecting');
-        
-        try {
-          const repoName = 'ida';  // Hardcode the repo name for reliability
-          console.log('GitHub Pages SPA Router: Initializing');
-          
-          // Handle redirect from 404.html
-          const storedRedirect = sessionStorage.getItem('redirect');
-          if (storedRedirect) {
-            // Clear the stored redirect to prevent future redirects
-            sessionStorage.removeItem('redirect');
-            
-            // Get current path
-            const currentPath = window.location.pathname;
-            
-            // Apply the redirect path for the Angular router
-            if (currentPath === `/${repoName}/`) {
-              const newPath = `/${repoName}${storedRedirect.startsWith('/') ? storedRedirect : '/' + storedRedirect}`;
-              console.log('Applying redirect to:', newPath);
-              window.history.replaceState(null, null, newPath);
-            }
-          }
-        } catch (e) {
-          console.error('Error in GitHub Pages SPA Router:', e);
-        }
-      }, 100); // Short delay to ensure DOM is fully loaded
+      // Clear any redirect flags immediately
+      sessionStorage.removeItem('redirected');
+      sessionStorage.removeItem('redirect');
+      sessionStorage.removeItem('redirecting');
+      sessionStorage.removeItem('redirectCount');
+      
+      console.log('Application initialized, all redirect flags cleared');
     });
   </script>
 </head>

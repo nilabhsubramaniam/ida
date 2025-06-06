@@ -10,11 +10,11 @@ const getBaseHref = () => {
   // For GitHub Pages deployment
   if (typeof window !== 'undefined' && window.location.hostname.includes('github.io')) {
     // Always use /ida/ for GitHub Pages
-    console.log('GitHub Pages detected, using /ida/ as base href');
+    console.log('[AppConfig] GitHub Pages detected, using /ida/ as base href');
     return '/ida/';
   }
   // Default for local development
-  console.log('Local development detected, using / as base href');
+  console.log('[AppConfig] Local development detected, using / as base href');
   return '/';
 };
 

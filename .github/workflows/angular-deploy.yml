@@ -69,6 +69,7 @@ jobs:
         # Copy test pages
         cp -f public/test.html dist/vyaktigatav-rtta/
         cp -f public/deploy-test.html dist/vyaktigatav-rtta/
+        cp -f public/routing-test.html dist/vyaktigatav-rtta/
         
         # Ensure assets are copied properly
         if [ -d "public/assets" ]; then

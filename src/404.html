@@ -4,11 +4,19 @@
   <meta charset="utf-8">
   <title>व्यक्तिगतवृत्त - Resume builder</title>
   <script type="text/javascript">
-    // Store the requested URL for redirection
-    sessionStorage.redirect = location.href;
-
-    // Redirect to the base URL
-    window.location.href = "/ida/";
+    // Simple, clean redirect to base URL
+    (function() {
+      const repoName = 'ida';
+      
+      // Clear all redirect flags
+      sessionStorage.removeItem('redirected');
+      sessionStorage.removeItem('redirect');
+      sessionStorage.removeItem('redirecting');
+      sessionStorage.removeItem('redirectCount');
+      
+      // Redirect to the base URL
+      window.location.href = "/" + repoName + "/";
+    })();
   </script>
 </head>
 <body>
