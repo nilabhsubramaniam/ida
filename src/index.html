@@ -9,17 +9,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   
-  <!-- SPA initialization script - very simple implementation -->
+  <!-- No redirect handling in the main app, rely on Angular routing only -->
   <script type="text/javascript">
-    document.addEventListener('DOMContentLoaded', function() {
-      // Clear any redirect flags immediately
-      sessionStorage.removeItem('redirected');
-      sessionStorage.removeItem('redirect');
-      sessionStorage.removeItem('redirecting');
-      sessionStorage.removeItem('redirectCount');
-      
-      console.log('Application initialized, all redirect flags cleared');
-    });
+    console.log('Angular application initialized');
   </script>
 </head>
 <body class="mat-typography">
