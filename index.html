@@ -4,12 +4,21 @@
   <meta charset="utf-8">
   <title>व्यक्तिगतवृत्त - Resume Builder</title>
   <script>
+    // Log useful debug info
+    console.log('Root index.html loading, URL:', window.location.href);
+    console.log('Root Pathname:', window.location.pathname);
+    
+    // Add timestamp to prevent caching issues
+    const timestamp = new Date().getTime();
+    const targetUrl = '/ida/#/?nocache=' + timestamp;
+    
     // Ultra-simple redirect - no sessionStorage, no complex logic
     if (window.location.hostname.includes('github.io')) {
-      // Direct, reliable redirect
-      window.location.replace("/ida/");
+      console.log('GitHub Pages detected, redirecting to:', targetUrl);
+      // Direct, reliable redirect with hash routing
+      window.location.replace(targetUrl);
     } else {
-      console.log("Local environment detected, not redirecting");
+      console.log('Local environment detected, not redirecting');
     }
   </script>
   <style>
@@ -24,6 +33,6 @@
 <body>
   <h2>व्यक्तिगतवृत्त - Resume Builder</h2>
   <p>Redirecting to application...</p>
-  <p>If you are not redirected, <a href="/ida/">click here</a>.</p>
+  <p>If you are not redirected, <a href="/ida/#/">click here</a>.</p>
 </body>
 </html>
