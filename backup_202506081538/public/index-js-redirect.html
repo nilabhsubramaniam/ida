@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>व्यक्तिगतवृत्त - Resume Builder</title>
+  <!-- Cache control to prevent browsers from caching the redirect -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <script>
+    // Get the current URL and domain
+    const currentURL = window.location.href;
+    const isGithubPages = currentURL.includes('github.io');
+    const timestamp = new Date().getTime();
+    
+    // Use relative URL for better portability across environments
+    const baseURL = '/ida/#/';
+    
+    // Add cache-busting parameter
+    const targetURL = `${baseURL}?t=${timestamp}`;
+    
+    // Perform the redirect
+    window.location.replace(targetURL);
+  </script>
+  <!-- Fallback meta redirect -->
+  <meta http-equiv="refresh" content="2;url=/ida/#/">
+</head>
+<body>
+  <h2>व्यक्तिगतवृत्त - Resume Builder</h2>
+  <p>Redirecting to application...</p>
+  <p>If you are not redirected, <a href="/ida/#/">click here</a>.</p>
+</body>
+</html>

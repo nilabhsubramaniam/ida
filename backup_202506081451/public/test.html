@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>व्यक्तिगतवृत्त - Deployment Test</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+      line-height: 1.6;
+      color: #333;
+      background: #f5f5f5;
+    }
+    h1 {
+      color: #121223;
+    }
+    .success {
+      background: #e6ffe6;
+      border: 1px solid #99cc99;
+      padding: 15px;
+      border-radius: 5px;
+    }
+    .details {
+      background: #fff;
+      border: 1px solid #ddd;
+      padding: 15px;
+      border-radius: 5px;
+      margin-top: 20px;
+    }
+    pre {
+      background: #f0f0f0;
+      padding: 10px;
+      border-radius: 3px;
+      overflow-x: auto;
+    }
+  </style>
+</head>
+<body>
+  <h1>व्यक्तिगतवृत्त - Deployment Test Page</h1>
+  
+  <div class="success">
+    <p><strong>Success!</strong> If you can see this page, your GitHub Pages deployment is working correctly.</p>
+  </div>
+  
+  <div class="details">
+    <h3>Details:</h3>
+    <ul>
+      <li>Current URL: <span id="current-url"></span></li>
+      <li>Path: <span id="path"></span></li>
+      <li>Deployed: <span id="deploy-time">Unknown</span></li>
+    </ul>
+    
+    <h3>Test Navigation:</h3>
+    <p>Try these links to test Angular routing:</p>
+    <ul>
+      <li><a href="index.html">Home (index.html)</a></li>
+      <li><a href="/">Root (/)</a></li>
+      <li><a href="/ida/">Repo Root (/ida/)</a></li>
+      <li><a href="/ida/dashboard">Dashboard (/ida/dashboard)</a></li>
+      <li><a href="/ida/login">Login (/ida/login)</a></li>
+    </ul>
+  </div>
+  
+  <script>
+    document.getElementById('current-url').textContent = window.location.href;
+    document.getElementById('path').textContent = window.location.pathname;
+    
+    // Fetch deployed time
+    fetch('version.txt')
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById('deploy-time').textContent = data;
+      })
+      .catch(err => {
+        console.log('Error fetching version info:', err);
+      });
+  </script>
+</body>
+</html>

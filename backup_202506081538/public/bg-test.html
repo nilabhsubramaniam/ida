@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Background Image Test</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      /* Test with both relative and absolute paths */
+      background-image: url('assets/main_theme.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      color: white;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    h1 {
+      font-size: 2.5rem;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+      margin-bottom: 2rem;
+    }
+    .test {
+      background-color: rgba(0,0,0,0.7);
+      padding: 2rem;
+      border-radius: 8px;
+      text-align: center;
+    }
+    .test-image {
+      max-width: 300px;
+      margin: 1rem auto;
+      border: 2px solid white;
+    }
+  </style>
+</head>
+<body>
+  <div class="test">
+    <h1>Background Image Test</h1>
+    <p>This page tests if the background image (main_theme.jpg) is properly loading</p>
+    <p>Background image is set using CSS: url('assets/main_theme.jpg')</p>
+    
+    <h2>Direct Image Test:</h2>
+    <img class="test-image" src="assets/main_theme.jpg" alt="Main Theme (Direct)">
+  </div>
+</body>
+</html>
