@@ -26,6 +26,12 @@ export class TopbarComponent implements OnChanges, OnInit {
   isMobileMenuOpen = false;
   isAtTop = true;
   isUserAuthenticated = false;
+  isUserMenuOpen = false;
+  showProgressBar = false;
+  currentStep = 1;
+  
+  // Resume building steps
+  resumeSteps = ['Personal Info', 'Education', 'Experience', 'Skills', 'Review'];
   
   // FontAwesome icons
   faBars = faBars;
@@ -50,6 +56,14 @@ export class TopbarComponent implements OnChanges, OnInit {
     this.themeService.darkThemeEnabled$.subscribe(isDarkMode => {
       this.isDarkMode = isDarkMode;
     });
+    
+    // Check if we're on a page that should show the progress bar
+    this.router.events.subscribe(() => {
+      this.updateProgressBarState();
+    });
+    
+    // Initial check
+    this.updateProgressBarState();
   }
   
   ngOnChanges() {
@@ -60,6 +74,21 @@ export class TopbarComponent implements OnChanges, OnInit {
   @HostListener('window:scroll', [])
   onWindowScroll() {
     this.isAtTop = window.scrollY < 10;
+  }
+  
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    // Close user menu when clicking outside
+    const userMenu = document.querySelector('.topbar__user-profile');
+    const userMenuDropdown = document.querySelector('.user-menu');
+    
+    if (this.isUserMenuOpen && 
+        userMenu && 
+        userMenuDropdown && 
+        !userMenu.contains(event.target as Node) && 
+        !userMenuDropdown.contains(event.target as Node)) {
+      this.isUserMenuOpen = false;
+    }
   }
 
   toggleDarkMode() {
@@ -72,12 +101,22 @@ export class TopbarComponent implements OnChanges, OnInit {
     document.body.style.overflow = this.isMobileMenuOpen ? 'hidden' : '';
   }
   
+  closeMobileMenu() {
+    this.isMobileMenuOpen = false;
+    document.body.style.overflow = '';
+  }
+  
+  toggleUserMenu() {
+    this.isUserMenuOpen = !this.isUserMenuOpen;
+  }
+  
   toggleSidebar() {
     this.toggleSideNav.emit();
   }
   
   logout() {
     this.authService.logout();
+    this.isUserMenuOpen = false;
   }
   
   // For demo purposes - simulate login
@@ -89,8 +128,36 @@ export class TopbarComponent implements OnChanges, OnInit {
     }, 100);
   }
   
+  // Open help dialog or page
+  openHelp() {
+    // This could open a help dialog or navigate to a help page
+    this.router.navigate(['/help']);
+  }
+  
   // Method to check authentication status
   checkAuthentication() {
     return this.isUserAuthenticated;
+  }
+  
+  // Update progress bar state based on current route
+  private updateProgressBarState() {
+    const currentUrl = this.router.url;
+    
+    // Show progress bar only on resume building pages
+    this.showProgressBar = currentUrl.includes('/editor') || 
+                          currentUrl.includes('/theme') || 
+                          currentUrl.includes('/preview') ||
+                          currentUrl.includes('/export');
+    
+    // Set current step based on route
+    if (currentUrl.includes('/editor')) {
+      this.currentStep = 1;
+    } else if (currentUrl.includes('/theme')) {
+      this.currentStep = 2;
+    } else if (currentUrl.includes('/preview')) {
+      this.currentStep = 3;
+    } else if (currentUrl.includes('/export')) {
+      this.currentStep = 4;
+    }
   }
 }

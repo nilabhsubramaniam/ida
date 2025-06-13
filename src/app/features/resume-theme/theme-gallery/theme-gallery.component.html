@@ -1,0 +1,99 @@
+<section class="theme-gallery">
+  <div class="theme-gallery__header">
+    <div class="container">
+      <h1>Resume Templates</h1>
+      <p>Choose from our professionally designed templates to make your resume stand out</p>
+    </div>
+  </div>
+  
+  <div class="container">
+    <div class="theme-gallery__filters">
+      <div class="filter-group">
+        <span>Filter by:</span>
+        <button class="btn btn--ghost btn--sm active">All</button>
+        <button class="btn btn--ghost btn--sm">Professional</button>
+        <button class="btn btn--ghost btn--sm">Creative</button>
+        <button class="btn btn--ghost btn--sm">Technical</button>
+      </div>
+      
+      <div class="layout-toggle">
+        <button class="btn btn--icon-only">
+          <mat-icon>grid_view</mat-icon>
+        </button>
+        <button class="btn btn--icon-only active">
+          <mat-icon>view_list</mat-icon>
+        </button>
+      </div>
+    </div>
+  
+  <div class="theme-cards">
+    <div *ngFor="let theme of themes" 
+         class="theme-card" 
+         [class.theme-card--selected]="isSelected(theme)"
+         [class.theme-card--previewing]="isPreviewing(theme)"
+         (click)="selectTheme(theme)">
+      
+      <div class="theme-card__preview">
+        <!-- Theme preview image -->
+        <img [src]="theme.thumbnail" [alt]="theme.name + ' preview'" class="theme-thumbnail">
+        
+        <!-- Overlay controls -->
+        <div class="theme-card__overlay">
+          <button 
+            class="btn btn--ghost btn--sm" 
+            (click)="startPreview($event, theme)"
+            *ngIf="!isPreviewing(theme)">
+            <mat-icon>visibility</mat-icon>
+            Preview
+          </button>
+          <button 
+            class="btn btn--ghost btn--sm" 
+            (click)="endPreview($event)"
+            *ngIf="isPreviewing(theme)">
+            <mat-icon>visibility_off</mat-icon>
+            Exit Preview
+          </button>
+        </div>
+        
+        <!-- Status indicators -->
+        <div class="theme-card__status" *ngIf="isSelected(theme)">
+          <mat-icon>check_circle</mat-icon>
+          <span>Selected</span>
+        </div>
+      </div>
+      
+      <div class="theme-card__info">
+        <h3>{{ theme.name }}</h3>
+        <p>{{ theme.description }}</p>
+        <div class="theme-card__layout-info">
+          <span class="layout-type">{{ theme.layout.type | titlecase }}</span>
+          <span class="layout-density">{{ theme.layout.density | titlecase }}</span>
+        </div>
+        <div class="theme-card__color-strip">
+          <span 
+            *ngFor="let key of getMainColors(theme)" 
+            class="color-swatch" 
+            [style.background-color]="getColorValue(theme, key)">
+          </span>
+        </div>
+      </div>
+      
+      <div class="theme-card__actions">
+        <button 
+          class="btn btn--primary" 
+          *ngIf="isUserAuthenticated" 
+          (click)="selectTheme(theme)">
+          <mat-icon *ngIf="isSelected(theme)">check</mat-icon>
+          <span>{{ isSelected(theme) ? 'Selected' : 'Use This Theme' }}</span>
+        </button>
+        <button 
+          class="btn btn--secondary" 
+          *ngIf="!isUserAuthenticated">
+          <mat-icon>lock</mat-icon>
+          <span>Log In to Use</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  </div>
+</section>

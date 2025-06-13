@@ -1,0 +1,206 @@
+@use 'variables' as *;
+@use 'buttons' as *;
+
+.theme-page {
+  width: 100%;
+  min-height: calc(100vh - var(--topbar-height));
+  padding-bottom: 4rem;
+  
+  &__header {
+    background: linear-gradient(135deg, var(--primary-dark), var(--primary-light));
+    padding: 3rem 0 2rem;
+    color: white;
+    margin-bottom: 2rem;
+    
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    
+    p {
+      font-size: 1.2rem;
+      opacity: 0.9;
+    }
+  }
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+// Theme Preview Area
+.theme-preview {
+  margin-bottom: 3rem;
+  background: var(--surface-light);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  
+  &__header {
+    padding: 1.5rem;
+    background: var(--surface);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-light);
+    
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin: 0;
+    }
+  }
+  
+  &__actions {
+    display: flex;
+    gap: 0.75rem;
+  }
+  
+  &__content {
+    padding: 2rem;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+    
+    @media screen and (max-width: 992px) {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+// Resume Preview
+.resume-preview {
+  background: white;
+  padding: 2rem;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  max-height: 70vh;
+  overflow-y: auto;
+  
+  &__header {
+    text-align: center;
+    margin-bottom: 2rem;
+    
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    p {
+      font-size: 1.2rem;
+      color: var(--text-muted);
+    }
+  }
+  
+  &__section {
+    margin-bottom: 1.5rem;
+    padding: 1.5rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-light);
+    
+    h2 {
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border-light);
+    }
+  }
+  
+  &__item {
+    margin-bottom: 1rem;
+    
+    h3 {
+      font-size: 1.1rem;
+      margin-bottom: 0.25rem;
+    }
+    
+    p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    ul {
+      padding-left: 1.5rem;
+      margin-top: 0.5rem;
+      
+      li {
+        margin-bottom: 0.25rem;
+      }
+    }
+  }
+}
+
+// Theme Info Sidebar
+.theme-info {
+  h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  
+  &__detail {
+    margin-bottom: 1.5rem;
+    
+    strong {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--primary-dark);
+    }
+    
+    p {
+      line-height: 1.6;
+    }
+  }
+  
+  &__color-palette {
+    margin-bottom: 1.5rem;
+    
+    h4 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+    }
+  }
+  
+  .color-swatches {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+    gap: 0.75rem;
+  }
+  
+  .color-swatch {
+    width: 100%;
+    height: 70px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 0.8rem;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    
+    span {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 0.25rem;
+      background: rgba(0, 0, 0, 0.5);
+      text-align: center;
+      font-size: 0.7rem;
+    }
+  }
+  
+  .btn--lg {
+    width: 100%;
+    margin-top: 1rem;
+  }
+}

@@ -1,6 +1,178 @@
 @use 'variables' as *;
 @use 'buttons' as *;
 
+// Add new keyframes for sparkle animations
+@keyframes sparkling {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+@keyframes rotateGlow {
+  0% {
+    transform: rotate(0deg);
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: rotate(360deg);
+    opacity: 0.5;
+  }
+}
+
+@keyframes borderGlow {
+  0%, 100% {
+    border-color: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.4);
+  }
+  50% {
+    border-color: rgba(255, 255, 255, 1);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+  }
+}
+
+// Add styles for animated button with corner sparkles
+.animated-btn {
+  position: relative;
+  overflow: visible !important; // Override the overflow hidden
+  
+  .corner-sparkle {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    pointer-events: none;
+    z-index: 3;
+    
+    &:before,
+    &:after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-image: radial-gradient(circle, #fff 10%, transparent 70%);
+      border-radius: 50%;
+      opacity: 0;
+      transform: scale(0.5);
+    }
+    
+    // Different colored sparkles for different corners
+    &.top-left {
+      top: -3px;
+      left: -3px;
+      
+      &:before,
+      &:after {
+        background-image: radial-gradient(circle, var(--primary-light) 10%, transparent 70%);
+      }
+    }
+    
+    &.top-right {
+      top: -3px;
+      right: -3px;
+      
+      &:before,
+      &:after {
+        background-image: radial-gradient(circle, #7bf5f5 10%, transparent 70%);
+      }
+    }
+    
+    &.bottom-left {
+      bottom: -3px;
+      left: -3px;
+      
+      &:before,
+      &:after {
+        background-image: radial-gradient(circle, #f5dd7b 10%, transparent 70%);
+      }
+    }
+    
+    &.bottom-right {
+      bottom: -3px;
+      right: -3px;
+      
+      &:before,
+      &:after {
+        background-image: radial-gradient(circle, #f57bab 10%, transparent 70%);
+      }
+    }
+  }
+}
+
+// Apply animation to corner sparkles on hover
+.animated-btn:hover {
+  .corner-sparkle {
+    &:before {
+      animation: sparkleEffect 1.5s infinite 0.2s;
+    }
+    
+    &:after {
+      animation: sparkleEffect 1.5s infinite;
+    }
+  }
+}
+
+// Special animation for corner sparkles
+@keyframes sparkleEffect {
+  0% {
+    transform: scale(0.1);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.3;
+  }
+  80% {
+    opacity: 0.1;
+  }
+  100% {
+    transform: scale(0.1);
+    opacity: 0;
+  }
+}
+
+// Add a glow pulse animation for the animated buttons
+.animated-btn:hover {
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: inherit;
+    box-shadow: 0 0 10px rgba(66, 135, 245, 0.3),
+                0 0 20px rgba(66, 135, 245, 0.2);
+    opacity: 0;
+    animation: glowPulsate 2s infinite;
+    z-index: 0;
+  }
+}
+
+@keyframes glowPulsate {
+  0% {
+    opacity: 0.3;
+    transform: scale(0.95);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.05);
+  }
+  100% {
+    opacity: 0.3;
+    transform: scale(0.95);
+  }
+}
+
 :host {
   display: block;
   width: 100%;
@@ -103,15 +275,97 @@
     display: flex;
     align-items: center;
     gap: 1rem;
-
-    .btn {
-      @media (max-width: 768px) {
-        display: none;
+    position: relative;
+    
+    // Enhanced login button
+    a.btn.btn--ghost, button.btn.btn--secondary {
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      
+      // Corner sparkles
+      &::before, &::after {
+        content: '';
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 70%);
+        opacity: 0;
+        z-index: 2;
+      }
+      
+      // Top-left and bottom-right sparkles
+      &::before {
+        top: 3px;
+        left: 3px;
+      }
+      
+      // Top-right and bottom-left sparkles
+      &::after {
+        bottom: 3px;
+        right: 3px;
+      }
+      
+      // Corner border glow effect on hover
+      &:hover {
+        transform: translateY(-2px) scale(1.03);
+        box-shadow: 0 5px 15px rgba(66, 135, 245, 0.3);
+        
+        // Activate sparkles on hover
+        &::before, &::after {
+          animation: sparkling 2s infinite;
+        }
+        
+        // Add a subtle inner border glow
+        border-color: rgba(255, 255, 255, 0.7);
+        box-shadow: 
+          inset 0 0 5px rgba(255, 255, 255, 0.5),
+          0 5px 15px rgba(66, 135, 245, 0.3);
+      }
+    }
+    
+    // Special styling for login button
+    a.btn.btn--ghost {
+      &:hover {
+        background: rgba(66, 135, 245, 0.1);
+        
+        &::after, &::before {
+          background: radial-gradient(circle, rgba(66,135,245,1) 0%, rgba(66,135,245,0) 70%);
+        }
+      }
+    }
+    
+    // Special styling for demo button
+    button.btn.btn--secondary {
+      // Add a subtle rotating glow effect
+      &::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 60%);
+        opacity: 0;
+        z-index: 0;
+      }
+      
+      &:hover {
+        border-color: var(--primary-light);
+        
+        &::before {
+          opacity: 0.8;
+          animation: rotateGlow 3s infinite linear;
+        }
+        
+        &::after {
+          background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 70%);
+        }
       }
     }
   }
-
-  &__theme-toggle {
+  
+  &__help-button, &__theme-toggle {
     background: transparent;
     border: none;
     color: #fff;
@@ -123,99 +377,512 @@
     justify-content: center;
     cursor: pointer;
     transition: all 0.2s ease;
-
+    
     &:hover {
       background: rgba(255, 255, 255, 0.1);
     }
-
+    
     mat-icon {
-      font-size: 22px;
+      font-size: 1.2rem;
     }
   }
-
+  
+  &__user-profile {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 1.5rem;
+    border: 1px solid transparent;
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    position: relative;
+    overflow: hidden;
+    
+    &:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+      
+      .topbar__user-avatar {
+        transform: scale(1.1);
+      }
+      
+      .topbar__username {
+        color: var(--primary-light);
+      }
+      
+      mat-icon:last-child {
+        transform: rotate(180deg);
+      }
+      
+      &::after {
+        transform: scale(1.5);
+        opacity: 0.6;
+      }
+    }
+    
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle at center, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+      opacity: 0;
+      transform: scale(0);
+      transition: transform 0.5s ease, opacity 0.5s ease;
+    }
+    
+    &:active {
+      transform: scale(0.95);
+    }
+  }
+  
+  &__user-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 0.5rem;
+    
+    mat-icon {
+      font-size: 1.2rem;
+      color: white;
+    }
+  }
+  
+  &__username {
+    font-weight: 500;
+    color: #fff;
+    margin-right: 0.5rem;
+    
+    @media (max-width: 768px) {
+      display: none;
+    }
+  }
+  
   &__mobile-toggle {
+    display: none;
     background: transparent;
     border: none;
     color: #fff;
-    width: 40px;
-    height: 40px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
-    display: none;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
-
-    @media (max-width: 768px) {
-      display: flex;
-    }
-
+    transition: all 0.2s ease;
+    
     &:hover {
       background: rgba(255, 255, 255, 0.1);
+    }
+    
+    @media (max-width: 768px) {
+      display: flex;
     }
   }
 }
 
-.mobile-menu {
-  position: fixed;
-  top: 64px; // Height of the topbar
-  left: 0;
-  width: 100%;
-  height: calc(100vh - 64px);
-  background: rgba(30, 30, 47, 0.98);
-  z-index: 999;
-  transform: translateY(-100%);
+// User dropdown menu with enhanced animations
+.user-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 200px;
+  background: #2a2a40;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+  z-index: 1001;
   opacity: 0;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   visibility: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  overflow-y: auto;
-
+  transform: translateY(-10px) scale(0.95);
+  transform-origin: top right;
+  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  overflow: hidden;
+  
+  // Enhanced animation for open state
   &--open {
-    transform: translateY(0);
     opacity: 1;
     visibility: visible;
+    transform: translateY(0) scale(1);
+    
+    // Staggered animation for menu items
+    .user-menu__item {
+      opacity: 1;
+      transform: translateX(0);
+      transition-delay: calc(0.05s * var(--item-index, 0));
+    }
   }
-
-  &__nav {
+  
+  &__item {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    gap: 1.5rem;
-    width: 100%;
-    padding: 2rem;
-
-    a {
-      color: #fff;
-      text-decoration: none;
-      font-size: 1.5rem;
-      font-weight: 500;
-      transition: all 0.2s ease;
-      padding: 0.5rem 1rem;
-      border-radius: 8px;
-      width: 100%;
-      text-align: center;
-
-      &:hover, &.active {
-        background: rgba(255, 255, 255, 0.1);
+    padding: 0.75rem;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateX(10px);
+    position: relative;
+    overflow: hidden;
+    
+    // Set custom property for staggered animation
+    &:nth-child(1) { --item-index: 1; }
+    &:nth-child(2) { --item-index: 2; }
+    &:nth-child(3) { --item-index: 3; }
+    
+    mat-icon {
+      margin-right: 8px;
+      transition: transform 0.3s ease, color 0.3s ease;
+    }
+    
+    // Enhanced hover effect with background transition
+    &:hover {
+      background: rgba(255, 255, 255, 0.1);
+      padding-left: 1rem;
+      
+      mat-icon {
+        transform: scale(1.2);
         color: var(--primary-light);
+      }
+      
+      // Animated highlight line
+      &::before {
+        transform: scaleX(1);
+        opacity: 1;
+      }
+    }
+    
+    // Highlight line element
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 3px;
+      background: linear-gradient(to bottom, var(--primary-light), var(--secondary-light));
+      transform: scaleX(0);
+      transform-origin: left;
+      opacity: 0;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    
+    &--logout {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      margin-top: 0.5rem;
+      padding-top: 0.75rem;
+      color: #ff6b6b;
+      background: transparent;
+      width: 100%;
+      text-align: left;
+      font-family: inherit;
+      font-size: inherit;
+      border-left: none;
+      border-right: none;
+      border-bottom: none;
+      
+      &:hover {
+        background: rgba(255, 107, 107, 0.1);
       }
     }
   }
+}
 
+// Mobile menu
+.mobile-menu {
+  position: fixed;
+  top: var(--topbar-height, 64px);
+  left: 0;
+  width: 100%;
+  height: calc(100vh - var(--topbar-height, 64px));
+  background: rgba(25, 25, 35, 0.98);
+  backdrop-filter: blur(10px);
+  z-index: 999;
+  transform: translateX(100%);
+  transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  
+  &--open {
+    transform: translateX(0);
+  }
+  
+  &__nav {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 1.5rem;
+    
+    a {
+      display: flex;
+      align-items: center;
+      color: #fff;
+      text-decoration: none;
+      padding: 1rem;
+      margin-bottom: 0.5rem;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      
+      mat-icon {
+        margin-right: 1rem;
+      }
+      
+      &.active {
+        background: rgba(255, 255, 255, 0.1);
+        color: var(--primary-light);
+      }
+      
+      &:hover {
+        background: rgba(255, 255, 255, 0.05);
+      }
+    }
+  }
+  
   &__auth {
+    margin-top: 2rem;
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    width: 100%;
-    margin-top: 2rem;
+    padding: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+}
 
-    .btn {
-      display: flex !important;
-      justify-content: center;
-      width: 100%;
+// Progress bar for resume building steps
+.progress-bar {
+  position: fixed;
+  top: var(--topbar-height, 64px);
+  left: 0;
+  width: 100%;
+  background: rgba(35, 35, 50, 0.95);
+  padding: 0.75rem 2rem;
+  z-index: 998;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  
+  &__steps {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+    
+    // Connect steps with line
+    &:before {
+      content: "";
+      position: absolute;
+      top: 24px;
+      left: 14px;
+      width: calc(100% - 28px);
+      height: 2px;
+      background: rgba(255, 255, 255, 0.2);
+      z-index: -1;
     }
+  }
+  
+  &__step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    
+    &-indicator {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      transition: all 0.3s ease;
+    }
+    
+    &-label {
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.7);
+      transition: all 0.3s ease;
+      white-space: nowrap;
+      
+      @media (max-width: 600px) {
+        display: none;
+      }
+    }
+    
+    // Active state
+    &--active {
+      .progress-bar__step-indicator {
+        background: var(--primary);
+        border-color: var(--primary-light);
+        box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.3);
+      }
+      
+      .progress-bar__step-label {
+        color: var(--primary-light);
+        font-weight: 500;
+      }
+    }
+    
+    // Completed state
+    &--completed {
+      .progress-bar__step-indicator {
+        background: var(--success, #28a745);
+        border-color: var(--success-light, #48d368);
+      }
+    }
+  }
+}
+
+// Enhanced button styles with animations
+.btn {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  
+  // Add subtle pulse effect on hover
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    
+    &:after {
+      opacity: 1;
+      transform: scale(1.5);
+    }
+    
+    mat-icon {
+      transform: translateY(-2px);
+    }
+    
+    span {
+      transform: translateY(-1px);
+    }
+  }
+  
+  // Add ripple effect pseudo-element
+  &:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.3);
+    opacity: 0;
+    border-radius: 100%;
+    transform: scale(1);
+    transform-origin: center;
+    transition: all 0.5s ease;
+  }
+  
+  &:active {
+    transform: scale(0.95);
+    
+    &:after {
+      opacity: 0.6;
+      transform: scale(20);
+      background: rgba(255, 255, 255, 0.15);
+    }
+  }
+  
+  // Login button specific animations
+  &[routerLink="/login"] {
+    border: 1px solid transparent;
+    position: relative;
+    background-position: center;
+    
+    &:hover {
+      border-color: rgba(255, 255, 255, 0.3);
+      background: linear-gradient(to right, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.03));
+      background-size: 200% auto;
+      animation: shimmer 2s infinite linear;
+      
+      mat-icon {
+        animation: pulse 1.5s infinite;
+      }
+    }
+  }
+  
+  // Demo button specific animations
+  &.btn--secondary {
+    position: relative;
+    
+    &:hover {
+      &:before {
+        transform: scaleX(1);
+        opacity: 1;
+      }
+    }
+    
+    &:before {
+      content: '';
+      position: absolute;
+      bottom: -3px;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(to right, var(--primary), var(--secondary));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s, opacity 0.3s;
+      opacity: 0;
+      border-radius: 3px;
+    }
+  }
+
+  mat-icon {
+    transition: transform 0.3s ease;
+  }
+  
+  span {
+    transition: transform 0.3s ease;
+  }
+  
+  @media (max-width: 768px) {
+    padding: 0.5rem;
+    
+    span {
+      display: none;
+    }
+    
+    mat-icon {
+      margin: 0;
+    }
+  }
+}
+
+// Keyframes for button animations
+@keyframes shimmer {
+  0% {
+    background-position: 0% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1);
   }
 }

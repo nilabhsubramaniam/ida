@@ -14,44 +14,124 @@
   </div>
 
   <div class="topbar__right">
+    <!-- Help button for quick access to support -->
+    <button class="topbar__help-button" title="Get help" (click)="openHelp()">
+      <mat-icon>help_outline</mat-icon>
+    </button>
+
     <button class="topbar__theme-toggle" (click)="toggleDarkMode()" title="Toggle dark mode">
       <mat-icon>{{ isDarkMode ? 'light_mode' : 'dark_mode' }}</mat-icon>
     </button>
     
     <!-- Show different buttons based on login state -->
     <ng-container *ngIf="!isUserAuthenticated">
-      <a routerLink="/login" class="btn btn--ghost">Log in</a>
-      <a routerLink="/signup" class="btn btn--primary">Sign up</a>
+      <a routerLink="/login" class="btn btn--ghost animated-btn">
+        <div class="corner-sparkle top-left"></div>
+        <mat-icon>login</mat-icon>
+        <span>Log in</span>
+        <div class="corner-sparkle bottom-right"></div>
+      </a>
       <!-- For demo purposes only - This button simulates a login -->
-      <button class="btn btn--secondary" (click)="simulateLogin()">Demo</button>
+      <button class="btn btn--secondary animated-btn" (click)="simulateLogin()">
+        <div class="corner-sparkle top-right"></div>
+        <mat-icon>preview</mat-icon>
+        <span>Try Demo</span>
+        <div class="corner-sparkle bottom-left"></div>
+      </button>
     </ng-container>
     
     <!-- Only show Home/Logout in topbar when not on protected route (when sidebar is not visible) -->
     <ng-container *ngIf="isUserAuthenticated && !isProtectedRoute">
-      <a [routerLink]="['/']" [queryParams]="{fromLogin: true}" class="btn btn--ghost">Home</a>
-      <button class="btn btn--ghost" (click)="logout()">Logout</button>
+      <a [routerLink]="['/']" [queryParams]="{fromLogin: true}" class="btn btn--ghost">
+        <mat-icon>home</mat-icon>
+        <span>Home</span>
+      </a>
+      <div class="topbar__user-profile" (click)="toggleUserMenu()">
+        <div class="topbar__user-avatar">
+          <mat-icon>person</mat-icon>
+        </div>
+        <span class="topbar__username">User</span>
+        <mat-icon>arrow_drop_down</mat-icon>
+      </div>
+      <div class="user-menu" [ngClass]="{'user-menu--open': isUserMenuOpen}">
+        <a routerLink="/profile" class="user-menu__item">
+          <mat-icon>account_circle</mat-icon>
+          <span>Profile</span>
+        </a>
+        <a routerLink="/dashboard" class="user-menu__item">
+          <mat-icon>dashboard</mat-icon>
+          <span>Dashboard</span>
+        </a>
+        <button class="user-menu__item user-menu__item--logout" (click)="logout()">
+          <mat-icon>logout</mat-icon>
+          <span>Logout</span>
+        </button>
+      </div>
     </ng-container>
     
-    <!-- Mobile menu toggle button -->
+    <!-- Mobile menu toggle button with enhanced visibility -->
     <button class="topbar__mobile-toggle" (click)="toggleMobileMenu()">
       <mat-icon>{{ isMobileMenuOpen ? 'close' : 'menu' }}</mat-icon>
     </button>
   </div>
 </div>
 
-<!-- Mobile menu -->
+<!-- Mobile menu with improved transitions -->
 <div class="mobile-menu" [ngClass]="{'mobile-menu--open': isMobileMenuOpen}">
   <nav class="mobile-menu__nav">
-    <a [routerLink]="['/']" [queryParams]="{fromLogin: true}" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
-    <a routerLink="/editor" routerLinkActive="active">Editor</a>
-    <a routerLink="/theme" routerLinkActive="active">Templates</a>
-    <a routerLink="/dashboard" routerLinkActive="active" *ngIf="isUserAuthenticated">Dashboard</a>
+    <a [routerLink]="['/']" [queryParams]="{fromLogin: true}" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="closeMobileMenu()">
+      <mat-icon>home</mat-icon>
+      <span>Home</span>
+    </a>
+    <a routerLink="/editor" routerLinkActive="active" (click)="closeMobileMenu()">
+      <mat-icon>edit</mat-icon>
+      <span>Editor</span>
+    </a>
+    <a routerLink="/theme" routerLinkActive="active" (click)="closeMobileMenu()">
+      <mat-icon>style</mat-icon>
+      <span>Templates</span>
+    </a>
+    <a routerLink="/dashboard" routerLinkActive="active" *ngIf="isUserAuthenticated" (click)="closeMobileMenu()">
+      <mat-icon>dashboard</mat-icon>
+      <span>Dashboard</span>
+    </a>
+    <a routerLink="/preview" routerLinkActive="active" (click)="closeMobileMenu()">
+      <mat-icon>visibility</mat-icon>
+      <span>Preview</span>
+    </a>
+    <a routerLink="/export" routerLinkActive="active" (click)="closeMobileMenu()">
+      <mat-icon>cloud_download</mat-icon>
+      <span>Export</span>
+    </a>
     <div class="mobile-menu__auth">
       <ng-container *ngIf="!isUserAuthenticated">
-        <a routerLink="/login" class="btn btn--ghost">Log in</a>
-        <a routerLink="/signup" class="btn btn--primary">Sign up</a>
+        <a routerLink="/login" class="btn btn--ghost" (click)="closeMobileMenu()">
+          <mat-icon>login</mat-icon>
+          <span>Log in</span>
+        </a>
+        <a routerLink="/signup" class="btn btn--primary" (click)="closeMobileMenu()">
+          <mat-icon>person_add</mat-icon>
+          <span>Sign up</span>
+        </a>
       </ng-container>
-      <button *ngIf="isUserAuthenticated && !isProtectedRoute" class="btn btn--ghost" (click)="logout()">Logout</button>
+      <button *ngIf="isUserAuthenticated" class="btn btn--ghost" (click)="logout(); closeMobileMenu()">
+        <mat-icon>logout</mat-icon>
+        <span>Logout</span>
+      </button>
     </div>
   </nav>
+</div>
+
+<!-- Progress indicator for resume building steps -->
+<div class="progress-bar" *ngIf="showProgressBar">
+  <div class="progress-bar__steps">
+    <div class="progress-bar__step" *ngFor="let step of resumeSteps; let i = index" 
+         [ngClass]="{'progress-bar__step--active': currentStep >= i, 'progress-bar__step--completed': currentStep > i}">
+      <div class="progress-bar__step-indicator">
+        <mat-icon *ngIf="currentStep > i">check</mat-icon>
+        <span *ngIf="currentStep <= i">{{i + 1}}</span>
+      </div>
+      <span class="progress-bar__step-label">{{step}}</span>
+    </div>
+  </div>
 </div>

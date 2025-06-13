@@ -1,1 +1,139 @@
-<p>theme works!</p>
+<section class="theme-page">
+  <div class="theme-page__header">
+    <div class="container">
+      <h1>Resume Templates</h1>
+      <p>Choose from our professionally designed templates to make your resume stand out</p>
+    </div>
+  </div>
+  
+  <div class="container">
+    <!-- Theme Preview Area -->
+    <div class="theme-preview" *ngIf="previewTheme || selectedTheme">
+      <div class="theme-preview__header">
+        <h2>{{ (previewTheme || selectedTheme)?.name }} Theme</h2>
+        <div class="theme-preview__actions">
+          <button 
+            *ngIf="previewTheme" 
+            class="btn btn--ghost" 
+            (click)="previewThemeEnd()">
+            <mat-icon>close</mat-icon>
+            Exit Preview
+          </button>
+          <button 
+            *ngIf="previewTheme && isUserAuthenticated" 
+            class="btn btn--primary" 
+            (click)="applyTheme(previewTheme)">
+            <mat-icon>check</mat-icon>
+            Apply Theme
+          </button>
+        </div>
+      </div>
+      
+      <div class="theme-preview__content">
+        <!-- Resume Preview Using Selected Theme -->
+        <div class="resume-preview" [attr.data-theme]="(previewTheme || selectedTheme)?.id">
+          <!-- This is a simplified preview of how the resume would look -->
+          <div class="resume-preview__header" [ngStyle]="{
+            'font-family': (previewTheme || selectedTheme)?.fonts?.headings?.fontFamily || '',
+            'color': (previewTheme || selectedTheme)?.colorPalette?.headings || ''
+          }">
+            <h1>John Doe</h1>
+            <p>Software Engineer</p>
+          </div>
+          
+          <div class="resume-preview__section" [ngStyle]="{
+            'background-color': (previewTheme || selectedTheme)?.colorPalette?.sectionBackground || '',
+            'border-color': (previewTheme || selectedTheme)?.colorPalette?.borders || '',
+            'font-family': (previewTheme || selectedTheme)?.fonts?.body?.fontFamily || ''
+          }">
+            <h2 [ngStyle]="{'color': (previewTheme || selectedTheme)?.colorPalette?.headings || ''}">Experience</h2>
+            <div class="resume-preview__item">
+              <h3>Senior Developer</h3>
+              <p>Tech Company, Inc. | 2020 - Present</p>
+              <ul>
+                <li>Led development of enterprise web applications</li>
+                <li>Improved system performance by 40%</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="resume-preview__section" [ngStyle]="{
+            'background-color': (previewTheme || selectedTheme)?.colorPalette?.sectionBackground || '',
+            'border-color': (previewTheme || selectedTheme)?.colorPalette?.borders || '',
+            'font-family': (previewTheme || selectedTheme)?.fonts?.body?.fontFamily || ''
+          }">
+            <h2 [ngStyle]="{'color': (previewTheme || selectedTheme)?.colorPalette?.headings || ''}">Education</h2>
+            <div class="resume-preview__item">
+              <h3>Master of Computer Science</h3>
+              <p>University of Technology | 2018</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="theme-info">
+          <h3>Theme Details</h3>
+          
+          <div class="theme-info__detail">
+            <strong>Description:</strong>
+            <p>{{ (previewTheme || selectedTheme)?.description }}</p>
+          </div>
+          
+          <div class="theme-info__detail">
+            <strong>Layout:</strong>
+            <p>{{ (previewTheme || selectedTheme)?.layout?.type | titlecase }} with {{ (previewTheme || selectedTheme)?.layout?.density | titlecase }} density</p>
+          </div>
+          
+          <div class="theme-info__color-palette">
+            <h4>Color Palette</h4>
+            <div class="color-swatches">
+              <div class="color-swatch" 
+                   *ngFor="let color of getColorPalette()" 
+                   [style.background-color]="color.value">
+                <span>{{ color.name }}</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="theme-info__detail">
+            <strong>Typography:</strong>
+            <p [style.font-family]="(previewTheme || selectedTheme)?.fonts?.headings?.fontFamily || ''">
+              Heading: {{ (previewTheme || selectedTheme)?.fonts?.headings?.fontFamily }}
+            </p>
+            <p [style.font-family]="(previewTheme || selectedTheme)?.fonts?.body?.fontFamily || ''">
+              Body: {{ (previewTheme || selectedTheme)?.fonts?.body?.fontFamily }}
+            </p>
+          </div>
+          
+          <button 
+            class="btn btn--primary btn--lg" 
+            *ngIf="!previewTheme && isUserAuthenticated" 
+            [routerLink]="['/editor']"
+            [queryParams]="{theme: selectedTheme?.id}">
+            <mat-icon>edit</mat-icon>
+            Create Resume with This Theme
+          </button>
+          
+          <button 
+            class="btn btn--secondary btn--lg" 
+            *ngIf="!isUserAuthenticated" 
+            [routerLink]="['/login']"
+            [queryParams]="{returnUrl: '/resume-theme'}">
+            <mat-icon>login</mat-icon>
+            Log In to Use This Theme
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Theme Gallery -->
+    <app-theme-gallery 
+      [themes]="availableThemes"
+      [selectedTheme]="selectedTheme"
+      [previewTheme]="previewTheme"
+      [isUserAuthenticated]="isUserAuthenticated"
+      (themeSelected)="applyTheme($event)"
+      (themePreviewStart)="previewThemeStart($event)"
+      (themePreviewEnd)="previewThemeEnd()">
+    </app-theme-gallery>
+  </div>
+</section>
