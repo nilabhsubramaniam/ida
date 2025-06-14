@@ -126,13 +126,11 @@ export class WelcomeComponent implements OnInit {
   }
 
   exploreTemplates(): void {
-    // Allow non-logged-in users to browse templates without requiring login
+    // Navigate to the templates gallery - same path used in navbar
     this.router.navigate(['/resume-theme']);
     
-    // If you want to limit features for non-logged-in users:
-    // this.router.navigate(['/resume-theme'], { 
-    //   queryParams: { preview: true }
-    // });
+    // Add analytics tracking of button click (if implemented)
+    // this.analyticsService.trackEvent('explore_templates_click', { source: 'welcome_page' });
   }
 
   openFeedbackForm(): void {

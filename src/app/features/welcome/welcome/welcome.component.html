@@ -11,11 +11,11 @@
     <div class="welcome__cta">
       <ng-container *ngIf="!isLoggedIn" class="welcome__cta-buttons">
         <div class="action-buttons-container">
-          <button class="btn btn--primary btn--icon btn--large btn--glow" (click)="startResumeBuilder()">
+          <button class="btn btn--primary btn--icon btn--large btn--glow" (click)="startResumeBuilder()" aria-label="Create Resume">
             <mat-icon>description</mat-icon>
             <span>Create Resume</span>
           </button>
-          <button class="btn btn--secondary btn--icon btn--large btn--glow" (click)="exploreTemplates()">
+          <button class="btn btn--secondary btn--icon btn--large btn--glow" (click)="exploreTemplates()" aria-label="Explore Templates">
             <mat-icon>style</mat-icon>
             <span>Explore Templates</span>
           </button>

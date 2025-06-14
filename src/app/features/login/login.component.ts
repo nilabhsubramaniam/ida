@@ -42,8 +42,18 @@ export class LoginComponent implements OnInit, OnDestroy {
       author: "Hitopadesa"
     },
     {
-      text: "योगः कर्मसु कौशलम्",
-      translation: "Yoga is excellence in action",
+      text: "जातस्य हि ध्रुवो मृत्युर्ध्रुवं जन्म मृतस्य च। तस्मादपरिहार्येऽर्थे न त्वं शोचितुमर्हसि॥ ",
+      translation: "Death is certain for the born, and re-birth is certain for the dead; therefore you should not feel grief for what is inevitable.",
+      author: "Bhagavad Gita"
+    },
+    {
+      text: "नैनं छिन्दन्ति शस्त्राणि नैनं दहति पावकः। न चैनं क्लेदयन्त्यापो न शोषयति मारुतः॥",
+      translation: "Weapons do not cleave the soul, fire does not burn it, waters do not wet it, and the wind does not dry it.",
+      author: "Bhagavad Gita"
+    },
+    {
+      text: "कर्मण्येवाधिकारस्ते मा फलेषु कदाचन। मा कर्मफलहेतुर्भूर्मा ते सङ्गोऽस्त्वकर्मणि॥ ",
+      translation: "To work alone you have the right, and not to the fruits. Do not be impelled by the fruits of work. Nor have an attachment to inaction.",
       author: "Bhagavad Gita"
     }
   ];
