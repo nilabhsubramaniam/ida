@@ -1,1 +1,0 @@
-import{G as t,Mb as m,oa as i,wb as n}from"./chunk-A4YK4DHV.js";var u=[],e=class o{static \u0275fac=function(r){return new(r||o)};static \u0275mod=i({type:o});static \u0275inj=t({imports:[m.forChild(u),m]})};var s=class o{static \u0275fac=function(r){return new(r||o)};static \u0275mod=i({type:o});static \u0275inj=t({imports:[n,e]})};export{s as ProfileSettingsModule};
