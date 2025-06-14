@@ -2,7 +2,7 @@
 
 IDA is a modern and modular resume builder application. It uses **Angular 19** for the frontend, **Golang** for the backend, and **PostgreSQL** as the database.
 
-The UI is built using reusable, standalone components, smart services, and a scalable layout system. It features a drag-and-drop resume editor, theme selector, preview engine, and export functionality.
+The UI is built using reusable, standalone components, smart services, and a scalable layout system. It features a drag-and-drop resume editor, theme selector, preview engine, export functionality, and an immersive Three.js background animation that creates a dynamic starfield effect with colorful nebula clouds and atmospheric lighting.
 
 
 ## 📁 Project Structure
@@ -17,7 +17,8 @@ src/
     │   │   ├── export.service.ts
     │   │   ├── theme.service.ts
     │   │   ├── toast.service.ts
-    │   │   └── template-render.service.ts
+    │   │   ├── template-render.service.ts
+    │   │   └── three-background.service.ts      # Dynamic starfield animation
     │   ├── guards/
     │   │   ├── auth.guard.ts
     │   │   └── guest.guard.ts
@@ -27,6 +28,10 @@ src/
 
     ├── shared/                      # Reusable components, directives, pipes
     │   ├── components/
+    │   │   ├── three-background/               # Three.js background component
+    │   │   │   └── three-background.component.ts
+    │   │   ├── theme-background/               # Alternative Three.js component
+    │   │   │   └── theme-background.component.ts
     │   │   ├── auth-ui/
     │   │   │   ├── login-form.component.ts
     │   │   │   ├── register-form.component.ts
@@ -122,7 +127,7 @@ src/
 ```
 
 ## Description
-VyaktigatavRtta is a modern resume builder application built using Angular (latest version), SCSS, and TypeScript for the frontend, Golang for the backend, and PostgreSQL as the database.
+IDA is a modern resume builder application built using Angular (latest version), SCSS, and TypeScript for the frontend, Golang for the backend, and PostgreSQL as the database. The application features an immersive user interface with a dynamic Three.js background animation that creates a starfield effect with cosmic nebula and subtle lighting.
 
 
 ---
@@ -134,15 +139,23 @@ Manages all essential services, state management, route security, and global int
 
 | Folder        | Purpose                                      |
 |---------------|----------------------------------------------|
-| `services/`   | Auth, API, Resume Builder, Theme, Export     |
+| `services/`   | Auth, API, Resume Builder, Theme, Export, Three.js Background |
 | `guards/`     | Route protection                            |
 | `interceptors/` | HTTP request interception & error handling |
+
+The `ThreeBackgroundService` provides a dynamic, interactive starfield animation using Three.js. It features:
+- A cosmic nebula with stars, dust particles, and subtle lighting effects
+- Parallax star movement for a sense of depth
+- Optimized performance with custom shaders and texture handling
+- Responsive design that adapts to container size
 
 ---
 
 ### 📦 2. Shared Module (Reusable Library)
 Contains all reusable building blocks of the UI.
 
+- `three-background/`: Dynamic starfield background animation component
+- `theme-background/`: Alternative implementation of background animation
 - `auth-ui/`: Login, Register, Social Auth
 - `resume-fields/`: Text, Tags, Markdown, Dates
 - `shared-ui/`: Buttons, Modals, Toggles, Icons
@@ -186,7 +199,7 @@ All route-level features:
 
 2. Navigate to the project directory:
    ```sh
-   cd vyaktigatavrtta
+   cd ida
    ```
 3. Install dependencies:
    ```sh
@@ -211,5 +224,30 @@ All route-level features:
 -   Reuse from shared/ — keep DRY.
 
 ## License
-VyaktigatavRtta is licensed under the MIT License.
+
+IDA is licensed under the [MIT License](https://opensource.org/licenses/MIT).
+
+```
+MIT License
+
+Copyright (c) 2025 Nilabh Subramaniam
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
 
