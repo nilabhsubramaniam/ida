@@ -1,5 +1,7 @@
 <section class="welcome">
-  <!-- Removed inline styles as they're now in the SCSS file -->
+  <!-- Three.js animated background -->
+  <app-three-background [starCount]="3000"></app-three-background>
+  
   <div class="welcome__container">
     <div class="welcome__header">
       <h1 *ngIf="isLoggedIn">Welcome back, <span class="highlight">{{ userName }}</span>!</h1>

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterLink, Router, ActivatedRoute } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { AuthService } from '../../../core/services/auth.service';
+import { ThreeBackgroundComponent } from '../../../shared/components/three-background/three-background.component';
 
 interface ResumeStatistic {
   title: string;
@@ -26,7 +27,7 @@ interface ResumeTip {
 @Component({
   selector: 'app-welcome',
   standalone: true, 
-  imports: [CommonModule, RouterLink, MatIconModule], 
+  imports: [CommonModule, RouterLink, MatIconModule, ThreeBackgroundComponent], 
   templateUrl: './welcome.component.html',
   styleUrls: ['./welcome.component.scss']
 })
